@@ -40,7 +40,6 @@
     "rimraf": "^2.2.8"
   },
   "dependencies": {
-    "hexo-front-matter": "0.0.4",
     "highlight.js": "^8.4.0",
     "inflection": "^1.5.3"
   }
