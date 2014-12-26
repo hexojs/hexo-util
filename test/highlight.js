@@ -80,8 +80,8 @@ describe('highlight', function(){
     result.should.eql(hljs.highlightAuto(testString).value);
   });
 
-  it('first_line', function(){
-    var result = highlight(testString, {first_line: 3});
+  it('firstLine', function(){
+    var result = highlight(testString, {firstLine: 3});
     assertResult(result, gutter(3, 6), code(testString));
   });
 
