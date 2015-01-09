@@ -16,83 +16,17 @@ $ npm install hexo-util --save
 var util = require('hexo-util');
 ```
 
-### escape.filename(str, [transform])
-
-Escapes special characters in a filename. Use `transform` argument to transform the string into lower case (`1`) or upper case (`2`).
-
-### escpae.path(str, [transform])
-
-Escapes special characters in a path. Use `transform` argument to convert the string into lower case (`1`) or upper case (`2`).
-
-### escape.regex(str)
+### escapeRegex(str)
 
 Escapes special characters in a regular expression.
 
-### escape.diacritic(str)
+### escapeDiacritic(str)
 
 Escapes diacritic characters in a string.
 
-### escape.html(str)
+### escapeHTML(str)
 
 Escapes HTML entities in a string.
-
-### format.stripHTML(str)
-
-Removes HTML tags in a string.
-
-### format.trim(str)
-
-Removes prefixing spaces and trailing spaces in a string.
-
-### format.titlecase(str)
-
-Converts a string into title case.
-
-### format.wordWrap(str, [options])
-
-Wraps the string no longer than line width. This method breaks on the first whitespace character that does not exceed line width.
-
-Option | Description | Default
---- | --- | ---
-`width` | Line width | 80
-
-``` js
-format.wordWrap('Once upon a time')
-// Once upon a time
-
-format.wordWrap('Once upon a time, in a kingdom called Far Far Away, a king fell ill, and finding a successor to the throne turned out to be more trouble than anyone could have imagined...')
-// Once upon a time, in a kingdom called Far Far Away, a king fell ill, and finding\na successor to the throne turned out to be more trouble than anyone could have\nimagined...
-
-format.wordWrap('Once upon a time', {width: 8})
-// Once\nupon a\ntime
-
-format.wordWrap('Once upon a time', {width: 1})
-// Once\nupon\na\ntime
-```
-
-### format.truncate(str, [options])
-
-Truncates a given text after a given `length` if text is longer than `length`. The last characters will be replaced with the `omission` option for a total length not exceeding `length`.
-
-Option | Description | Default
---- | --- | ---
-`length` | Max length of the string | 30
-`omission` | Omission text | ...
-`separator` | truncate text at a natural break | 
-
-``` js
-format.truncate('Once upon a time in a world far far away')
-// "Once upon a time in a world..."
-
-format.truncate('Once upon a time in a world far far away', {length: 17})
-// "Once upon a ti..."
-
-format.truncate('Once upon a time in a world far far away', {length: 17, separator: ' '})
-// "Once upon a..."
-
-format.truncate('And they found that many people were sleeping better.', {length: 25, omission: '... (continued)'})
-// "And they f... (continued)"
-```
 
 ### highlight(str, [options])
 
@@ -147,11 +81,11 @@ Option | Description
 
 ``` js
 var permalink = new Permalink(':year/:month/:day/:title', {
-    segments: {
-        year: /(\d{4})/,
-        month: /(\d{2})/,
-        day: /(\d{2})/
-    }
+  segments: {
+    year: /(\d{4})/,
+    month: /(\d{2})/,
+    day: /(\d{2})/
+  }
 });
 
 permalink.parse('2014/01/31/test');
@@ -162,6 +96,94 @@ permalink.test('2014/01/31/test');
 
 permalink.stringify({year: '2014', month: '01', day: '31', title: 'test'})
 // 2014/01/31/test
+```
+
+### slugize(str, [options])
+
+Transforms a string into a clean URL-friendly string.
+
+Option | Description | Default
+--- | --- | ---
+`separator` | Separator | -
+`transform` | Transform the string into lower case (`1`) or upper case (`2`) | 
+
+``` js
+slugize('Hello World') = 'Hello-World'
+slugize('Hellô Wòrld') = 'Hello-World'
+slugize('Hello World', {separator: '_'}) = 'Hello_World'
+slugize('Hello World', {transform: 1}) = 'hello-world'
+slugize('Hello World', {transform: 2}) = 'HELLO-WORLD'
+```
+
+### spawn(command, [args], [options])
+
+Launches a new process with the given `command`. This method returns a promise.
+
+Option | Description | Default
+--- | --- | ---
+`cwd` | Current working directory of the child process | 
+`env` | Environment key-value pairs |
+`stdio` | Child's stdio configuration |
+`detached` | The child will be a process group leader |
+`uid` | Sets the user identity of the process |
+`gid` | Sets the group identity of the process |
+`verbose` | Display messages on the console | false
+`encoding` | Sets the encoding of the output string | utf8
+
+``` js
+spawn('cat', 'test.txt').then(function(content){
+  console.log(content);
+});
+```
+
+### stripHTML(str)
+
+Removes HTML tags in a string.
+
+### wordWrap(str, [options])
+
+Wraps the string no longer than line width. This method breaks on the first whitespace character that does not exceed line width.
+
+Option | Description | Default
+--- | --- | ---
+`width` | Line width | 80
+
+``` js
+wordWrap('Once upon a time')
+// Once upon a time
+
+wordWrap('Once upon a time, in a kingdom called Far Far Away, a king fell ill, and finding a successor to the throne turned out to be more trouble than anyone could have imagined...')
+// Once upon a time, in a kingdom called Far Far Away, a king fell ill, and finding\na successor to the throne turned out to be more trouble than anyone could have\nimagined...
+
+wordWrap('Once upon a time', {width: 8})
+// Once\nupon a\ntime
+
+wordWrap('Once upon a time', {width: 1})
+// Once\nupon\na\ntime
+```
+
+### truncate(str, [options])
+
+Truncates a given text after a given `length` if text is longer than `length`. The last characters will be replaced with the `omission` option for a total length not exceeding `length`.
+
+Option | Description | Default
+--- | --- | ---
+`length` | Max length of the string | 30
+`omission` | Omission text | ...
+`separator` | truncate text at a natural break | 
+
+``` js
+truncate('Once upon a time in a world far far away')
+// "Once upon a time in a world..."
+
+truncate('Once upon a time in a world far far away', {length: 17})
+// "Once upon a ti..."
+
+truncate('Once upon a time in a world far far away', {length: 17, separator: ' '})
+// "Once upon a..."
+
+truncate('And they found that many people were sleeping better.', {length: 25, omission: '... (continued)'})
+// "And they f... (continued)"
 ```
 
 ## License

@@ -24,4 +24,12 @@ describe('html_tag', function(){
       href: 'http://zespia.tw'
     }, 'My blog').should.eql('<a href="http://zespia.tw">My blog</a>');
   });
+
+  it('tag is required', function(){
+    try {
+      htmlTag();
+    } catch (err){
+      err.should.have.property('message', 'tag is required!');
+    }
+  });
 });

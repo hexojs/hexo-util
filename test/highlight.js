@@ -70,6 +70,14 @@ describe('highlight', function(){
     assertResult(result, gutter(1, 4), code(testString));
   });
 
+  it('str must be a string', function(){
+    try {
+      highlight();
+    } catch (err){
+      err.should.have.property('message', 'str must be a string!');
+    }
+  });
+
   it('gutter: false', function(){
     var result = highlight(testString, {gutter: false});
     assertResult(result, code(testString));

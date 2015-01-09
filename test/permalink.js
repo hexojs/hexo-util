@@ -24,6 +24,14 @@ describe('Permalink', function(){
     permalink.params.should.eql(['year', 'month', 'day', 'title']);
   });
 
+  it('rule is required', function(){
+    try {
+      new Permalink();
+    } catch (err){
+      err.should.have.property('message', 'rule is required!');
+    }
+  });
+
   it('test()', function(){
     permalink.test('2014/01/31/test').should.be.true;
     permalink.test('foweirojwoier').should.be.false;

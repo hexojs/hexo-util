@@ -12,13 +12,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/hexojs/util.git"
-  },
-  "bugs": {
-    "url": "https://github.com/hexojs/util/issues"
-  },
+  "repository": "hexojs/util",
   "homepage": "http://hexo.io/",
   "keywords": [
     "hexo",
@@ -40,7 +34,7 @@
     "rimraf": "^2.2.8"
   },
   "dependencies": {
-    "highlight.js": "^8.4.0",
-    "inflection": "^1.5.3"
+    "bluebird": "^2.6.2",
+    "highlight.js": "^8.4.0"
   }
 }

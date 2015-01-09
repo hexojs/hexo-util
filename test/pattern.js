@@ -56,4 +56,12 @@ describe('Pattern', function(){
 
     pattern.match('foo').should.eql({});
   });
+
+  it('rule is required', function(){
+    try {
+      new Pattern();
+    } catch (err){
+      err.should.have.property('message', 'rule must be a function, a string or a regular expression.');
+    }
+  });
 });
