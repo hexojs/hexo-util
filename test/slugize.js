@@ -35,6 +35,10 @@ describe('slugize', function(){
     slugize('Hello World', {transform: 2}).should.eql('HELLO-WORLD');
   });
 
+  it('non-english', function(){
+    slugize('遊戲').should.eql('遊戲');
+  });
+
   it('str must be a string', function(){
     try {
       slugize();
