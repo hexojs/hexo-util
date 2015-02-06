@@ -93,7 +93,27 @@ describe('highlight', function(){
     assertResult(result, gutter(3, 6), code(testString));
   });
 
-  it('lang');
+  it('lang = plain', function(){
+    var result = highlight('test', {lang: 'plain'});
+
+    result.should.eql([
+      '<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>',
+      '</pre></td><td class="code"><pre><span class="line">test</span>',
+      '</pre></td></tr></table></figure>'
+    ].join('\n'));
+  });
+
+  it('don\'t highlight if can\'t find language', function(){
+    var result = highlight('test', {lang: 'jrowiejrowi'});
+
+    result.should.eql([
+      '<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>',
+      '</pre></td><td class="code"><pre><span class="line">test</span>',
+      '</pre></td></tr></table></figure>'
+    ].join('\n'));
+  });
+
+  it('don\'t highlight if parse failed');
 
   it('caption', function(){
     var result = highlight(testString, {caption: 'hello world'});
