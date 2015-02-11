@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var rirmaf = require('rimraf');
@@ -14,12 +16,20 @@ gulp.task('coverage:clean', function(callback){
   rirmaf('coverage', callback);
 });
 
-gulp.task('mocha', ['coverage'], function(){
-  return gulp.src('test/index.js')
+function mochaStream(){
+  return gulp.src('test/index.js', {read: false})
     .pipe($.mocha({
       reporter: 'spec'
-    }))
+    }));
+}
+
+gulp.task('mocha', ['coverage'], function(){
+  return mochaStream()
     .pipe($.istanbul.writeReports());
+});
+
+gulp.task('mocha:nocov', function(){
+  return mochaStream();
 });
 
 gulp.task('jshint', function(){
@@ -31,7 +41,12 @@ gulp.task('jshint', function(){
 
 gulp.task('watch', function(){
   gulp.watch(lib, ['mocha', 'jshint']);
-  gulp.watch(['test/index.js'], ['mocha']);
+  gulp.watch(['test/*.js'], ['mocha']);
+});
+
+gulp.task('bench', function(){
+  return gulp.src('benchmark/*.js', {read: false})
+    .pipe($.bench());
 });
 
 gulp.task('test', ['mocha', 'jshint']);

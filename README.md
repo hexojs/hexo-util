@@ -1,6 +1,6 @@
-# util
+# hexo-util
 
-[![Build Status](https://travis-ci.org/hexojs/util.svg?branch=master)](https://travis-ci.org/hexojs/util)  [![NPM version](https://badge.fury.io/js/hexo-util.svg)](http://badge.fury.io/js/hexo-util) [![Coverage Status](https://img.shields.io/coveralls/hexojs/util.svg)](https://coveralls.io/r/hexojs/util?branch=master)
+[![Build Status](https://travis-ci.org/hexojs/hexo-util.svg?branch=master)](https://travis-ci.org/hexojs/hexo-util)  [![NPM version](https://badge.fury.io/js/hexo-util.svg)](http://badge.fury.io/js/hexo-util) [![Coverage Status](https://img.shields.io/coveralls/hexojs/hexo-util.svg)](https://coveralls.io/r/hexojs/hexo-util?branch=master)
 
 Utilities for [Hexo].
 
@@ -105,7 +105,7 @@ Transforms a string into a clean URL-friendly string.
 Option | Description | Default
 --- | --- | ---
 `separator` | Separator | -
-`transform` | Transform the string into lower case (`1`) or upper case (`2`) | 
+`transform` | Transform the string into lower case (`1`) or upper case (`2`) |
 
 ``` js
 slugize('Hello World') = 'Hello-World'
@@ -121,7 +121,7 @@ Launches a new process with the given `command`. This method returns a promise.
 
 Option | Description | Default
 --- | --- | ---
-`cwd` | Current working directory of the child process | 
+`cwd` | Current working directory of the child process |
 `env` | Environment key-value pairs |
 `stdio` | Child's stdio configuration |
 `detached` | The child will be a process group leader |
@@ -170,7 +170,7 @@ Option | Description | Default
 --- | --- | ---
 `length` | Max length of the string | 30
 `omission` | Omission text | ...
-`separator` | truncate text at a natural break | 
+`separator` | truncate text at a natural break |
 
 ``` js
 truncate('Once upon a time in a world far far away')
