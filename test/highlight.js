@@ -1,3 +1,5 @@
+'use strict';
+
 var should = require('chai').should();
 var hljs = require('highlight.js');
 
@@ -142,5 +144,18 @@ describe('highlight', function(){
       code(str.replace(/\t/g, '  '), 'js'),
       end
     ].join(''));
+  });
+
+  it('escape html entity', function(){
+    var str = [
+      'deploy:',
+      '  type: git',
+      '  repo: <repository url>',
+      '  branch: [branch]',
+      '  message: [message]'
+    ].join('\n');
+
+    var result = highlight(str);
+    result.should.include('&lt;repository url&gt;');
   });
 });

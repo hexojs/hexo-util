@@ -1,3 +1,5 @@
+'use strict';
+
 describe('util', function(){
   require('./escape_diacritic');
   require('./escape_html');
