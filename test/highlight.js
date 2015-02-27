@@ -23,7 +23,7 @@ function gutter(start, end){
   var result = gutterStart;
 
   for (var i = start; i <= end; i++){
-    result += '<span class="line">' + i + '</span>\n';
+    result += '<span class="line">' + i + '</span><br>';
   }
 
   result += gutterEnd;
@@ -44,7 +44,7 @@ function code(str, lang){
   var result = codeStart;
 
   for (var i = 0, len = lines.length; i < len; i++){
-    result += '<span class="line">' + lines[i] + '</span>\n';
+    result += '<span class="line">' + lines[i] + '</span><br>';
   }
 
   result += codeEnd;
@@ -102,7 +102,7 @@ describe('highlight', function(){
       '<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>',
       '</pre></td><td class="code"><pre><span class="line">test</span>',
       '</pre></td></tr></table></figure>'
-    ].join('\n'));
+    ].join('<br>'));
   });
 
   it('don\'t highlight if can\'t find language', function(){
@@ -112,7 +112,7 @@ describe('highlight', function(){
       '<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>',
       '</pre></td><td class="code"><pre><span class="line">test</span>',
       '</pre></td></tr></table></figure>'
-    ].join('\n'));
+    ].join('<br>'));
   });
 
   it('don\'t highlight if parse failed');
