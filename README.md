@@ -37,9 +37,10 @@ Option | Description | Default
 `gutter` | Whether to show line numbers | true
 `wrap` | Whether to wrap the code block | true
 `first_line` | First line number | 1
-`lang` | Language (Auto detect if not defined) |
+`lang` | Language |
 `caption` | Caption |
 `tab`| Replace tabs |
+`autoDetect` | Detect language automatically | true
 
 ### htmlTag(tag, attrs, text)
 
