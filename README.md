@@ -36,11 +36,11 @@ Option | Description | Default
 --- | --- | ---
 `gutter` | Whether to show line numbers | true
 `wrap` | Whether to wrap the code block | true
-`first_line` | First line number | 1
+`firstLine` | First line number | 1
 `lang` | Language |
 `caption` | Caption |
 `tab`| Replace tabs |
-`autoDetect` | Detect language automatically | true
+`autoDetect` | Detect language automatically | false
 
 ### htmlTag(tag, attrs, text)
 
