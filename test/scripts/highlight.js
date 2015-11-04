@@ -2,6 +2,8 @@
 
 var should = require('chai').should(); // eslint-disable-line
 var hljs = require('highlight.js');
+var Entities = require('html-entities').XmlEntities;
+var entities = new Entities();
 
 var testJson = {
   foo: 1,
@@ -10,7 +12,7 @@ var testJson = {
 
 var testString = JSON.stringify(testJson, null, '  ');
 
-var start = '<figure class="highlight json"><table><tr>';
+var start = '<figure class="highlight plain"><table><tr>';
 var end = '</tr></table></figure>';
 
 var gutterStart = '<td class="gutter"><pre>';
@@ -37,7 +39,7 @@ function code(str, lang) {
   if (lang) {
     data = hljs.highlight(lang.toLowerCase(), str);
   } else {
-    data = hljs.highlightAuto(str);
+    data = {value: entities.encode(str)};
   }
 
   var lines = data.value.split('\n');
@@ -87,7 +89,7 @@ describe('highlight', function() {
 
   it('wrap: false', function() {
     var result = highlight(testString, {wrap: false});
-    result.should.eql(hljs.highlightAuto(testString).value);
+    result.should.eql(entities.encode(testString));
   });
 
   it('firstLine', function() {
@@ -95,33 +97,42 @@ describe('highlight', function() {
     assertResult(result, gutter(3, 6), code(testString));
   });
 
-  it('lang = plain', function() {
-    var result = highlight('test', {lang: 'plain'});
+  it('lang = json', function() {
+    var result = highlight(testString, {lang: 'json'});
 
     result.should.eql([
-      '<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>',
-      '</pre></td><td class="code"><pre><span class="line">test</span>',
-      '</pre></td></tr></table></figure>'
-    ].join('<br>'));
+      '<figure class="highlight json"><table><tr>',
+      gutter(1, 4),
+      code(testString, 'json'),
+      end
+    ].join(''));
   });
 
-  it('don\'t highlight if can\'t find language', function() {
-    var result = highlight('test', {lang: 'jrowiejrowi'});
+  it('auto detect', function() {
+    var result = highlight(testString, {autoDetect: true});
 
     result.should.eql([
-      '<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>',
-      '</pre></td><td class="code"><pre><span class="line">test</span>',
-      '</pre></td></tr></table></figure>'
-    ].join('<br>'));
+      '<figure class="highlight json"><table><tr>',
+      gutter(1, 4),
+      code(testString, 'json'),
+      end
+    ].join(''));
+  });
+
+  it('don\'t highlight if language not found', function() {
+    var result = highlight('test', {lang: 'jrowiejrowi'});
+    assertResult(result, gutter(1, 1), code('test'));
   });
 
   it('don\'t highlight if parse failed');
 
   it('caption', function() {
-    var result = highlight(testString, {caption: 'hello world'});
+    var result = highlight(testString, {
+      caption: 'hello world'
+    });
 
     result.should.eql([
-      '<figure class="highlight json"><figcaption>hello world</figcaption><table><tr>',
+      '<figure class="highlight plain"><figcaption>hello world</figcaption><table><tr>',
       gutter(1, 4),
       code(testString),
       end
@@ -157,5 +168,23 @@ describe('highlight', function() {
 
     var result = highlight(str);
     result.should.include('&lt;repository url&gt;');
+  });
+
+  it('parse multi-line strings correctly', function() {
+    var str = [
+      'var string = `',
+      '  Multi',
+      '  line',
+      '  string',
+      '`'
+    ].join('\n');
+
+    var result = highlight(str, {lang: 'js'});
+    result.should.eql([
+      '<figure class="highlight js"><table><tr>',
+      gutter(1, 5),
+      code(str, 'js'),
+      end
+    ].join(''));
   });
 });

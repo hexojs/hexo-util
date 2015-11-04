@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "bluebird": "^3.0.5",
-    "ent": "^2.2.0",
-    "highlight.js": "^8.9.1"
+    "highlight.js": "^8.9.1",
+    "html-entities": "^1.2.0"
   }
 }
