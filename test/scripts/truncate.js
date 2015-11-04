@@ -10,6 +10,11 @@ describe('truncate', function() {
       .should.eql('Once upon a time in a world...');
   });
 
+  it('shorter string', function() {
+    truncate('Once upon')
+      .should.eql('Once upon');
+  });
+
   it('truncate', function() {
     truncate('Once upon a time in a world far far away', {length: 17})
       .should.eql('Once upon a ti...');
