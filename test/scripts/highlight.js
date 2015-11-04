@@ -1,6 +1,6 @@
 'use strict';
 
-var should = require('chai').should();
+var should = require('chai').should(); // eslint-disable-line
 var hljs = require('highlight.js');
 
 var testJson = {
@@ -19,10 +19,10 @@ var gutterEnd = '</pre></td>';
 var codeStart = '<td class="code"><pre>';
 var codeEnd = '</pre></td>';
 
-function gutter(start, end){
+function gutter(start, end) {
   var result = gutterStart;
 
-  for (var i = start; i <= end; i++){
+  for (var i = start; i <= end; i++) {
     result += '<span class="line">' + i + '</span><br>';
   }
 
@@ -31,10 +31,10 @@ function gutter(start, end){
   return result;
 }
 
-function code(str, lang){
+function code(str, lang) {
   var data;
 
-  if (lang){
+  if (lang) {
     data = hljs.highlight(lang.toLowerCase(), str);
   } else {
     data = hljs.highlightAuto(str);
@@ -43,7 +43,7 @@ function code(str, lang){
   var lines = data.value.split('\n');
   var result = codeStart;
 
-  for (var i = 0, len = lines.length; i < len; i++){
+  for (var i = 0, len = lines.length; i < len; i++) {
     result += '<span class="line">' + lines[i] + '</span><br>';
   }
 
@@ -52,10 +52,10 @@ function code(str, lang){
   return result;
 }
 
-function assertResult(result){
+function assertResult(result) {
   var expected = start;
 
-  for (var i = 1, len = arguments.length; i < len; i++){
+  for (var i = 1, len = arguments.length; i < len; i++) {
     expected += arguments[i];
   }
 
@@ -64,38 +64,38 @@ function assertResult(result){
   result.should.eql(expected);
 }
 
-describe('highlight', function(){
-  var highlight = require('../lib/highlight');
+describe('highlight', function() {
+  var highlight = require('../../lib/highlight');
 
-  it('default', function(){
+  it('default', function() {
     var result = highlight(testString);
     assertResult(result, gutter(1, 4), code(testString));
   });
 
-  it('str must be a string', function(){
+  it('str must be a string', function() {
     try {
       highlight();
-    } catch (err){
+    } catch (err) {
       err.should.have.property('message', 'str must be a string!');
     }
   });
 
-  it('gutter: false', function(){
+  it('gutter: false', function() {
     var result = highlight(testString, {gutter: false});
     assertResult(result, code(testString));
   });
 
-  it('wrap: false', function(){
+  it('wrap: false', function() {
     var result = highlight(testString, {wrap: false});
     result.should.eql(hljs.highlightAuto(testString).value);
   });
 
-  it('firstLine', function(){
+  it('firstLine', function() {
     var result = highlight(testString, {firstLine: 3});
     assertResult(result, gutter(3, 6), code(testString));
   });
 
-  it('lang = plain', function(){
+  it('lang = plain', function() {
     var result = highlight('test', {lang: 'plain'});
 
     result.should.eql([
@@ -105,7 +105,7 @@ describe('highlight', function(){
     ].join('<br>'));
   });
 
-  it('don\'t highlight if can\'t find language', function(){
+  it('don\'t highlight if can\'t find language', function() {
     var result = highlight('test', {lang: 'jrowiejrowi'});
 
     result.should.eql([
@@ -117,7 +117,7 @@ describe('highlight', function(){
 
   it('don\'t highlight if parse failed');
 
-  it('caption', function(){
+  it('caption', function() {
     var result = highlight(testString, {caption: 'hello world'});
 
     result.should.eql([
@@ -128,7 +128,7 @@ describe('highlight', function(){
     ].join(''));
   });
 
-  it('tab', function(){
+  it('tab', function() {
     var str = [
       'function fib(i){',
       '\tif (i <= 1) return i;',
@@ -146,7 +146,7 @@ describe('highlight', function(){
     ].join(''));
   });
 
-  it('escape html entity', function(){
+  it('escape html entity', function() {
     var str = [
       'deploy:',
       '  type: git',

@@ -1,16 +1,16 @@
 'use strict';
 
-describe('util', function(){
-  require('./escape_diacritic');
-  require('./escape_html');
-  require('./escape_regexp');
-  require('./highlight');
-  require('./html_tag');
-  require('./pattern');
-  require('./permalink');
-  require('./slugize');
-  require('./spawn');
-  require('./strip_html');
-  require('./truncate');
-  require('./word_wrap');
+describe('util', function() {
+  require('./scripts/escape_diacritic');
+  require('./scripts/escape_html');
+  require('./scripts/escape_regexp');
+  require('./scripts/highlight');
+  require('./scripts/html_tag');
+  require('./scripts/pattern');
+  require('./scripts/permalink');
+  require('./scripts/slugize');
+  require('./scripts/spawn');
+  require('./scripts/strip_html');
+  require('./scripts/truncate');
+  require('./scripts/word_wrap');
 });

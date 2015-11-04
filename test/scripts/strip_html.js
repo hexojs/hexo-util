@@ -1,11 +1,11 @@
 'use strict';
 
-var should = require('chai').should();
+var should = require('chai').should(); // eslint-disable-line
 
-describe('strip_html', function(){
-  var stripHTML = require('../lib/strip_html');
+describe('strip_html', function() {
+  var stripHTML = require('../../lib/strip_html');
 
-  it('default', function(){
+  it('default', function() {
     stripHTML('Strip <i>these</i> tags!').should.eql('Strip these tags!');
 
     stripHTML('<b>Bold</b> no more!  <a href="more.html">See more here</a>...')
@@ -15,10 +15,10 @@ describe('strip_html', function(){
       .should.eql('Welcome to my website!');
   });
 
-  it('str must be a string', function(){
+  it('str must be a string', function() {
     try {
       stripHTML();
-    } catch (err){
+    } catch (err) {
       err.should.have.property('message', 'str must be a string!');
     }
   });

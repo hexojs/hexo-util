@@ -1,12 +1,12 @@
 'use strict';
 
-var should = require('chai').should();
+var should = require('chai').should(); // eslint-disable-line
 
-describe('Permalink', function(){
-  var Permalink = require('../lib/permalink');
+describe('Permalink', function() {
+  var Permalink = require('../../lib/permalink');
   var permalink;
 
-  it('constructor', function(){
+  it('constructor', function() {
     permalink = new Permalink(':year/:month/:day/:title');
 
     permalink.rule.should.eql(':year/:month/:day/:title');
@@ -26,20 +26,20 @@ describe('Permalink', function(){
     permalink.params.should.eql(['year', 'month', 'day', 'title']);
   });
 
-  it('rule is required', function(){
+  it('rule is required', function() {
     try {
       new Permalink();
-    } catch (err){
+    } catch (err) {
       err.should.have.property('message', 'rule is required!');
     }
   });
 
-  it('test()', function(){
+  it('test()', function() {
     permalink.test('2014/01/31/test').should.be.true;
     permalink.test('foweirojwoier').should.be.false;
   });
 
-  it('parse()', function(){
+  it('parse()', function() {
     permalink.parse('2014/01/31/test').should.eql({
       year: '2014',
       month: '01',
@@ -48,7 +48,7 @@ describe('Permalink', function(){
     });
   });
 
-  it('stringify()', function(){
+  it('stringify()', function() {
     permalink.stringify({
       year: '2014',
       month: '01',
