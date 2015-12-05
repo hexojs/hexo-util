@@ -16,7 +16,6 @@ describe('hash', function() {
   it('hash', function() {
     var content = '123456';
     hash.hash(content).should.eql(sha1(content));
-    console.log(hash.hash(content))
   });
 
   it('HashStream', function() {
