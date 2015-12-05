@@ -11,20 +11,20 @@ var result = {
   aliases: {}
 };
 
-languages.forEach(function(lang){
+languages.forEach(function(lang) {
   result.aliases[lang] = lang;
 
   var def = require('highlight.js/lib/languages/' + lang)(hljs);
   var aliases = def.aliases;
 
-  if (aliases){
-    aliases.forEach(function(alias){
+  if (aliases) {
+    aliases.forEach(function(alias) {
       result.aliases[alias] = lang;
     });
   }
 });
 
-fs.writeFile(dest, JSON.stringify(result), function(err){
+fs.writeFile(dest, JSON.stringify(result), function(err) {
   if (err) return console.error(err);
 
   console.log('Highlight alias build success');
