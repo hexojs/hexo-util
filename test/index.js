@@ -4,6 +4,7 @@ describe('util', function() {
   require('./scripts/escape_diacritic');
   require('./scripts/escape_html');
   require('./scripts/escape_regexp');
+  require('./scripts/hash');
   require('./scripts/highlight');
   require('./scripts/html_tag');
   require('./scripts/pattern');

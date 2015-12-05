@@ -12,9 +12,6 @@
   "directories": {
     "lib": "./lib"
   },
-  "engines": {
-    "node": ">= 0.10.0"
-  },
   "repository": "hexojs/hexo-util",
   "homepage": "http://hexo.io/",
   "keywords": [

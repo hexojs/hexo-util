@@ -28,6 +28,29 @@ Escapes diacritic characters in a string.
 
 Escapes HTML entities in a string.
 
+### hash(str)
+
+Generates SHA1 hash.
+
+``` js
+hash('123456');
+// <Buffer 7c 4a 8d 09 ca 37 62 af 61 e5 95 20 94 3d c2 64 94 f8 94 1b>
+```
+
+### HashStream()
+
+Generates SHA1 hash with a transform stream.
+
+``` js
+var stream = new HashStream();
+
+fs.createReadStream('/path/to/file')
+  .pipe(stream)
+  .on('finish', function(){
+    console.log(stream.read());
+  });
+```
+
 ### highlight(str, [options])
 
 Syntax highlighting for a code block.
