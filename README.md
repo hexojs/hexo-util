@@ -16,6 +16,24 @@ $ npm install hexo-util --save
 var util = require('hexo-util');
 ```
 
+### CacheStream()
+
+Caches contents piped to the stream.
+
+``` js
+var stream = new CacheStream();
+
+fs.createReadStream('/path/to/file').pipe(stream);
+
+stream.on('finish', function(){
+  // Read cache piped to the stream
+  console.log(stream.getCache());
+
+  // Destroy cache
+  stream.destroy();
+});
+```
+
 ### escapeRegex(str)
 
 Escapes special characters in a regular expression.

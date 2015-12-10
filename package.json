@@ -1,6 +1,6 @@
 {
   "name": "hexo-util",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Utilities for Hexo.",
   "main": "lib/index",
   "scripts": {
@@ -29,8 +29,7 @@
     "jscs": "^2.6.0",
     "jscs-preset-hexo": "^1.0.1",
     "mocha": "^2.3.4",
-    "rewire": "^2.5.1",
-    "sinon": "^1.17.2"
+    "rewire": "^2.5.1"
   },
   "dependencies": {
     "bluebird": "^3.0.6",

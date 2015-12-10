@@ -3,7 +3,6 @@
 var should = require('chai').should(); // eslint-disable-line
 var pathFn = require('path');
 var fs = require('fs');
-var sinon = require('sinon');
 var rewire = require('rewire');
 
 describe('spawn', function() {
