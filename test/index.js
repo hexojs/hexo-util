@@ -1,6 +1,7 @@
 'use strict';
 
 describe('util', function() {
+  require('./scripts/cache_stream');
   require('./scripts/escape_diacritic');
   require('./scripts/escape_html');
   require('./scripts/escape_regexp');

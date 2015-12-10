@@ -28,7 +28,9 @@
     "istanbul": "^0.4.1",
     "jscs": "^2.6.0",
     "jscs-preset-hexo": "^1.0.1",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "rewire": "^2.5.1",
+    "sinon": "^1.17.2"
   },
   "dependencies": {
     "bluebird": "^3.0.6",

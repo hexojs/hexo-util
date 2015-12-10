@@ -3,9 +3,12 @@
 var should = require('chai').should(); // eslint-disable-line
 var pathFn = require('path');
 var fs = require('fs');
+var sinon = require('sinon');
+var rewire = require('rewire');
 
 describe('spawn', function() {
   var spawn = require('../../lib/spawn');
+  var CacheStream = require('../../lib/cache_stream');
   var fixturePath = pathFn.join(__dirname, 'spawn_test.txt');
   var fixture = 'test content';
 
@@ -38,7 +41,41 @@ describe('spawn', function() {
     });
   });
 
-  it('verbose');
+  it('verbose - stdout', function() {
+    var spawn = rewire('../../lib/spawn');
+    var stdoutCache = new CacheStream();
+    var stderrCache = new CacheStream();
+    var content = 'something';
+
+    spawn.__set__('process', {
+      stdout: stdoutCache,
+      stderr: stderrCache
+    });
+
+    return spawn('echo', [content], {
+      verbose: true
+    }).then(function() {
+      stdoutCache.getCache().toString('utf8').trim().should.eql(content);
+    });
+  });
+
+  it('verbose - stderr', function() {
+    var spawn = rewire('../../lib/spawn');
+    var stdoutCache = new CacheStream();
+    var stderrCache = new CacheStream();
+
+    spawn.__set__('process', {
+      stdout: stdoutCache,
+      stderr: stderrCache
+    });
+
+    return spawn('cat', ['nothing'], {
+      verbose: true
+    }).catch(function() {
+      stderrCache.getCache().toString('utf8').trim().should
+        .eql('cat: nothing: No such file or directory');
+    });
+  });
 
   it('custom encoding', function() {
     return spawn('cat', [fixturePath], {encoding: 'hex'}).then(function(content) {
