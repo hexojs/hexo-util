@@ -87,4 +87,10 @@ describe('spawn', function() {
       content.should.eql(new Buffer(fixture));
     });
   });
+
+  it('stdio = inherit', function() {
+    return spawn('echo', ['something'], {
+      stdio: 'inherit'
+    });
+  });
 });
