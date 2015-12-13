@@ -2,7 +2,7 @@
 
 var should = require('chai').should(); // eslint-disable-line
 
-describe('strip_html', function() {
+describe('stripHTML', function() {
   var stripHTML = require('../../lib/strip_html');
 
   it('default', function() {

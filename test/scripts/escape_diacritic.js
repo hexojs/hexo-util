@@ -2,7 +2,7 @@
 
 var should = require('chai').should(); // eslint-disable-line
 
-describe('escape_diacritic', function() {
+describe('escapeDiacritic', function() {
   var escapeDiacritic = require('../../lib/escape_diacritic');
 
   it('default', function() {

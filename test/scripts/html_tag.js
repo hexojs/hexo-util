@@ -2,7 +2,7 @@
 
 var should = require('chai').should(); // eslint-disable-line
 
-describe('html_tag', function() {
+describe('htmlTag', function() {
   var htmlTag = require('../../lib/html_tag');
 
   it('tag', function() {

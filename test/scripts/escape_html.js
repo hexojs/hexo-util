@@ -2,7 +2,7 @@
 
 var should = require('chai').should(); // eslint-disable-line
 
-describe('escape_html', function() {
+describe('escapeHTML', function() {
   var escapeHTML = require('../../lib/escape_html');
 
   it('default', function() {

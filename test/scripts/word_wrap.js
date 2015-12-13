@@ -2,7 +2,7 @@
 
 var should = require('chai').should(); // eslint-disable-line
 
-describe('word_wrap', function() {
+describe('wordWrap', function() {
   var wordWrap = require('../../lib/word_wrap');
 
   it('default', function() {
