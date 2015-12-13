@@ -34,6 +34,17 @@ stream.on('finish', function(){
 });
 ```
 
+### camelCaseKeys(obj, options)
+
+Convert object keys to camelCase. Original keys will be converted to getter/setter and sync to the camelCase keys.
+
+``` js
+camelCaseKeys({
+  foo_bar: 'test'
+});
+// { fooBar: 'test', foo_bar: 'test' }
+```
+
 ### escapeRegex(str)
 
 Escapes special characters in a regular expression.

@@ -2,6 +2,7 @@
 
 describe('util', function() {
   require('./scripts/cache_stream');
+  require('./scripts/camel_case_keys');
   require('./scripts/escape_diacritic');
   require('./scripts/escape_html');
   require('./scripts/escape_regexp');
