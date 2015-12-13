@@ -180,8 +180,8 @@ Option | Description | Default
 `detached` | The child will be a process group leader |
 `uid` | Sets the user identity of the process |
 `gid` | Sets the group identity of the process |
-`verbose` | Display messages on the console | false
-`encoding` | Sets the encoding of the output string | utf8
+`verbose` | Display messages on the console | `false`
+`encoding` | Sets the encoding of the output string | `utf8`
 
 ``` js
 spawn('cat', 'test.txt').then(function(content){
