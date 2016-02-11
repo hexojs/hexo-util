@@ -7,7 +7,9 @@
     "eslint": "eslint .",
     "jscs": "jscs .",
     "test": "mocha test/index.js",
-    "test-cov": "istanbul cover --print both _mocha -- test/index.js"
+    "test-cov": "istanbul cover --print both _mocha -- test/index.js",
+    "build:highlight": "mkdir -p build && node scripts/build_highlight_alias.js > build/highlight_alias.json",
+    "postinstall": "npm run build:highlight"
   },
   "directories": {
     "lib": "./lib"
@@ -34,6 +36,7 @@
   "dependencies": {
     "bluebird": "^3.0.6",
     "camel-case": "^1.2.0",
+    "cross-spawn": "^2.1.5",
     "highlight.js": "^9.0.0",
     "html-entities": "^1.2.0"
   }
