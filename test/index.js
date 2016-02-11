@@ -13,7 +13,6 @@ describe('util', function() {
   require('./scripts/permalink');
   require('./scripts/slugize');
   require('./scripts/spawn');
-  require('./scripts/strip_html');
   require('./scripts/truncate');
   require('./scripts/word_wrap');
 });
