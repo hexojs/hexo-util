@@ -1,6 +1,6 @@
 {
   "name": "hexo-util",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Utilities for Hexo.",
   "main": "lib/index",
   "scripts": {
@@ -15,7 +15,7 @@
     "lib": "./lib"
   },
   "repository": "hexojs/hexo-util",
-  "homepage": "http://hexo.io/",
+  "homepage": "https://hexo.io/",
   "keywords": [
     "hexo",
     "util",
