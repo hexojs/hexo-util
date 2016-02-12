@@ -8,7 +8,7 @@
     "jscs": "jscs .",
     "test": "mocha test/index.js",
     "test-cov": "istanbul cover --print both _mocha -- test/index.js",
-    "build:highlight": "mkdir -p build && node scripts/build_highlight_alias.js > build/highlight_alias.json",
+    "build:highlight": "node scripts/build_highlight_alias.js > highlight_alias.json",
     "postinstall": "npm run build:highlight"
   },
   "directories": {

@@ -4,4 +4,4 @@ tmp/
 *.log
 .idea/
 coverage/
-build/
+highlight_alias.json
