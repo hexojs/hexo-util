@@ -25,7 +25,7 @@ function gutter(start, end) {
   var result = gutterStart;
 
   for (var i = start; i <= end; i++) {
-    result += '<span class="line">' + i + '</span><br>';
+    result += '<div class="line">' + i + '</div>';
   }
 
   result += gutterEnd;
@@ -46,7 +46,7 @@ function code(str, lang) {
   var result = codeStart;
 
   for (var i = 0, len = lines.length; i < len; i++) {
-    result += '<span class="line">' + lines[i] + '</span><br>';
+    result += '<div class="line">' + lines[i] + '</div>';
   }
 
   result += codeEnd;
@@ -187,4 +187,20 @@ describe('highlight', function() {
       end
     ].join(''));
   });
+
+  it('gives the highlight class to marked lines', function() {
+    var str = [
+      'roses are red',
+      'violets are blue',
+      'sugar is sweet',
+      'and so are you'
+    ].join('\n');
+
+    var result = highlight(str, {mark: [1, 3, 5]});
+
+    result.should.include('class="line marked">roses');
+    result.should.include('class="line">violets');
+    result.should.include('class="line marked">sugar');
+    result.should.include('class="line">and');
+  })
 });
