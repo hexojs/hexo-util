@@ -202,5 +202,5 @@ describe('highlight', function() {
     result.should.include('class="line">violets');
     result.should.include('class="line marked">sugar');
     result.should.include('class="line">and');
-  })
+  });
 });
