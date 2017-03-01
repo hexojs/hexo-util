@@ -208,6 +208,25 @@ describe('highlight', function() {
     ].join(''));
   });
 
+  it('auto detect of multi-line statement', function() {
+    var str = [
+      '"use strict";',
+      'var string = `',
+      '  Multi',
+      '',
+      '  string',
+      '`'
+    ].join('\n');
+
+    var result = highlight(str, {autoDetect: true});
+    result.should.eql([
+      '<figure class="highlight javascript"><table><tr>',
+      gutter(1, 6),
+      code('<span class="meta">"use strict"</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
+      end
+    ].join(''));
+  });
+
   it('gives the highlight class to marked lines', function() {
     var str = [
       'roses are red',
