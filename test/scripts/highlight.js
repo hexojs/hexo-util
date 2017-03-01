@@ -38,6 +38,8 @@ function code(str, lang) {
 
   if (lang) {
     data = hljs.highlight(lang.toLowerCase(), str);
+  } else if (lang === null) {
+    data = {value: str};
   } else {
     data = {value: entities.encode(str)};
   }
@@ -183,7 +185,25 @@ describe('highlight', function() {
     result.should.eql([
       '<figure class="highlight js"><table><tr>',
       gutter(1, 5),
-      code(str, 'js'),
+      code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string">  line</span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
+      end
+    ].join(''));
+  });
+
+  it('parse multi-line strings including empty line', function() {
+    var str = [
+      'var string = `',
+      '  Multi',
+      '',
+      '  string',
+      '`'
+    ].join('\n');
+
+    var result = highlight(str, {lang: 'js'});
+    result.should.eql([
+      '<figure class="highlight js"><table><tr>',
+      gutter(1, 5),
+      code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
       end
     ].join(''));
   });
