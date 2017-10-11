@@ -26,7 +26,7 @@ function gutter(start, end) {
   var result = gutterStart;
 
   for (var i = start; i <= end; i++) {
-    result += '<div class="line">' + i + '</div>';
+    result += '<span class="line">' + i + '</span><br>';
   }
 
   result += gutterEnd;
@@ -49,7 +49,7 @@ function code(str, lang) {
   var result = codeStart;
 
   for (var i = 0, len = lines.length; i < len; i++) {
-    result += '<div class="line">' + lines[i] + '</div>';
+    result += '<span class="line">' + lines[i] + '</span><br>';
   }
 
   result += codeEnd;
