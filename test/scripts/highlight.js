@@ -218,9 +218,9 @@ describe('highlight', function() {
       '  string',
       '`'
     ].join('\n');
-    var result = highlight(str, {lang: 'js', classPrefix: 'hljs-'});
+    var result = highlight(str, {lang: 'js', classPrefix: 'hljs'});
     result.should.eql([
-      '<figure class="highlight js"><table><tr>',
+      '<figure class="hljs js"><table><tr>',
       gutter(1, 5),
       code(str, 'js', 'hljs-'),
       end
