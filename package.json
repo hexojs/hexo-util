@@ -9,7 +9,7 @@
     "test": "mocha test/index.js",
     "test-cov": "istanbul cover --print both _mocha -- test/index.js",
     "build:highlight": "node scripts/build_highlight_alias.js > highlight_alias.json",
-    "postinstall": "npm run build:highlight"
+    "prepare": "npm run build:highlight"
   },
   "directories": {
     "lib": "./lib"
@@ -24,7 +24,7 @@
   "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
   "maintainers": [
     "Abner Chou <hi@abnerchou.me> (http://abnerchou.me)"
-    ],
+  ],
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
