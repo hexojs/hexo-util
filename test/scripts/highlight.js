@@ -34,8 +34,14 @@ function gutter(start, end) {
   return result;
 }
 
-function code(str, lang) {
+function code(str, lang, classPrefix) {
   var data;
+
+  if (classPrefix) {
+    hljs.configure({
+      classPrefix: classPrefix
+    });
+  }
 
   if (lang) {
     data = hljs.highlight(lang.toLowerCase(), str);
@@ -266,5 +272,23 @@ describe('highlight', function() {
     result.should.include('class="line marked">sugar');
     result.should.include('class="line">and');
     validateHtmlAsync(result, done);
+  });
+
+  it('can set classPrefix options', function() {
+    var str = [
+      'var a = `',
+      '  Multi',
+      '  line',
+      '  string',
+      '`'
+    ].join('\n');
+    var result = highlight(str, {lang: 'js', classPrefix: 'hljs'});
+    result.should.eql([
+      '<figure class="hljs js"><table><tr>',
+      gutter(1, 5),
+      code(str, 'js', 'hljs-'),
+      end
+    ].join(''));
+    console.log(result);
   });
 });

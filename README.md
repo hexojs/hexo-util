@@ -93,6 +93,12 @@ Option | Description | Default
 `caption` | Caption |
 `tab`| Replace tabs |
 `autoDetect` | Detect language automatically | false
+`classPrefix` | Prefix for generated HTML's classes |
+
+If classPrefix is unset, the containing `<figure>` element will have the class
+`highlight`. Highlight.js currently uses the `hljs` prefix. This was not the case
+earlier and is the reason that the default is blank, so as to not break compatibility
+in older hexo sites.
 
 ### htmlTag(tag, attrs, text)
 
