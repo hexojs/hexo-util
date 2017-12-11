@@ -267,4 +267,34 @@ describe('highlight', function() {
     result.should.include('class="line">and');
     validateHtmlAsync(result, done);
   });
+
+  it('hljs compatibility - with lines', () => {
+    var str = [
+      'function (a) {',
+      '    if (a > 3)',
+      '        return true;',
+      '    return false;',
+      '}'
+    ].join('\n');
+    var result = highlight(str, {hljs: true, lang: 'javascript' });
+    result.should.include(gutterStart);
+    result.should.include(codeStart);
+    result.should.include('code class="hljs javascript"');
+    result.should.include('class="hljs-function"');
+  });
+
+  it('hljs compatibility - no lines', () => {
+    var str = [
+      'function (a) {',
+      '    if (a > 3)',
+      '        return true;',
+      '    return false;',
+      '}'
+    ].join('\n');
+    var result = highlight(str, {hljs: true, gutter: false, lang: 'javascript' });
+    result.should.not.include(gutterStart);
+    result.should.not.include(codeStart);
+    result.should.include('code class="hljs javascript"');
+    result.should.include('class="hljs-function"');
+  });
 });
