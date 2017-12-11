@@ -268,7 +268,7 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('hljs compatibility - with lines', () => {
+  it('hljs compatibility - with lines', (done) => {
     var str = [
       'function (a) {',
       '    if (a > 3)',
@@ -281,9 +281,11 @@ describe('highlight', function() {
     result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
     result.should.include('class="hljs-function"');
+    result.should.include(gutter(1, 5));
+    validateHtmlAsync(result, done);
   });
 
-  it('hljs compatibility - no lines', () => {
+  it('hljs compatibility - no lines', (done) => {
     var str = [
       'function (a) {',
       '    if (a > 3)',
@@ -296,5 +298,6 @@ describe('highlight', function() {
     result.should.not.include(codeStart);
     result.should.include('code class="hljs javascript"');
     result.should.include('class="hljs-function"');
+    validateHtmlAsync(result, done);
   });
 });
