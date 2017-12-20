@@ -89,6 +89,7 @@ Option | Description | Default
 `gutter` | Whether to show line numbers | true
 `wrap` | Whether to wrap the code block | true
 `firstLine` | First line number | 1
+`hljs` | Whether to use the `hljs-*` prefix for CSS classes | false
 `lang` | Language |
 `caption` | Caption |
 `tab`| Replace tabs |
