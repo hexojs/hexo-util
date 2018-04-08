@@ -28,6 +28,7 @@ describe('Permalink', function() {
 
   it('rule is required', function() {
     try {
+      // eslint-disable-next-line no-new
       new Permalink();
     } catch (err) {
       err.should.have.property('message', 'rule is required!');

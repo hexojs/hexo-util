@@ -78,13 +78,13 @@ describe('spawn', function() {
 
   it('custom encoding', function() {
     return spawn('cat', [fixturePath], {encoding: 'hex'}).then(function(content) {
-      content.should.eql(new Buffer(fixture).toString('hex'));
+      content.should.eql(Buffer.from(fixture).toString('hex'));
     });
   });
 
   it('encoding = null', function() {
     return spawn('cat', [fixturePath], {encoding: null}).then(function(content) {
-      content.should.eql(new Buffer(fixture));
+      content.should.eql(Buffer.from(fixture));
     });
   });
 

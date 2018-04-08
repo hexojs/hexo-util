@@ -22,7 +22,7 @@ describe('hash', function() {
     var content = '123456';
     var stream = new hash.HashStream();
 
-    stream.write(new Buffer(content));
+    stream.write(Buffer.from(content));
     stream.end();
 
     stream.read().should.eql(sha1(content));
