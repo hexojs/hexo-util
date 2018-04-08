@@ -8,7 +8,7 @@ describe('CacheStream', function() {
   it('default', function() {
     var src = new Readable();
     var cacheStream = new CacheStream();
-    var content = new Buffer('test');
+    var content = Buffer.from('test');
 
     src.push(content);
     src.push(null);
@@ -21,7 +21,7 @@ describe('CacheStream', function() {
 
   it('destroy', function() {
     var cacheStream = new CacheStream();
-    cacheStream._cache = [new Buffer(1)];
+    cacheStream._cache = [Buffer.alloc(1)];
 
     cacheStream.destroy();
     cacheStream._cache.should.have.length(0);
