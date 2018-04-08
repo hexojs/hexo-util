@@ -1,6 +1,6 @@
 # hexo-util
 
-[![Build Status](https://travis-ci.org/hexojs/hexo-util.svg?branch=master)](https://travis-ci.org/hexojs/hexo-util)  [![NPM version](https://badge.fury.io/js/hexo-util.svg)](http://badge.fury.io/js/hexo-util) [![Coverage Status](https://coveralls.io/repos/hexojs/hexo-util/badge.svg?branch=master&service=github)](https://coveralls.io/github/hexojs/hexo-util?branch=master)
+[![Build Status](https://travis-ci.org/hexojs/hexo-util.svg?branch=master)](https://travis-ci.org/hexojs/hexo-util)  [![NPM version](https://badge.fury.io/js/hexo-util.svg)](http://badge.fury.io/js/hexo-util) [![Coverage Status](https://coveralls.io/repos/hexojs/hexo-util/badge.svg?branch=master&service=github)](https://coveralls.io/github/hexojs/hexo-util?branch=master) [![dependencies Status](https://david-dm.org/hexojs/hexo-util/status.svg)](https://david-dm.org/hexojs/hexo-util) [![devDependencies Status](https://david-dm.org/hexojs/hexo-util/dev-status.svg)](https://david-dm.org/hexojs/hexo-util?type=dev)
 
 Utilities for [Hexo].
 
