@@ -16,7 +16,6 @@ script:
   # to build the project. You can still install and consume the package without any issue.
   - if [[ "$TRAVIS_NODE_VERSION" == "6" ]]; then npm run prepare; fi
   - npm run eslint
-  - npm run jscs
   - npm run test-cov
 
 after_script:
