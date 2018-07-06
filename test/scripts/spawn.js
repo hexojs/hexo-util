@@ -1,6 +1,7 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
+
 const pathFn = require('path');
 const fs = require('fs');
 const rewire = require('rewire');

@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('camelCaseKeys', () => {
   const camelCaseKeys = require('../../lib/camel_case_keys');

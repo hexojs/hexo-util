@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('escapeHTML', () => {
   const escapeHTML = require('../../lib/escape_html');
