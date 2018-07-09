@@ -60,11 +60,6 @@ describe('Pattern', () => {
   });
 
   it('rule is required', () => {
-    try {
-      // eslint-disable-next-line no-new
-      new Pattern();
-    } catch (err) {
-      err.should.have.property('message', 'rule must be a function, a string or a regular expression.');
-    }
+    (() => new Pattern()).should.throw('rule must be a function, a string or a regular expression.');
   });
 });
