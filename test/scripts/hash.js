@@ -19,12 +19,17 @@ describe('hash', () => {
   });
 
   it('HashStream', () => {
-    const content = '123456';
+    const content1 = '123456';
+    const content2 = '654321';
     const stream = new hash.HashStream();
 
-    stream.write(Buffer.from(content));
+    // explicit convert
+    stream.write(Buffer.from(content1));
+
+    // implicit convert
+    stream.write(content2);
     stream.end();
 
-    stream.read().should.eql(sha1(content));
+    stream.read().should.eql(sha1(content1 + content2));
   });
 });
