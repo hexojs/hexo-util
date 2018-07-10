@@ -10,10 +10,6 @@ describe('escapeHTML', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      escapeHTML();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    (() => { escapeHTML(); }).should.throw('str must be a string!');
   });
 });

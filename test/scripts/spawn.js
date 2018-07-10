@@ -25,11 +25,7 @@ describe('spawn', () => {
   }));
 
   it('command is required', () => {
-    try {
-      spawn();
-    } catch (err) {
-      err.should.have.property('message', 'command is required!');
-    }
+    (() => { spawn(); }).should.throw('command is required!');
   });
 
   it('error', () => spawn('cat', ['nothing']).catch(err => {

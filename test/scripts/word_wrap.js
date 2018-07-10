@@ -23,10 +23,6 @@ describe('wordWrap', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      wordWrap();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    (() => { wordWrap(); }).should.throw('str must be a string!');
   });
 });

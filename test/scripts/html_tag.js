@@ -28,10 +28,6 @@ describe('htmlTag', () => {
   });
 
   it('tag is required', () => {
-    try {
-      htmlTag();
-    } catch (err) {
-      err.should.have.property('message', 'tag is required!');
-    }
+    (() => { htmlTag(); }).should.throw('tag is required!');
   });
 });

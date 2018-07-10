@@ -27,12 +27,8 @@ describe('Permalink', () => {
   });
 
   it('rule is required', () => {
-    try {
-      // eslint-disable-next-line no-new
-      new Permalink();
-    } catch (err) {
-      err.should.have.property('message', 'rule is required!');
-    }
+    // eslint-disable-next-line no-new
+    (() => { new Permalink(); }).should.throw('rule is required!');
   });
 
   it('test()', () => {

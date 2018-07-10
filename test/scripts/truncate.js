@@ -31,10 +31,6 @@ describe('truncate', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      truncate();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    (() => { truncate(); }).should.throw('str must be a string!');
   });
 });

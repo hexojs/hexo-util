@@ -89,11 +89,7 @@ describe('highlight', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      highlight();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    (() => { highlight(); }).should.throw('str must be a string!');
   });
 
   it('gutter: false', done => {
