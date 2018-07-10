@@ -1,6 +1,6 @@
 'use strict';
 
-const Readable = require('stream').Readable;
+const { Readable } = require('stream');
 
 describe('CacheStream', () => {
   const CacheStream = require('../../lib/cache_stream');
@@ -8,14 +8,20 @@ describe('CacheStream', () => {
   it('default', () => {
     const src = new Readable();
     const cacheStream = new CacheStream();
-    const content = Buffer.from('test');
+    const content1 = 'test1';
+    const content2 = 'test2';
 
-    src.push(content);
+    // explicit convert
+    src.push(Buffer.from(content1));
+
+    // implicit convert
+    src.push(content2);
+
     src.push(null);
     src.pipe(cacheStream);
 
     cacheStream.on('finish', () => {
-      cacheStream.getCache().should.eql(content);
+      cacheStream.getCache().should.eql(Buffer.from(content1 + content2));
     });
   });
 
