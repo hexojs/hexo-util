@@ -59,6 +59,18 @@ describe('Pattern', () => {
     pattern.match('foo').should.eql({});
   });
 
+  it('self', () => {
+    const self = new Pattern('posts/:id');
+    const pattern = new Pattern(self);
+    const result = pattern.match('/posts/89');
+
+    result.should.eql({
+      0: 'posts/89',
+      1: '89',
+      id: '89'
+    });
+  });
+
   it('rule is required', () => {
     (() => new Pattern()).should.throw('rule must be a function, a string or a regular expression.');
   });
