@@ -27,4 +27,23 @@ describe('hash', function() {
 
     stream.read().should.eql(sha1(content));
   });
+
+  it('createSha1Hash', function() {
+    var _sha1 = hash.createSha1Hash();
+    var content = '123456';
+    _sha1.update(content);
+    _sha1.digest().should.eql(sha1(content));
+  });
+
+  it('createSha1Hash - streamMode', function() {
+    var content1 = '123456';
+    var content2 = '654321';
+    var stream = hash.createSha1Hash();
+    // explicit convert
+    stream.write(Buffer.from(content1));
+    // implicit convert
+    stream.write(content2);
+    stream.end();
+    stream.read().should.eql(sha1(content1 + content2));
+  });
 });
