@@ -1,15 +1,15 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
+const should = require('chai').should(); // eslint-disable-line
 
-describe('escapeDiacritic', function() {
-  var escapeDiacritic = require('../../lib/escape_diacritic');
+describe('escapeDiacritic', () => {
+  const escapeDiacritic = require('../../lib/escape_diacritic');
 
-  it('default', function() {
+  it('default', () => {
     escapeDiacritic('Hell\u00F2 w\u00F2rld').should.eql('Hello world');
   });
 
-  it('str must be a string', function() {
+  it('str must be a string', () => {
     try {
       escapeDiacritic();
     } catch (err) {
