@@ -1,12 +1,12 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
-describe('Permalink', function() {
-  var Permalink = require('../../lib/permalink');
-  var permalink;
+describe('Permalink', () => {
+  const Permalink = require('../../lib/permalink');
+  let permalink;
 
-  it('constructor', function() {
+  it('constructor', () => {
     permalink = new Permalink(':year/:month/:day/:title');
 
     permalink.rule.should.eql(':year/:month/:day/:title');
@@ -26,21 +26,17 @@ describe('Permalink', function() {
     permalink.params.should.eql(['year', 'month', 'day', 'title']);
   });
 
-  it('rule is required', function() {
-    try {
-      // eslint-disable-next-line no-new
-      new Permalink();
-    } catch (err) {
-      err.should.have.property('message', 'rule is required!');
-    }
+  it('rule is required', () => {
+    // eslint-disable-next-line no-new
+    (() => { new Permalink(); }).should.throw('rule is required!');
   });
 
-  it('test()', function() {
+  it('test()', () => {
     permalink.test('2014/01/31/test').should.be.true;
     permalink.test('foweirojwoier').should.be.false;
   });
 
-  it('parse()', function() {
+  it('parse()', () => {
     permalink.parse('2014/01/31/test').should.eql({
       year: '2014',
       month: '01',
@@ -49,7 +45,7 @@ describe('Permalink', function() {
     });
   });
 
-  it('stringify()', function() {
+  it('stringify()', () => {
     permalink.stringify({
       year: '2014',
       month: '01',

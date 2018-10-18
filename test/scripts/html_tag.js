@@ -1,15 +1,15 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
-describe('htmlTag', function() {
-  var htmlTag = require('../../lib/html_tag');
+describe('htmlTag', () => {
+  const htmlTag = require('../../lib/html_tag');
 
-  it('tag', function() {
+  it('tag', () => {
     htmlTag('hr').should.eql('<hr>');
   });
 
-  it('tag + attrs', function() {
+  it('tag + attrs', () => {
     htmlTag('img', {
       src: 'http://placekitten.com/200/300'
     }).should.eql('<img src="http://placekitten.com/200/300">');
@@ -21,7 +21,7 @@ describe('htmlTag', function() {
     }).should.eql('<img src="http://placekitten.com/200/300" width="200" height="300">');
   });
 
-  it('tag + attrs + text', function() {
+  it('tag + attrs + text', () => {
     htmlTag('a', {
       href: 'http://zespia.tw'
     }, 'My blog').should.eql('<a href="http://zespia.tw">My blog</a>');
@@ -56,10 +56,6 @@ describe('htmlTag', function() {
   });
 
   it('tag is required', function() {
-    try {
-      htmlTag();
-    } catch (err) {
-      err.should.have.property('message', 'tag is required!');
-    }
+    (() => { htmlTag(); }).should.throw('tag is required!');
   });
 });

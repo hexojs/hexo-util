@@ -1,50 +1,43 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
-var pathFn = require('path');
-var fs = require('fs');
-var rewire = require('rewire');
+require('chai').should();
 
-describe('spawn', function() {
-  var spawn = require('../../lib/spawn');
-  var CacheStream = require('../../lib/cache_stream');
-  var fixturePath = pathFn.join(__dirname, 'spawn_test.txt');
-  var fixture = 'test content';
+const pathFn = require('path');
+const fs = require('fs');
+const rewire = require('rewire');
 
-  before(function(done) {
+describe('spawn', () => {
+  const spawn = require('../../lib/spawn');
+  const CacheStream = require('../../lib/cache_stream');
+  const fixturePath = pathFn.join(__dirname, 'spawn_test.txt');
+  const fixture = 'test content';
+
+  before(done => {
     fs.writeFile(fixturePath, fixture, done);
   });
 
-  after(function(done) {
+  after(done => {
     fs.unlink(fixturePath, done);
   });
 
-  it('default', function() {
-    return spawn('cat', [fixturePath]).then(function(content) {
-      content.should.eql(fixture);
-    });
+  it('default', () => spawn('cat', [fixturePath]).then(content => {
+    content.should.eql(fixture);
+  }));
+
+  it('command is required', () => {
+    (() => { spawn(); }).should.throw('command is required!');
   });
 
-  it('command is required', function() {
-    try {
-      spawn();
-    } catch (err) {
-      err.should.have.property('message', 'command is required!');
-    }
-  });
+  it('error', () => spawn('cat', ['nothing']).catch(err => {
+    err.message.trim().should.eql('cat: nothing: No such file or directory');
+    err.code.should.eql(1);
+  }));
 
-  it('error', function() {
-    return spawn('cat', ['nothing']).catch(function(err) {
-      err.message.trim().should.eql('cat: nothing: No such file or directory');
-      err.code.should.eql(1);
-    });
-  });
-
-  it('verbose - stdout', function() {
-    var spawn = rewire('../../lib/spawn');
-    var stdoutCache = new CacheStream();
-    var stderrCache = new CacheStream();
-    var content = 'something';
+  it('verbose - stdout', () => {
+    const spawn = rewire('../../lib/spawn');
+    const stdoutCache = new CacheStream();
+    const stderrCache = new CacheStream();
+    const content = 'something';
 
     spawn.__set__('process', {
       stdout: stdoutCache,
@@ -53,15 +46,15 @@ describe('spawn', function() {
 
     return spawn('echo', [content], {
       verbose: true
-    }).then(function() {
+    }).then(() => {
       stdoutCache.getCache().toString('utf8').trim().should.eql(content);
     });
   });
 
-  it('verbose - stderr', function() {
-    var spawn = rewire('../../lib/spawn');
-    var stdoutCache = new CacheStream();
-    var stderrCache = new CacheStream();
+  it('verbose - stderr', () => {
+    const spawn = rewire('../../lib/spawn');
+    const stdoutCache = new CacheStream();
+    const stderrCache = new CacheStream();
 
     spawn.__set__('process', {
       stdout: stdoutCache,
@@ -70,27 +63,21 @@ describe('spawn', function() {
 
     return spawn('cat', ['nothing'], {
       verbose: true
-    }).catch(function() {
+    }).catch(() => {
       stderrCache.getCache().toString('utf8').trim().should
         .eql('cat: nothing: No such file or directory');
     });
   });
 
-  it('custom encoding', function() {
-    return spawn('cat', [fixturePath], {encoding: 'hex'}).then(function(content) {
-      content.should.eql(Buffer.from(fixture).toString('hex'));
-    });
-  });
+  it('custom encoding', () => spawn('cat', [fixturePath], {encoding: 'hex'}).then(content => {
+    content.should.eql(Buffer.from(fixture).toString('hex'));
+  }));
 
-  it('encoding = null', function() {
-    return spawn('cat', [fixturePath], {encoding: null}).then(function(content) {
-      content.should.eql(Buffer.from(fixture));
-    });
-  });
+  it('encoding = null', () => spawn('cat', [fixturePath], {encoding: null}).then(content => {
+    content.should.eql(Buffer.from(fixture));
+  }));
 
-  it('stdio = inherit', function() {
-    return spawn('echo', ['something'], {
-      stdio: 'inherit'
-    });
-  });
+  it('stdio = inherit', () => spawn('echo', ['something'], {
+    stdio: 'inherit'
+  }));
 });

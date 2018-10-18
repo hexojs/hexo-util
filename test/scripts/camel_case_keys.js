@@ -1,12 +1,12 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
-describe('camelCaseKeys', function() {
-  var camelCaseKeys = require('../../lib/camel_case_keys');
+describe('camelCaseKeys', () => {
+  const camelCaseKeys = require('../../lib/camel_case_keys');
 
-  it('default', function() {
-    var result = camelCaseKeys({
+  it('default', () => {
+    const result = camelCaseKeys({
       foo_bar: 'test'
     });
 
@@ -16,16 +16,12 @@ describe('camelCaseKeys', function() {
     });
   });
 
-  it('obj must be an object', function() {
-    try {
-      camelCaseKeys();
-    } catch (err) {
-      err.should.have.property('message', 'obj must be an object!');
-    }
+  it('obj must be an object', () => {
+    (() => { camelCaseKeys(); }).should.throw('obj must be an object!');
   });
 
-  it('setter', function() {
-    var result = camelCaseKeys({
+  it('setter', () => {
+    const result = camelCaseKeys({
       foo_bar: 'test'
     });
 
@@ -33,8 +29,8 @@ describe('camelCaseKeys', function() {
     result.fooBar.should.eql('new');
   });
 
-  it('ignore prefixing underscore', function() {
-    var result = camelCaseKeys({
+  it('ignore prefixing underscore', () => {
+    const result = camelCaseKeys({
       _foo_bar: 'test',
       __bar_baz: 'foo'
     });
@@ -47,8 +43,8 @@ describe('camelCaseKeys', function() {
     });
   });
 
-  it('do nothing if the key is camelCase', function() {
-    var result = camelCaseKeys({
+  it('do nothing if the key is camelCase', () => {
+    const result = camelCaseKeys({
       fooBar: 'test'
     });
 

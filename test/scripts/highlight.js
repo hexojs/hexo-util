@@ -1,32 +1,32 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
-var hljs = require('highlight.js');
-var Entities = require('html-entities').XmlEntities;
-var entities = new Entities();
-var validator = require('html-tag-validator');
+require('chai').should();
+const hljs = require('highlight.js');
+const Entities = require('html-entities').XmlEntities;
+const entities = new Entities();
+const validator = require('html-tag-validator');
 
-var testJson = {
+const testJson = {
   foo: 1,
   bar: 2
 };
 
-var testString = JSON.stringify(testJson, null, '  ');
+const testString = JSON.stringify(testJson, null, '  ');
 
-var start = '<figure class="highlight plain"><table><tr>';
-var end = '</tr></table></figure>';
+const start = '<figure class="highlight plain"><table><tr>';
+const end = '</tr></table></figure>';
 
-var gutterStart = '<td class="gutter"><pre>';
-var gutterEnd = '</pre></td>';
+const gutterStart = '<td class="gutter"><pre>';
+const gutterEnd = '</pre></td>';
 
-var codeStart = '<td class="code"><pre>';
-var codeEnd = '</pre></td>';
+const codeStart = '<td class="code"><pre>';
+const codeEnd = '</pre></td>';
 
 function gutter(start, end) {
-  var result = gutterStart;
+  let result = gutterStart;
 
-  for (var i = start; i <= end; i++) {
-    result += '<span class="line">' + i + '</span><br>';
+  for (let i = start; i <= end; i++) {
+    result += `<span class="line">${i}</span><br>`;
   }
 
   result += gutterEnd;
@@ -35,7 +35,7 @@ function gutter(start, end) {
 }
 
 function code(str, lang) {
-  var data;
+  let data;
 
   if (lang) {
     data = hljs.highlight(lang.toLowerCase(), str);
@@ -45,11 +45,11 @@ function code(str, lang) {
     data = {value: entities.encode(str)};
   }
 
-  var lines = data.value.split('\n');
-  var result = codeStart;
+  const lines = data.value.split('\n');
+  let result = codeStart;
 
-  for (var i = 0, len = lines.length; i < len; i++) {
-    result += '<span class="line">' + lines[i] + '</span><br>';
+  for (let i = 0, len = lines.length; i < len; i++) {
+    result += `<span class="line">${lines[i]}</span><br>`;
   }
 
   result += codeEnd;
@@ -58,9 +58,9 @@ function code(str, lang) {
 }
 
 function assertResult(result) {
-  var expected = start;
+  let expected = start;
 
-  for (var i = 1, len = arguments.length; i < len; i++) {
+  for (let i = 1, len = arguments.length; i < len; i++) {
     expected += arguments[i];
   }
 
@@ -70,7 +70,7 @@ function assertResult(result) {
 }
 
 function validateHtmlAsync(str, done) {
-  validator(str, function(err, ast) {
+  validator(str, (err, ast) => {
     if (err) {
       done(err);
     } else {
@@ -79,43 +79,39 @@ function validateHtmlAsync(str, done) {
   });
 }
 
-describe('highlight', function() {
-  var highlight = require('../../lib/highlight');
+describe('highlight', () => {
+  const highlight = require('../../lib/highlight');
 
-  it('default', function(done) {
-    var result = highlight(testString);
+  it('default', done => {
+    const result = highlight(testString);
     assertResult(result, gutter(1, 4), code(testString));
     validateHtmlAsync(result, done);
   });
 
-  it('str must be a string', function() {
-    try {
-      highlight();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+  it('str must be a string', () => {
+    (() => { highlight(); }).should.throw('str must be a string!');
   });
 
-  it('gutter: false', function(done) {
-    var result = highlight(testString, {gutter: false});
+  it('gutter: false', done => {
+    const result = highlight(testString, {gutter: false});
     assertResult(result, code(testString));
     validateHtmlAsync(result, done);
   });
 
-  it('wrap: false', function(done) {
-    var result = highlight(testString, {wrap: false});
+  it('wrap: false', done => {
+    const result = highlight(testString, {wrap: false});
     result.should.eql(entities.encode(testString));
     validateHtmlAsync(result, done);
   });
 
-  it('firstLine', function(done) {
-    var result = highlight(testString, {firstLine: 3});
+  it('firstLine', done => {
+    const result = highlight(testString, {firstLine: 3});
     assertResult(result, gutter(3, 6), code(testString));
     validateHtmlAsync(result, done);
   });
 
-  it('lang = json', function(done) {
-    var result = highlight(testString, {lang: 'json'});
+  it('lang = json', done => {
+    const result = highlight(testString, {lang: 'json'});
 
     result.should.eql([
       '<figure class="highlight json"><table><tr>',
@@ -126,8 +122,8 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('auto detect', function(done) {
-    var result = highlight(testString, {autoDetect: true});
+  it('auto detect', done => {
+    const result = highlight(testString, {autoDetect: true});
 
     result.should.eql([
       '<figure class="highlight json"><table><tr>',
@@ -138,16 +134,16 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('don\'t highlight if language not found', function(done) {
-    var result = highlight('test', {lang: 'jrowiejrowi'});
+  it('don\'t highlight if language not found', done => {
+    const result = highlight('test', {lang: 'jrowiejrowi'});
     assertResult(result, gutter(1, 1), code('test'));
     validateHtmlAsync(result, done);
   });
 
   it('don\'t highlight if parse failed');
 
-  it('caption', function(done) {
-    var result = highlight(testString, {
+  it('caption', done => {
+    const result = highlight(testString, {
       caption: 'hello world'
     });
 
@@ -160,15 +156,15 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('tab', function(done) {
-    var str = [
+  it('tab', done => {
+    const str = [
       'function fib(i){',
       '\tif (i <= 1) return i;',
       '\treturn fib(i - 1) + fib(i - 2);',
       '}'
     ].join('\n');
 
-    var result = highlight(str, {tab: '  ', lang: 'js'});
+    const result = highlight(str, {tab: '  ', lang: 'js'});
 
     result.should.eql([
       '<figure class="highlight js"><table><tr>',
@@ -179,8 +175,8 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('escape html entity', function(done) {
-    var str = [
+  it('escape html entity', done => {
+    const str = [
       'deploy:',
       '  type: git',
       '  repo: <repository url>',
@@ -188,13 +184,13 @@ describe('highlight', function() {
       '  message: [message]'
     ].join('\n');
 
-    var result = highlight(str);
+    const result = highlight(str);
     result.should.include('&lt;repository url&gt;');
     validateHtmlAsync(result, done);
   });
 
-  it('parse multi-line strings correctly', function(done) {
-    var str = [
+  it('parse multi-line strings correctly', done => {
+    const str = [
       'var string = `',
       '  Multi',
       '  line',
@@ -202,7 +198,7 @@ describe('highlight', function() {
       '`'
     ].join('\n');
 
-    var result = highlight(str, {lang: 'js'});
+    const result = highlight(str, {lang: 'js'});
     result.should.eql([
       '<figure class="highlight js"><table><tr>',
       gutter(1, 5),
@@ -212,8 +208,8 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('parse multi-line strings including empty line', function(done) {
-    var str = [
+  it('parse multi-line strings including empty line', done => {
+    const str = [
       'var string = `',
       '  Multi',
       '',
@@ -221,7 +217,7 @@ describe('highlight', function() {
       '`'
     ].join('\n');
 
-    var result = highlight(str, {lang: 'js'});
+    const result = highlight(str, {lang: 'js'});
     result.should.eql([
       '<figure class="highlight js"><table><tr>',
       gutter(1, 5),
@@ -231,8 +227,8 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('auto detect of multi-line statement', function(done) {
-    var str = [
+  it('auto detect of multi-line statement', done => {
+    const str = [
       '"use strict";',
       'var string = `',
       '  Multi',
@@ -241,7 +237,7 @@ describe('highlight', function() {
       '`'
     ].join('\n');
 
-    var result = highlight(str, {autoDetect: true});
+    const result = highlight(str, {autoDetect: true});
     result.should.eql([
       '<figure class="highlight javascript"><table><tr>',
       gutter(1, 6),
@@ -251,15 +247,15 @@ describe('highlight', function() {
     validateHtmlAsync(result, done);
   });
 
-  it('gives the highlight class to marked lines', function(done) {
-    var str = [
+  it('gives the highlight class to marked lines', done => {
+    const str = [
       'roses are red',
       'violets are blue',
       'sugar is sweet',
       'and so are you'
     ].join('\n');
 
-    var result = highlight(str, {mark: [1, 3, 5]});
+    const result = highlight(str, {mark: [1, 3, 5]});
 
     result.should.include('class="line marked">roses');
     result.should.include('class="line">violets');
@@ -269,14 +265,14 @@ describe('highlight', function() {
   });
 
   it('hljs compatibility - with lines', (done) => {
-    var str = [
+    const str = [
       'function (a) {',
       '    if (a > 3)',
       '        return true;',
       '    return false;',
       '}'
     ].join('\n');
-    var result = highlight(str, {hljs: true, lang: 'javascript' });
+    const result = highlight(str, {hljs: true, lang: 'javascript' });
     result.should.include(gutterStart);
     result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
@@ -286,14 +282,14 @@ describe('highlight', function() {
   });
 
   it('hljs compatibility - no lines', (done) => {
-    var str = [
+    const str = [
       'function (a) {',
       '    if (a > 3)',
       '        return true;',
       '    return false;',
       '}'
     ].join('\n');
-    var result = highlight(str, {hljs: true, gutter: false, lang: 'javascript' });
+    const result = highlight(str, {hljs: true, gutter: false, lang: 'javascript' });
     result.should.not.include(gutterStart);
     result.should.not.include(codeStart);
     result.should.include('code class="hljs javascript"');
