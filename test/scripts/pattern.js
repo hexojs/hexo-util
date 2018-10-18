@@ -1,13 +1,13 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
+const should = require('chai').should(); // eslint-disable-line
 
-describe('Pattern', function() {
-  var Pattern = require('../../lib/pattern');
+describe('Pattern', () => {
+  const Pattern = require('../../lib/pattern');
 
-  it('String - posts/:id', function() {
-    var pattern = new Pattern('posts/:id');
-    var result = pattern.match('/posts/89');
+  it('String - posts/:id', () => {
+    const pattern = new Pattern('posts/:id');
+    const result = pattern.match('/posts/89');
 
     result.should.eql({
       0: 'posts/89',
@@ -16,9 +16,9 @@ describe('Pattern', function() {
     });
   });
 
-  it('String - posts/*path', function() {
-    var pattern = new Pattern('posts/*path');
-    var result = pattern.match('posts/2013/hello-world');
+  it('String - posts/*path', () => {
+    const pattern = new Pattern('posts/*path');
+    const result = pattern.match('posts/2013/hello-world');
 
     result.should.eql({
       0: 'posts/2013/hello-world',
@@ -27,8 +27,8 @@ describe('Pattern', function() {
     });
   });
 
-  it('String - posts/:id?', function() {
-    var pattern = new Pattern('posts/:id?');
+  it('String - posts/:id?', () => {
+    const pattern = new Pattern('posts/:id?');
 
     pattern.match('posts/').should.eql({
       0: 'posts/',
@@ -43,15 +43,15 @@ describe('Pattern', function() {
     });
   });
 
-  it('RegExp', function() {
-    var pattern = new Pattern(/ab?cd/);
+  it('RegExp', () => {
+    const pattern = new Pattern(/ab?cd/);
 
     pattern.match('abcd').should.be.ok;
     pattern.match('acd').should.be.ok;
   });
 
-  it('Function', function() {
-    var pattern = new Pattern(function(str) {
+  it('Function', () => {
+    const pattern = new Pattern(str => {
       str.should.eql('foo');
       return {};
     });
@@ -59,7 +59,7 @@ describe('Pattern', function() {
     pattern.match('foo').should.eql({});
   });
 
-  it('rule is required', function() {
+  it('rule is required', () => {
     try {
       // eslint-disable-next-line no-new
       new Pattern();
