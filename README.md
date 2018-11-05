@@ -67,6 +67,7 @@ hash('123456');
 ```
 
 ### HashStream()
+**\[deprecated\]** use `createSha1Hash()`.
 
 Generates SHA1 hash with a transform stream.
 
@@ -77,6 +78,18 @@ fs.createReadStream('/path/to/file')
   .pipe(stream)
   .on('finish', function(){
     console.log(stream.read());
+  });
+```
+
+### createSha1Hash()
+return SHA1 hash object.
+ This is the same as calling `createHash('utf8')` in the node.js native module crypto.
+ ``` js
+const sha1 = createSha1Hash();
+ fs.createReadStream('/path/to/file')
+  .pipe(sha1)
+  .on('finish', () => {
+    console.log(sha1.read());
   });
 ```
 
