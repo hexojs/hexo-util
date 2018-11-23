@@ -37,7 +37,7 @@
   "dependencies": {
     "bluebird": "^3.5.2",
     "camel-case": "^3.0.0",
-    "cross-spawn": "^4.0.0",
+    "cross-spawn": "^6.0.5",
     "highlight.js": "^9.13.1",
     "html-entities": "^1.2.1",
     "striptags": "^2.1.1"
