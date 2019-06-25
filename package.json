@@ -6,9 +6,7 @@
   "scripts": {
     "eslint": "eslint .",
     "test": "mocha test/index.js",
-    "test-cov": "istanbul cover --print both _mocha -- test/index.js",
-    "build:highlight": "node scripts/build_highlight_alias.js > highlight_alias.json",
-    "prepare": "npm run build:highlight"
+    "test-cov": "istanbul cover --print both _mocha -- test/index.js"
   },
   "directories": {
     "lib": "./lib"
@@ -43,6 +41,6 @@
     "striptags": "^3.1.1"
   },
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=8.6.0"
   }
 }
