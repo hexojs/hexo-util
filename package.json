@@ -6,7 +6,9 @@
   "scripts": {
     "eslint": "eslint .",
     "test": "mocha test/index.js",
-    "test-cov": "istanbul cover --print both _mocha -- test/index.js"
+    "test-cov": "istanbul cover --print both _mocha -- test/index.js",
+    "build:highlight": "node scripts/build_highlight_alias.js > highlight_alias.json",
+    "prepare": "npm run build:highlight"
   },
   "directories": {
     "lib": "./lib"
