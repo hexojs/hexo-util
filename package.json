@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint .",
     "test": "mocha test/index.js",
-    "test-cov": "istanbul cover --print both _mocha -- test/index.js",
+    "test-cov": "nyc npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js > highlight_alias.json",
     "prepare": "npm run build:highlight"
   },
@@ -30,8 +30,8 @@
     "eslint": "^5.9.0",
     "eslint-config-hexo": "^3.0.0",
     "html-tag-validator": "^1.5.0",
-    "istanbul": "^0.4.3",
     "mocha": "^6.0.1",
+    "nyc": "^14.1.1",
     "rewire": "^4.0.1"
   },
   "dependencies": {
