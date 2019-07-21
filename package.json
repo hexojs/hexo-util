@@ -11,8 +11,13 @@
     "prepare": "npm run build:highlight"
   },
   "directories": {
-    "lib": "./lib"
+    "lib": "./lib",
+    "scripts": "./scripts"
   },
+  "files": [
+    "lib/",
+    "scripts/"
+  ],
   "repository": "hexojs/hexo-util",
   "homepage": "https://hexo.io/",
   "keywords": [
