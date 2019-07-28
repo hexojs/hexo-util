@@ -6,19 +6,19 @@ describe('htmlTag', () => {
   const htmlTag = require('../../lib/html_tag');
 
   it('tag', () => {
-    htmlTag('hr').should.eql('<hr>');
+    htmlTag('hr').should.eql('<hr/>');
   });
 
   it('tag + attrs', () => {
     htmlTag('img', {
       src: 'http://placekitten.com/200/300'
-    }).should.eql('<img src="http://placekitten.com/200/300">');
+    }).should.eql('<img src="http://placekitten.com/200/300"/>');
 
     htmlTag('img', {
       src: 'http://placekitten.com/200/300',
       width: 200,
       height: 300
-    }).should.eql('<img src="http://placekitten.com/200/300" width="200" height="300">');
+    }).should.eql('<img src="http://placekitten.com/200/300" width="200" height="300"/>');
   });
 
   it('tag + attrs + text', () => {
@@ -31,7 +31,7 @@ describe('htmlTag', () => {
     htmlTag('img', {
       src: 'http://placekitten.com/200/300',
       alt: ''
-    }).should.eql('<img src="http://placekitten.com/200/300" alt="">');
+    }).should.eql('<img src="http://placekitten.com/200/300" alt=""/>');
   });
 
   it('passing a zero as attribute', () => {
