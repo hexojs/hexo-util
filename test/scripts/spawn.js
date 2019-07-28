@@ -46,7 +46,8 @@ describe('spawn', () => {
       stdout: stdoutCache,
       stderr: stderrCache,
       removeListener: () => {},
-      on: () => {}
+      on: () => {},
+      exit: () => {}
     });
 
     return spawn('echo', [content], {
@@ -65,7 +66,8 @@ describe('spawn', () => {
       stdout: stdoutCache,
       stderr: stderrCache,
       removeListener: () => {},
-      on: () => {}
+      on: () => {},
+      exit: () => {}
     });
 
     return spawn('cat', ['nothing'], {
