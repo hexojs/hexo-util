@@ -44,7 +44,10 @@ describe('spawn', () => {
 
     spawn.__set__('process', {
       stdout: stdoutCache,
-      stderr: stderrCache
+      stderr: stderrCache,
+      removeListener: () => {},
+      on: () => {},
+      exit: () => {}
     });
 
     return spawn('echo', [content], {
@@ -61,7 +64,10 @@ describe('spawn', () => {
 
     spawn.__set__('process', {
       stdout: stdoutCache,
-      stderr: stderrCache
+      stderr: stderrCache,
+      removeListener: () => {},
+      on: () => {},
+      exit: () => {}
     });
 
     return spawn('cat', ['nothing'], {
