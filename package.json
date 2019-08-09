@@ -16,7 +16,8 @@
   },
   "files": [
     "lib/",
-    "scripts/"
+    "scripts/",
+    "highlight_alias.json"
   ],
   "repository": "hexojs/hexo-util",
   "homepage": "https://hexo.io/",
