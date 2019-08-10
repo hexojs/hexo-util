@@ -2,6 +2,7 @@
 
 var hljs = require('highlight.js');
 var languages = hljs.listLanguages();
+const fs = require('fs');
 
 var result = {
   languages: languages,
@@ -21,4 +22,9 @@ languages.forEach(function(lang) {
   }
 });
 
-console.log(JSON.stringify(result));
+const stream = fs.createWriteStream('highlight_alias.json');
+stream.write(JSON.stringify(result));
+stream.on('end', () => {
+  stream.end();
+});
+
