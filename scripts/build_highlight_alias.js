@@ -1,22 +1,22 @@
 'use strict';
 
-var hljs = require('highlight.js');
-var languages = hljs.listLanguages();
+const hljs = require('highlight.js');
+const languages = hljs.listLanguages();
 const fs = require('fs');
 
-var result = {
+const result = {
   languages: languages,
   aliases: {}
 };
 
-languages.forEach(function(lang) {
+languages.forEach(lang => {
   result.aliases[lang] = lang;
 
-  var def = require('highlight.js/lib/languages/' + lang)(hljs);
-  var aliases = def.aliases;
+  const def = require('highlight.js/lib/languages/' + lang)(hljs);
+  const aliases = def.aliases;
 
   if (aliases) {
-    aliases.forEach(function(alias) {
+    aliases.forEach(alias => {
       result.aliases[alias] = lang;
     });
   }
@@ -27,4 +27,3 @@ stream.write(JSON.stringify(result));
 stream.on('end', () => {
   stream.end();
 });
-
