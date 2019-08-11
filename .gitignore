@@ -5,4 +5,3 @@ tmp/
 .idea/
 .nyc_output/
 highlight_alias.json
-*.tgz
