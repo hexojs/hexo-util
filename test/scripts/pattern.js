@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('Pattern', () => {
   const Pattern = require('../../lib/pattern');

@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('wordWrap', () => {
   const wordWrap = require('../../lib/word_wrap');
