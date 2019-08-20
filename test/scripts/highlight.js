@@ -46,27 +46,14 @@ function code(str, lang) {
   }
 
   const lines = data.value.split('\n');
-  let result = codeStart;
 
-  for (let i = 0, len = lines.length; i < len; i++) {
-    result += `<span class="line">${lines[i]}</span><br>`;
-  }
-
-  result += codeEnd;
-
-  return result;
+  return lines.reduce((prev, current) => {
+    return `${prev}<span class="line">${current}</span><br>`;
+  }, codeStart) + codeEnd;
 }
 
-function assertResult(result) {
-  let expected = start;
-
-  for (let i = 1, len = arguments.length; i < len; i++) {
-    expected += arguments[i];
-  }
-
-  expected += end;
-
-  result.should.eql(expected);
+function assertResult(result, ...args) {
+  result.should.eql(start + args.join('') + end);
 }
 
 function validateHtmlAsync(str, done) {

@@ -44,12 +44,7 @@ describe('camelCaseKeys', () => {
   });
 
   it('do nothing if the key is camelCase', () => {
-    const result = camelCaseKeys({
-      fooBar: 'test'
-    });
-
-    result.should.eql({
-      fooBar: 'test'
-    });
+    const result = camelCaseKeys({ fooBar: 'test' });
+    result.should.eql({ fooBar: 'test' });
   });
 });
