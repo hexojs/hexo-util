@@ -79,7 +79,7 @@ describe('spawn', () => {
         // utf8 support in windows shell (cmd.exe) is difficult.
         Buffer.byteLength(stderrResult, 'hex').should.least(1);
       } else {
-        stderrResult.toString('utf8').should.eql('cat: nothing: No such file or directory');
+        stderrResult.toString('utf8').should.with.match(/^cat: nothing: No such file or directory\n?$/);
       }
     });
   });
