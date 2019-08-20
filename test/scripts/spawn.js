@@ -48,10 +48,7 @@ describe('spawn', () => {
 
     spawn.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
-      stderr: stderrCache,
-      removeListener: () => {},
-      on: () => {},
-      exit: () => {}
+      stderr: stderrCache
     }));
 
     return spawn('echo', [content], {
@@ -75,8 +72,7 @@ describe('spawn', () => {
       stdout: stdoutCache,
       stderr: stderrCache,
       removeListener: () => {},
-      on: () => {},
-      exit: () => {}
+      on: () => {}
     }));
 
     return spawn(catCommand, ['nothing'], {
