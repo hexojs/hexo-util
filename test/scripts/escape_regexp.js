@@ -10,10 +10,6 @@ describe('escapeRegExp', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      escapeRegExp();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    escapeRegExp.should.throw('str must be a string!');
   });
 });

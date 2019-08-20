@@ -42,10 +42,6 @@ describe('slugize', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      slugize();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    slugize.should.throw('str must be a string!');
   });
 });

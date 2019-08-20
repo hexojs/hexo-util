@@ -10,10 +10,6 @@ describe('escapeDiacritic', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      escapeDiacritic();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    escapeDiacritic.should.throw('str must be a string!');
   });
 });

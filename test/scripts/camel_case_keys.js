@@ -17,11 +17,7 @@ describe('camelCaseKeys', () => {
   });
 
   it('obj must be an object', () => {
-    try {
-      camelCaseKeys();
-    } catch (err) {
-      err.should.have.property('message', 'obj must be an object!');
-    }
+    camelCaseKeys.should.throw('obj must be an object!');
   });
 
   it('setter', () => {
