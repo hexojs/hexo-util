@@ -1,6 +1,10 @@
 # hexo-util
 
-[![Build Status](https://travis-ci.org/hexojs/hexo-util.svg?branch=master)](https://travis-ci.org/hexojs/hexo-util)  [![NPM version](https://badge.fury.io/js/hexo-util.svg)](http://badge.fury.io/js/hexo-util) [![Coverage Status](https://coveralls.io/repos/hexojs/hexo-util/badge.svg?branch=master&service=github)](https://coveralls.io/github/hexojs/hexo-util?branch=master) [![dependencies Status](https://david-dm.org/hexojs/hexo-util/status.svg)](https://david-dm.org/hexojs/hexo-util) [![devDependencies Status](https://david-dm.org/hexojs/hexo-util/dev-status.svg)](https://david-dm.org/hexojs/hexo-util?type=dev)
+[![Build Status](https://travis-ci.org/hexojs/hexo-util.svg?branch=master)](https://travis-ci.org/hexojs/hexo-util)
+[![NPM version](https://badge.fury.io/js/hexo-util.svg)](https://www.npmjs.com/package/hexo-util)
+[![Coverage Status](https://coveralls.io/repos/hexojs/hexo-util/badge.svg?branch=master&service=github)](https://coveralls.io/github/hexojs/hexo-util?branch=master)
+[![dependencies Status](https://david-dm.org/hexojs/hexo-util/status.svg)](https://david-dm.org/hexojs/hexo-util)
+[![devDependencies Status](https://david-dm.org/hexojs/hexo-util/dev-status.svg)](https://david-dm.org/hexojs/hexo-util?type=dev)
 
 Utilities for [Hexo].
 
@@ -67,6 +71,7 @@ hash('123456');
 ```
 
 ### HashStream()
+**\[deprecated\]** use `createSha1Hash()`.
 
 Generates SHA1 hash with a transform stream.
 
@@ -77,6 +82,18 @@ fs.createReadStream('/path/to/file')
   .pipe(stream)
   .on('finish', function(){
     console.log(stream.read());
+  });
+```
+
+### createSha1Hash()
+return SHA1 hash object.
+ This is the same as calling `createHash('utf8')` in the node.js native module crypto.
+ ``` js
+const sha1 = createSha1Hash();
+ fs.createReadStream('/path/to/file')
+  .pipe(sha1)
+  .on('finish', () => {
+    console.log(sha1.read());
   });
 ```
 

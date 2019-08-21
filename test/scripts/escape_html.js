@@ -1,19 +1,15 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
-describe('escapeHTML', function() {
-  var escapeHTML = require('../../lib/escape_html');
+describe('escapeHTML', () => {
+  const escapeHTML = require('../../lib/escape_html');
 
-  it('default', function() {
+  it('default', () => {
     escapeHTML('<p>Hello "world".</p>').should.eql('&lt;p&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;');
   });
 
-  it('str must be a string', function() {
-    try {
-      escapeHTML();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+  it('str must be a string', () => {
+    escapeHTML.should.throw('str must be a string!');
   });
 });

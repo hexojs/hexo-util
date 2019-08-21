@@ -1,96 +1,96 @@
 'use strict';
 
-var should = require('chai').should(); // eslint-disable-line
-var pathFn = require('path');
-var fs = require('fs');
-var rewire = require('rewire');
+require('chai').use(require('chai-as-promised')).should();
+const { join } = require('path');
+const { writeFile, unlink } = require('fs');
+const rewire = require('rewire');
 
-describe('spawn', function() {
-  var spawn = require('../../lib/spawn');
-  var CacheStream = require('../../lib/cache_stream');
-  var fixturePath = pathFn.join(__dirname, 'spawn_test.txt');
-  var fixture = 'test content';
+const isWindows = process.platform === 'win32';
+const catCommand = isWindows ? 'type' : 'cat';
 
-  before(function(done) {
-    fs.writeFile(fixturePath, fixture, done);
+describe('spawn', () => {
+  const spawn = require('../../lib/spawn');
+  const CacheStream = require('../../lib/cache_stream');
+  const fixturePath = join(__dirname, 'spawn_test.txt');
+  const fixture = 'test content';
+
+  before(done => {
+    writeFile(fixturePath, fixture, done);
   });
 
-  after(function(done) {
-    fs.unlink(fixturePath, done);
+  after(done => {
+    unlink(fixturePath, done);
   });
 
-  it('default', function() {
-    return spawn('cat', [fixturePath]).then(function(content) {
-      content.should.eql(fixture);
-    });
+  it('default', () => spawn(catCommand, [fixturePath]).should.become(fixture));
+
+  it('command is required', () => {
+    spawn.should.throw('command is required!');
   });
 
-  it('command is required', function() {
-    try {
-      spawn();
-    } catch (err) {
-      err.should.have.property('message', 'command is required!');
+  it('error', () => {
+    const promise = spawn(catCommand, ['nothing']);
+    if (isWindows) {
+      return promise.should.rejectedWith('spawn type ENOENT').and.eventually.have.property('code', 'ENOENT');
     }
+    return promise.should.rejectedWith('cat: nothing: No such file or directory').and.eventually.have.property('code', 1);
   });
 
-  it('error', function() {
-    return spawn('cat', ['nothing']).catch(function(err) {
-      err.message.trim().should.eql('cat: nothing: No such file or directory');
-      err.code.should.eql(1);
-    });
-  });
+  it('verbose - stdout', () => {
+    const spawn = rewire('../../lib/spawn');
+    const stdoutCache = new CacheStream();
+    const stderrCache = new CacheStream();
+    const content = 'something';
 
-  it('verbose - stdout', function() {
-    var spawn = rewire('../../lib/spawn');
-    var stdoutCache = new CacheStream();
-    var stderrCache = new CacheStream();
-    var content = 'something';
-
-    spawn.__set__('process', {
+    spawn.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
       stderr: stderrCache
-    });
+    }));
 
     return spawn('echo', [content], {
       verbose: true
-    }).then(function() {
-      stdoutCache.getCache().toString('utf8').trim().should.eql(content);
+    }).then(() => {
+      const result = stdoutCache.getCache().toString('utf8').trim();
+      if (isWindows) {
+        result.should.match(new RegExp(`^(["']?)${content}\\1$`));
+      } else {
+        result.should.eql(content);
+      }
     });
   });
 
-  it('verbose - stderr', function() {
-    var spawn = rewire('../../lib/spawn');
-    var stdoutCache = new CacheStream();
-    var stderrCache = new CacheStream();
+  it('verbose - stderr', () => {
+    const spawn = rewire('../../lib/spawn');
+    const stdoutCache = new CacheStream();
+    const stderrCache = new CacheStream();
 
-    spawn.__set__('process', {
+    spawn.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
-      stderr: stderrCache
-    });
+      stderr: stderrCache,
+      removeListener: () => {},
+      on: () => {}
+    }));
 
-    return spawn('cat', ['nothing'], {
+    return spawn(catCommand, ['nothing'], {
       verbose: true
-    }).catch(function() {
-      stderrCache.getCache().toString('utf8').trim().should
-        .eql('cat: nothing: No such file or directory');
+    }).should.rejected.then(() => {
+      const stderrResult = stderrCache.getCache();
+      if (isWindows) {
+        // utf8 support in windows shell (cmd.exe) is difficult.
+        Buffer.byteLength(stderrResult, 'hex').should.least(1);
+      } else {
+        stderrResult.toString('utf8').should.with.match(/^cat: nothing: No such file or directory\n?$/);
+      }
     });
   });
 
-  it('custom encoding', function() {
-    return spawn('cat', [fixturePath], {encoding: 'hex'}).then(function(content) {
-      content.should.eql(Buffer.from(fixture).toString('hex'));
-    });
+  it('custom encoding', () => {
+    return spawn(catCommand, [fixturePath], {encoding: 'hex'}).should.become(Buffer.from(fixture).toString('hex'));
   });
 
-  it('encoding = null', function() {
-    return spawn('cat', [fixturePath], {encoding: null}).then(function(content) {
-      content.should.eql(Buffer.from(fixture));
-    });
+  it('encoding = null', () => {
+    return spawn(catCommand, [fixturePath], {encoding: null}).should.become(Buffer.from(fixture));
   });
 
-  it('stdio = inherit', function() {
-    return spawn('echo', ['something'], {
-      stdio: 'inherit'
-    });
-  });
+  it('stdio = inherit', () => spawn('echo', ['something'], { stdio: 'inherit' }));
 });
