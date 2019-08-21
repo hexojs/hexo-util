@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('truncate', () => {
   const truncate = require('../../lib/truncate');
@@ -31,10 +31,6 @@ describe('truncate', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      truncate();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    truncate.should.throw('str must be a string!');
   });
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('escapeRegExp', () => {
   const escapeRegExp = require('../../lib/escape_regexp');
@@ -10,10 +10,6 @@ describe('escapeRegExp', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      escapeRegExp();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    escapeRegExp.should.throw('str must be a string!');
   });
 });

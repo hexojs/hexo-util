@@ -1,5 +1,7 @@
 'use strict';
 
+require('chai').should();
+
 describe('color', () => {
   const Color = require('../../lib/color');
 

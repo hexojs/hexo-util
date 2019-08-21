@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 const crypto = require('crypto');
 
 function sha1(content) {
@@ -28,17 +28,17 @@ describe('hash', () => {
     stream.read().should.eql(sha1(content));
   });
 
-  it('createSha1Hash', function() {
-    var _sha1 = hash.createSha1Hash();
-    var content = '123456';
+  it('createSha1Hash', () => {
+    const _sha1 = hash.createSha1Hash();
+    const content = '123456';
     _sha1.update(content);
     _sha1.digest().should.eql(sha1(content));
   });
 
-  it('createSha1Hash - streamMode', function() {
-    var content1 = '123456';
-    var content2 = '654321';
-    var stream = hash.createSha1Hash();
+  it('createSha1Hash - streamMode', () => {
+    const content1 = '123456';
+    const content2 = '654321';
+    const stream = hash.createSha1Hash();
     // explicit convert
     stream.write(Buffer.from(content1));
     // implicit convert

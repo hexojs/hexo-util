@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('slugize', () => {
   const slugize = require('../../lib/slugize');
@@ -42,10 +42,6 @@ describe('slugize', () => {
   });
 
   it('str must be a string', () => {
-    try {
-      slugize();
-    } catch (err) {
-      err.should.have.property('message', 'str must be a string!');
-    }
+    slugize.should.throw('str must be a string!');
   });
 });

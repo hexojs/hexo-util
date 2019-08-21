@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('camelCaseKeys', () => {
   const camelCaseKeys = require('../../lib/camel_case_keys');
@@ -17,11 +17,7 @@ describe('camelCaseKeys', () => {
   });
 
   it('obj must be an object', () => {
-    try {
-      camelCaseKeys();
-    } catch (err) {
-      err.should.have.property('message', 'obj must be an object!');
-    }
+    camelCaseKeys.should.throw('obj must be an object!');
   });
 
   it('setter', () => {
@@ -48,12 +44,7 @@ describe('camelCaseKeys', () => {
   });
 
   it('do nothing if the key is camelCase', () => {
-    const result = camelCaseKeys({
-      fooBar: 'test'
-    });
-
-    result.should.eql({
-      fooBar: 'test'
-    });
+    const result = camelCaseKeys({ fooBar: 'test' });
+    result.should.eql({ fooBar: 'test' });
   });
 });

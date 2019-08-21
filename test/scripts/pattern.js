@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 
 describe('Pattern', () => {
   const Pattern = require('../../lib/pattern');
@@ -60,11 +60,9 @@ describe('Pattern', () => {
   });
 
   it('rule is required', () => {
-    try {
+    (() => {
       // eslint-disable-next-line no-new
       new Pattern();
-    } catch (err) {
-      err.should.have.property('message', 'rule must be a function, a string or a regular expression.');
-    }
+    }).should.throw('rule must be a function, a string or a regular expression.');
   });
 });
