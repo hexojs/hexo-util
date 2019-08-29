@@ -4,8 +4,7 @@
   "description": "Utilities for Hexo.",
   "main": "lib/index",
   "scripts": {
-    "eslint": "eslint .",
-    "test": "mocha test/*.spec.js",
+    "test": "mocha",
     "test-cov": "nyc npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "prepare": "npm run build:highlight"
