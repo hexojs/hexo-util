@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('camelCaseKeys', () => {
-  const camelCaseKeys = require('../../lib/camel_case_keys');
+  const camelCaseKeys = require('../lib/camel_case_keys');
 
   it('default', () => {
     const result = camelCaseKeys({

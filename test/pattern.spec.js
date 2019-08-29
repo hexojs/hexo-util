@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('Pattern', () => {
-  const Pattern = require('../../lib/pattern');
+  const Pattern = require('../lib/pattern');
 
   it('String - posts/:id', () => {
     const pattern = new Pattern('posts/:id');

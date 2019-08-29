@@ -67,7 +67,7 @@ function validateHtmlAsync(str, done) {
 }
 
 describe('highlight', () => {
-  const highlight = require('../../lib/highlight');
+  const highlight = require('../lib/highlight');
 
   it('default', done => {
     const result = highlight(testString);
