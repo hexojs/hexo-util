@@ -176,6 +176,18 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
+  it('highlight sublanguages', function(done) {
+    var str = '<node><?php echo "foo"; ?></node>';
+    var result = highlight(str, {lang: 'xml'});
+    result.should.eql([
+      '<figure class="highlight xml"><table><tr>',
+      gutter(1, 1),
+      code('<span class="tag">&lt;<span class="name">node</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">node</span>&gt;</span>', null),
+      end
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
   it('parse multi-line strings correctly', done => {
     const str = [
       'var string = `',
