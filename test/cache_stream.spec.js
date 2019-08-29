@@ -5,7 +5,7 @@ require('chai').should();
 const { Readable } = require('stream');
 
 describe('CacheStream', () => {
-  const CacheStream = require('../../lib/cache_stream');
+  const CacheStream = require('../lib/cache_stream');
 
   it('default', () => {
     const src = new Readable();

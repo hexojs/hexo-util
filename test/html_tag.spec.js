@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('htmlTag', () => {
-  const htmlTag = require('../../lib/html_tag');
+  const htmlTag = require('../lib/html_tag');
 
   it('tag', () => {
     htmlTag('hr').should.eql('<hr>');

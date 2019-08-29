@@ -5,7 +5,7 @@
   "main": "lib/index",
   "scripts": {
     "eslint": "eslint .",
-    "test": "mocha test/index.js",
+    "test": "mocha test/*.spec.js",
     "test-cov": "nyc npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "prepare": "npm run build:highlight"
