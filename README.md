@@ -97,6 +97,21 @@ const sha1 = createSha1Hash();
   });
 ```
 
+### encodeURL(str)
+
+Encode URL or path into a [safe format](https://en.wikipedia.org/wiki/Percent-encoding). Domain is encoded into [punycode](https://en.wikipedia.org/wiki/Punycode) when necessary.
+
+``` js
+encodeURL('http://foo.com/bár')
+// http://foo.com/b%C3%A1r
+
+encodeURL('http://bár.com/baz')
+// http://xn--br-mia.com/baz
+
+encodeURL('/foo/bár/')
+// /foo/b%C3%A1r/
+```
+
 ### highlight(str, [options])
 
 Syntax highlighting for a code block.
