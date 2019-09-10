@@ -198,6 +198,15 @@ permalink.stringify({year: '2014', month: '01', day: '31', title: 'test'})
 // 2014/01/31/test
 ```
 
+### relative_url(from, to)
+
+Returns the relative URL from `from` to `to`. Output is [encoded](#encodeurlstr) automatically.
+
+``` js
+relative_url('foo/bar/', 'css/style.css')
+// ../../css/style.css
+```
+
 ### slugize(str, [options])
 
 Transforms a string into a clean URL-friendly string.
@@ -284,6 +293,20 @@ truncate('Once upon a time in a world far far away', {length: 17, separator: ' '
 
 truncate('And they found that many people were sleeping better.', {length: 25, omission: '... (continued)'})
 // "And they f... (continued)"
+```
+
+### url_for(path)
+
+Returns a url with the root path prefixed. Output is [encoded](#encodeurlstr) automatically.
+
+``` yml
+_config.yml
+root: /blog/ # example
+```
+
+``` js
+url_for('/a/path')
+// /blog/a/path
 ```
 
 ## License
