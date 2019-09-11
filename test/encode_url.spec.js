@@ -10,6 +10,7 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql(content);
   });
 
+<<<<<<< HEAD
   it('auth', () => {
     const content = 'http://user:pass@foo.com/';
     encodeURL(content).should.eql(content);
@@ -20,6 +21,8 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql(content);
   });
 
+=======
+>>>>>>> Fix eslint
   it('space', () => {
     const content = 'http://foo.com/bar baz';
     encodeURL(content).should.eql('http://foo.com/bar%20baz');
@@ -30,6 +33,7 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql('http://foo.com/b%C3%A1r');
   });
 
+<<<<<<< HEAD
   it('hash', () => {
     const content = 'http://foo.com/bár#bàz';
     encodeURL(content).should.eql('http://foo.com/b%C3%A1r#b%C3%A0z');
@@ -50,6 +54,8 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql('http://foo.com/bar?query=b%C3%A1z#f%C3%B3o');
   });
 
+=======
+>>>>>>> Fix eslint
   it('idn', () => {
     const content = 'http://bár.com/baz';
     encodeURL(content).should.eql('http://xn--br-mia.com/baz');
@@ -69,9 +75,12 @@ describe('encodeURL', () => {
     const content = '/foo/bár/';
     encodeURL(content).should.eql('/foo/b%C3%A1r/');
   });
+<<<<<<< HEAD
 
   it('anchor with unicode', () => {
     const content = '#fóo-bár';
     encodeURL(content).should.eql('#f%C3%B3o-b%C3%A1r');
   });
+=======
+>>>>>>> Fix eslint
 });

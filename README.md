@@ -102,6 +102,27 @@ full_url_for('/a/path')
 // https://example.com/blog/a/path
 ```
 
+### gravatar(str, options)
+
+Returns the gravatar image url from an email
+
+If you didn't specify the [options] parameter, the default options will apply. Otherwise, you can set it to a number which will then be passed on as the size parameter to Gravatar. Finally, if you set it to an object, it will be converted into a query string of parameters for Gravatar.
+
+``` js
+gravatar(email, [options])
+```
+
+**Examples:**
+
+``` js
+gravatar('a@abc.com')
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787
+gravatar('a@abc.com', 40)
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40
+gravatar('a@abc.com' {s: 40, d: 'https://via.placeholder.com/150'})
+// https://www.gravatar.com/avatar/b9b00e66c6b8a70f88c73cb6bdb06787?s=40&d=https%3A%2F%2Fvia.placeholder.com%2F150
+```
+
 ### hash(str)
 
 Generates SHA1 hash.
