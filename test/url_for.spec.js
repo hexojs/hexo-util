@@ -2,8 +2,7 @@
 
 describe('url_for', () => {
   const ctx = {
-    config: {},
-    relative_url: require('../lib/relative_url')
+    config: {}
   };
 
   const urlFor = require('../lib/url_for').bind(ctx);
