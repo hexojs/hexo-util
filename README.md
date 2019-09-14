@@ -63,7 +63,7 @@ Escapes HTML entities in a string.
 
 ### full_url_for(path)
 
-Returns a url with the config.url prefixed. Output is [encoded](#encodeurlstr) automatically.
+Returns a url with the config.url prefixed. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
 
 ``` yml
 _config.yml
@@ -312,6 +312,7 @@ url_for('/a/path')
 ## bind(hexo)
 
 Following utilities require `bind(hexo)` / `bind(this)` to parse the user config when initializing:
+- [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
 
