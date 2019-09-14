@@ -10,6 +10,16 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql(content);
   });
 
+  it('auth', () => {
+    const content = 'http://user:pass@foo.com/';
+    encodeURL(content).should.eql(content);
+  });
+
+  it('port', () => {
+    const content = 'http://foo.com:80/';
+    encodeURL(content).should.eql(content);
+  });
+
   it('space', () => {
     const content = 'http://foo.com/bar baz';
     encodeURL(content).should.eql('http://foo.com/bar%20baz');
