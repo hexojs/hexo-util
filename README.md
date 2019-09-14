@@ -295,7 +295,7 @@ truncate('And they found that many people were sleeping better.', {length: 25, o
 // "And they f... (continued)"
 ```
 
-### url_for(path)
+### url_for(path, {relative: boolean})
 
 Returns a url with the root path prefixed. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
 
@@ -308,6 +308,24 @@ root: /blog/ # example
 url_for('/a/path')
 // /blog/a/path
 ```
+
+Relative link, follows `relative_link` option by default
+e.g. post/page path is '/foo/bar/index.html'
+
+``` yml
+_config.yml
+relative_link: true
+```
+
+``` js
+url_for('/css/style.css')
+// ../../css/style.css
+
+// Override option
+// you could also enable it to output a relative link,
+// even when `relative_link` is disabled
+url_for('/css/style.css', {relative: false})
+// /css/style.css
 
 ## bind(hexo)
 
