@@ -10,6 +10,16 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql(content);
   });
 
+  it('auth', () => {
+    const content = 'http://user:pass@foo.com/';
+    encodeURL(content).should.eql(content);
+  });
+
+  it('port', () => {
+    const content = 'http://foo.com:80/';
+    encodeURL(content).should.eql(content);
+  });
+
   it('space', () => {
     const content = 'http://foo.com/bar baz';
     encodeURL(content).should.eql('http://foo.com/bar%20baz');
@@ -18,6 +28,26 @@ describe('encodeURL', () => {
   it('unicode', () => {
     const content = 'http://foo.com/bár';
     encodeURL(content).should.eql('http://foo.com/b%C3%A1r');
+  });
+
+  it('hash', () => {
+    const content = 'http://foo.com/bár#bàz';
+    encodeURL(content).should.eql('http://foo.com/b%C3%A1r#b%C3%A0z');
+  });
+
+  it('query', () => {
+    const content = 'http://foo.com/bar?qúery=báz';
+    encodeURL(content).should.eql('http://foo.com/bar?q%C3%BAery=b%C3%A1z');
+  });
+
+  it('multiple queries', () => {
+    const content = 'http://foo.com/bar?query1=aáa&query2=aàa';
+    encodeURL(content).should.eql('http://foo.com/bar?query1=a%C3%A1a&query2=a%C3%A0a');
+  });
+
+  it('hash and query', () => {
+    const content = 'http://foo.com/bar?query=báz#fóo';
+    encodeURL(content).should.eql('http://foo.com/bar?query=b%C3%A1z#f%C3%B3o');
   });
 
   it('idn', () => {
@@ -38,5 +68,10 @@ describe('encodeURL', () => {
   it('path with unicode', () => {
     const content = '/foo/bár/';
     encodeURL(content).should.eql('/foo/b%C3%A1r/');
+  });
+
+  it('anchor with unicode', () => {
+    const content = '#fóo-bár';
+    encodeURL(content).should.eql('#f%C3%B3o-b%C3%A1r');
   });
 });
