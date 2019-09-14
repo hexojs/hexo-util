@@ -49,56 +49,6 @@ camelCaseKeys({
 // { fooBar: 'test', foo_bar: 'test' }
 ```
 
-### escapeRegex(str)
-
-Escapes special characters in a regular expression.
-
-### escapeDiacritic(str)
-
-Escapes diacritic characters in a string.
-
-### escapeHTML(str)
-
-Escapes HTML entities in a string.
-
-### full_url_for(path)
-
-Returns a url with the config.url prefixed. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
-
-``` yml
-_config.yml
-url: https://example.com/blog # example
-```
-
-``` js
-full_url_for('/a/path')
-// https://example.com/blog/a/path
-```
-
-### hash(str)
-
-Generates SHA1 hash.
-
-``` js
-hash('123456');
-// <Buffer 7c 4a 8d 09 ca 37 62 af 61 e5 95 20 94 3d c2 64 94 f8 94 1b>
-```
-
-### HashStream()
-**\[deprecated\]** use `createSha1Hash()`.
-
-Generates SHA1 hash with a transform stream.
-
-``` js
-var stream = new HashStream();
-
-fs.createReadStream('/path/to/file')
-  .pipe(stream)
-  .on('finish', function(){
-    console.log(stream.read());
-  });
-```
-
 ### createSha1Hash()
 return SHA1 hash object.
  This is the same as calling `createHash('utf8')` in the node.js native module crypto.
@@ -124,6 +74,56 @@ encodeURL('http://bár.com/baz')
 
 encodeURL('/foo/bár/')
 // /foo/b%C3%A1r/
+```
+
+### escapeDiacritic(str)
+
+Escapes diacritic characters in a string.
+
+### escapeHTML(str)
+
+Escapes HTML entities in a string.
+
+### escapeRegex(str)
+
+Escapes special characters in a regular expression.
+
+### full_url_for(path)
+
+Returns a url with the config.url prefixed. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
+
+``` yml
+_config.yml
+url: https://example.com/blog # example
+```
+
+``` js
+full_url_for('/a/path')
+// https://example.com/blog/a/path
+```
+
+### hash(str)
+
+Generates SHA1 hash.
+
+``` js
+hash('123456');
+// <Buffer 7c 4a 8d 09 ca 37 62 af 61 e5 95 20 94 3d c2 64 94 f8 94 1b>
+```
+
+### HashStream()
+**\[deprecated\]** use [`createSha1Hash()`](#createsha1hash).
+
+Generates SHA1 hash with a transform stream.
+
+``` js
+var stream = new HashStream();
+
+fs.createReadStream('/path/to/file')
+  .pipe(stream)
+  .on('finish', function(){
+    console.log(stream.read());
+  });
 ```
 
 ### highlight(str, [options])
