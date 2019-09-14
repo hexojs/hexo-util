@@ -51,8 +51,9 @@ describe('url_for', () => {
   });
 
   it('internal url (options.relative)', () => {
-    ctx.path = '';
-    urlFor('index.html', {relative: true}).should.eql('index.html');
+    ctx.config.relative_link = false;
+    ctx.path = 'foo/bar/';
+    urlFor('index.html', {relative: true}).should.eql('../../index.html');
 
     ctx.config.relative_link = true;
     urlFor('index.html', {relative: false}).should.eql('/index.html');
