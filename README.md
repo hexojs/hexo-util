@@ -112,7 +112,7 @@ hash('123456');
 ```
 
 ### HashStream()
-**\[deprecated\]** use `createSha1Hash()`.
+**\[deprecated\]** use [`createSha1Hash()`](#createsha1hash).
 
 Generates SHA1 hash with a transform stream.
 
