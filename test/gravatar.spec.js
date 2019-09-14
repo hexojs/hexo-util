@@ -1,12 +1,12 @@
 'use strict';
 
-const crypto = require('crypto');
+const { createHash } = require('crypto');
 
 describe('gravatar', () => {
   const gravatar = require('../lib/gravatar');
 
   function md5(str) {
-    return crypto.createHash('md5').update(str).digest('hex');
+    return createHash('md5').update(str).digest('hex');
   }
 
   const email = 'abc@abc.com';
