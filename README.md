@@ -200,7 +200,7 @@ permalink.stringify({year: '2014', month: '01', day: '31', title: 'test'})
 
 ### relative_url(from, to)
 
-Returns the relative URL from `from` to `to`. Output is [encoded](#encodeurlstr) automatically.
+Returns the relative URL from `from` to `to`. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
 
 ``` js
 relative_url('foo/bar/', 'css/style.css')
@@ -297,7 +297,7 @@ truncate('And they found that many people were sleeping better.', {length: 25, o
 
 ### url_for(path)
 
-Returns a url with the root path prefixed. Output is [encoded](#encodeurlstr) automatically.
+Returns a url with the root path prefixed. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
 
 ``` yml
 _config.yml
@@ -307,6 +307,63 @@ root: /blog/ # example
 ``` js
 url_for('/a/path')
 // /blog/a/path
+```
+
+## bind(hexo)
+
+Following utilities require `bind(hexo)` / `bind(this)` to parse the user config when initializing:
+- [`url_for()`](#url_forpath)
+- [`relative_url()`](#relative_urlfrom-to)
+
+Below examples demonstrate four approaches of creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
+
+``` js
+// Single function
+const url_for = require('hexo-util').url_for.bind(hexo);
+
+hexo.extend.helper.register('test_url', (str) => {
+  return url_for(str);
+})
+
+
+/******/
+// Multiple functions
+const url_for = require('hexo-util').url_for.bind(hexo)
+
+function testurlHelper(str) {
+  return url_for(str);
+}
+
+hexo.extend.helper.register('test_url', testurlHelper);
+
+
+/******/
+// Functions separated into different files.
+// test_url.js
+module.exports = function(str) {
+  const url_for = require('hexo-util').url_for.bind(this);
+  return url_for(str);
+}
+
+// index.js
+hexo.extend.helper.register('test_url', require('./test_url'));
+
+
+/******/
+// Separating functions into individual files
+// Each file has multiple functions
+// test_url.js
+function testurlHelper(str) {
+  const url_for = require('hexo-util').url_for.bind(this);
+  return url_for(str);
+}
+
+module.exports =  {
+  testurlHelper: testurlHelper
+}
+
+// index.js
+hexo.extend.helper.register('test_url', require('./test_url').testurlHelper);
 ```
 
 ## License
