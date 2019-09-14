@@ -49,9 +49,32 @@ camelCaseKeys({
 // { fooBar: 'test', foo_bar: 'test' }
 ```
 
-### escapeRegex(str)
+### createSha1Hash()
+return SHA1 hash object.
+ This is the same as calling `createHash('utf8')` in the node.js native module crypto.
+ ``` js
+const sha1 = createSha1Hash();
+ fs.createReadStream('/path/to/file')
+  .pipe(sha1)
+  .on('finish', () => {
+    console.log(sha1.read());
+  });
+```
 
-Escapes special characters in a regular expression.
+### encodeURL(str)
+
+Encode URL or path into a [safe format](https://en.wikipedia.org/wiki/Percent-encoding). Domain is encoded into [punycode](https://en.wikipedia.org/wiki/Punycode) when necessary.
+
+``` js
+encodeURL('http://foo.com/bár')
+// http://foo.com/b%C3%A1r
+
+encodeURL('http://bár.com/baz')
+// http://xn--br-mia.com/baz
+
+encodeURL('/foo/bár/')
+// /foo/b%C3%A1r/
+```
 
 ### escapeDiacritic(str)
 
@@ -60,6 +83,10 @@ Escapes diacritic characters in a string.
 ### escapeHTML(str)
 
 Escapes HTML entities in a string.
+
+### escapeRegex(str)
+
+Escapes special characters in a regular expression.
 
 ### full_url_for(path)
 
@@ -97,33 +124,6 @@ fs.createReadStream('/path/to/file')
   .on('finish', function(){
     console.log(stream.read());
   });
-```
-
-### createSha1Hash()
-return SHA1 hash object.
- This is the same as calling `createHash('utf8')` in the node.js native module crypto.
- ``` js
-const sha1 = createSha1Hash();
- fs.createReadStream('/path/to/file')
-  .pipe(sha1)
-  .on('finish', () => {
-    console.log(sha1.read());
-  });
-```
-
-### encodeURL(str)
-
-Encode URL or path into a [safe format](https://en.wikipedia.org/wiki/Percent-encoding). Domain is encoded into [punycode](https://en.wikipedia.org/wiki/Punycode) when necessary.
-
-``` js
-encodeURL('http://foo.com/bár')
-// http://foo.com/b%C3%A1r
-
-encodeURL('http://bár.com/baz')
-// http://xn--br-mia.com/baz
-
-encodeURL('/foo/bár/')
-// /foo/b%C3%A1r/
 ```
 
 ### highlight(str, [options])
