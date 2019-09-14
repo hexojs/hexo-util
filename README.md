@@ -61,6 +61,20 @@ Escapes diacritic characters in a string.
 
 Escapes HTML entities in a string.
 
+### full_url_for(path)
+
+Returns a url with the config.url prefixed. Output is [encoded](#encodeurlstr) automatically.
+
+``` yml
+_config.yml
+url: https://example.com/blog # example
+```
+
+``` js
+full_url_for('/a/path')
+// https://example.com/blog/a/path
+```
+
 ### hash(str)
 
 Generates SHA1 hash.
