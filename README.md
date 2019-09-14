@@ -72,7 +72,7 @@ url: https://example.com/blog # example
 
 ``` js
 full_url_for('/a/path')
-// https://example.com/blog/blog/a/path
+// https://example.com/blog/a/path
 ```
 
 ### hash(str)
