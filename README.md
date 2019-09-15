@@ -342,11 +342,13 @@ relative_link: true
 url_for('/css/style.css')
 // ../../css/style.css
 
-// Override option
-// you could also enable it to output a relative link,
-// even when `relative_link` is disabled
+/* Override option
+ * you could also enable it to output a relative link,
+ * even when `relative_link` is disabled and vice versa.
+ */
 url_for('/css/style.css', {relative: false})
 // /css/style.css
+```
 
 ## bind(hexo)
 
