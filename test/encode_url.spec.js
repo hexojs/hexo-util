@@ -30,6 +30,11 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql('http://foo.com/b%C3%A1r');
   });
 
+  it('encode once', () => {
+    const content = 'http://foo.com/b%C3%A1%20r';
+    encodeURL(content).should.eql(content);
+  });
+
   it('hash', () => {
     const content = 'http://foo.com/bár#bàz';
     encodeURL(content).should.eql('http://foo.com/b%C3%A1r#b%C3%A0z');
@@ -68,6 +73,11 @@ describe('encodeURL', () => {
   it('path with unicode', () => {
     const content = '/foo/bár/';
     encodeURL(content).should.eql('/foo/b%C3%A1r/');
+  });
+
+  it('encode once', () => {
+    const content = '/foo/b%C3%A1r%20/';
+    encodeURL(content).should.eql(content);
   });
 
   it('anchor with unicode', () => {
