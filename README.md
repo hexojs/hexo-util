@@ -165,9 +165,16 @@ Option | Description | Default
 `tab`| Replace tabs |
 `autoDetect` | Detect language automatically | false
 
-### htmlTag(tag, attrs, text)
+### htmlTag(tag, attrs, text, escape)
 
 Creates a html tag.
+
+Option | Description | Default
+--- | --- | ---
+`tag` | Tag / element name |
+`attrs` | Attribute(s) and its value.<br>Value is always [escaped](#escapehtmlstr), URL is always [encoded](#encodeurlstr). |
+`text` | Text |
+`escape` | Whether to escape the text | true
 
 ``` js
 htmlTag('img', {src: 'example.png'})
@@ -175,6 +182,12 @@ htmlTag('img', {src: 'example.png'})
 
 htmlTag('a', {href: 'http://hexo.io/'}, 'Hexo')
 // <a href="http://hexo.io/">Hexo</a>
+
+htmlTag('link', {href: 'http://foo.com/'}, '<a>bar</a>')
+// <a href="http://foo.com/">&lt;bar&gt;</a>
+
+htmlTag('a', {href: 'http://foo.com/'}, '<b>bold</b>', false)
+// <a href="http://foo.com/"><b>bold</b></a>
 ```
 
 ### Pattern(rule)
