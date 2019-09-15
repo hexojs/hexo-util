@@ -102,17 +102,20 @@ full_url_for('/a/path')
 // https://example.com/blog/a/path
 ```
 
-### gravatar(str, options)
+### gravatar(str, [options])
 
 Returns the gravatar image url from an email.
 
 If you didn't specify the [options] parameter, the default options will apply. Otherwise, you can set it to a number which will then be passed on as the size parameter to Gravatar. Finally, if you set it to an object, it will be converted into a query string of parameters for Gravatar.
 
-``` js
-gravatar(email, [options])
-```
+Option | Description | Default
+--- | --- | ---
+`s` | Output image size | 80
+`d` | Default image |
+`f` | Force default |
+`r` | Rating |
 
-**Examples:**
+More info: [Gravatar](https://en.gravatar.com/site/implement/images/)
 
 ``` js
 gravatar('a@abc.com')
@@ -316,9 +319,13 @@ truncate('And they found that many people were sleeping better.', {length: 25, o
 // "And they f... (continued)"
 ```
 
-### url_for(path, {relative: boolean})
+### url_for(path, [option])
 
 Returns a url with the root path prefixed. Output is [encoded](#encodeurlstr) automatically. Requires [`bind(hexo)`](#bindhexo).
+
+Option | Description | Default
+--- | --- | ---
+`relative` | Output relative link | Value of `config.relative_link`
 
 ``` yml
 _config.yml
