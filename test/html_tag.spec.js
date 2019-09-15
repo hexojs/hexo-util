@@ -81,4 +81,19 @@ describe('htmlTag', () => {
     }, '<baz>', false).should.eql('<foo bar="&lt;b&gt;"><baz></foo>');
   });
 
+  it('srcset', () => {
+    htmlTag('img', {
+      srcset: 'fóo.jpg 320w,/foo/bár.jpeg 480w,default.png'
+    }).should.eql('<img srcset="f%C3%B3o.jpg 320w,/foo/b%C3%A1r.jpeg 480w,default.png">');
+  });
+
+  it('srcset with whitespace', () => {
+    htmlTag('img', {
+      srcset: `fóo.jpg 320w,
+        /foo/bár.jpeg 480w,
+        default.png`
+    }).should.eql(`<img srcset="f%C3%B3o.jpg 320w,
+        /foo/b%C3%A1r.jpeg 480w,
+        default.png">`);
+  });
 });
