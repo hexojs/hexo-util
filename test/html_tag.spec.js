@@ -24,7 +24,7 @@ describe('htmlTag', () => {
   it('tag + attrs + text', () => {
     htmlTag('a', {
       href: 'http://zespia.tw'
-    }, 'My blog').should.eql('<a href="http://zespia.tw">My blog</a>');
+    }, 'My blog').should.eql('<a href="http://zespia.tw/">My blog</a>');
   });
 
   it('tag + empty ALT attr', () => {
@@ -38,21 +38,21 @@ describe('htmlTag', () => {
     htmlTag('a', {
       href: 'http://zespia.tw',
       tabindex: 0
-    }, 'My blog').should.eql('<a href="http://zespia.tw" tabindex="0">My blog</a>');
+    }, 'My blog').should.eql('<a href="http://zespia.tw/" tabindex="0">My blog</a>');
   });
 
   it('passing a null alt attribute', () => {
     htmlTag('a', {
       href: 'http://zespia.tw',
       alt: null
-    }, 'My blog').should.eql('<a href="http://zespia.tw">My blog</a>');
+    }, 'My blog').should.eql('<a href="http://zespia.tw/">My blog</a>');
   });
 
   it('passing a undefined alt attribute', () => {
     htmlTag('a', {
       href: 'http://zespia.tw',
       alt: undefined
-    }, 'My blog').should.eql('<a href="http://zespia.tw">My blog</a>');
+    }, 'My blog').should.eql('<a href="http://zespia.tw/">My blog</a>');
   });
 
   it('tag is required', () => {
@@ -62,4 +62,23 @@ describe('htmlTag', () => {
       err.should.have.property('message', 'tag is required!');
     }
   });
+
+  it('encode url', () => {
+    htmlTag('img', {
+      src: 'http://foo.com/bár.jpg'
+    }).should.eql('<img src="http://foo.com/b%C3%A1r.jpg">');
+  });
+
+  it('escape html tag', () => {
+    htmlTag('foo', {
+      bar: '<b>'
+    }, '<baz>').should.eql('<foo bar="&lt;b&gt;">&lt;baz&gt;</foo>');
+  });
+
+  it('escape html tag (escape off)', () => {
+    htmlTag('foo', {
+      bar: '<b>'
+    }, '<baz>', false).should.eql('<foo bar="&lt;b&gt;"><baz></foo>');
+  });
+
 });
