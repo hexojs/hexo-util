@@ -45,6 +45,16 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql('http://foo.com/bar?q%C3%BAery=b%C3%A1z');
   });
 
+  it('query contains %', () => {
+    const content = 'http://foo.com/bar?query=%';
+    encodeURL(content).should.eql('http://foo.com/bar?query=%25');
+  });
+
+  it('path or query contains %', () => {
+    const content = '/bar?query=%';
+    encodeURL(content).should.eql('/bar?query=%25');
+  });
+
   it('multiple queries', () => {
     const content = 'http://foo.com/bar?query1=aáa&query2=aàa';
     encodeURL(content).should.eql('http://foo.com/bar?query1=a%C3%A1a&query2=a%C3%A0a');
