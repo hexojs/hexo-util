@@ -61,6 +61,21 @@ const sha1 = createSha1Hash();
   });
 ```
 
+### decodeURL(str)
+
+Decode [encoded](https://en.wikipedia.org/wiki/Percent-encoding) URL or path. An alternative to the native [`decodeURI()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURI) function, with added ability to decode [punycoded](https://en.wikipedia.org/wiki/Punycode) domain.
+
+``` js
+decodeURL('http://foo.com/b%C3%A1r')
+// http://foo.com/bár
+
+decodeURL('http://xn--br-mia.com/baz')
+// http://bár.com/baz
+
+decodeURL('/foo/b%C3%A1r/')
+// /foo/bár/
+```
+
 ### encodeURL(str)
 
 Encode URL or path into a [safe format](https://en.wikipedia.org/wiki/Percent-encoding). Domain is encoded into [punycode](https://en.wikipedia.org/wiki/Punycode) when necessary.
