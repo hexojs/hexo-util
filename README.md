@@ -173,7 +173,7 @@ Option | Description | Default
 --- | --- | ---
 `tag` | Tag / element name |
 `attrs` | Attribute(s) and its value.<br>Value is always [escaped](#escapehtmlstr), URL is always [encoded](#encodeurlstr). |
-`text` | Text |
+`text` | Text, the value is always escaped<br>_(except for `<style>` tag)_ |
 `escape` | Whether to escape the text | true
 
 ``` js
@@ -188,6 +188,10 @@ htmlTag('link', {href: 'http://foo.com/'}, '<a>bar</a>')
 
 htmlTag('a', {href: 'http://foo.com/'}, '<b>bold</b>', false)
 // <a href="http://foo.com/"><b>bold</b></a>
+
+/* text value of <style> won't be escaped */
+htmlTag('style', {}, 'p { content: "—"; background: url("bár.jpg"); }')
+// <style>p { content: "—"; background: url("bár.jpg"); }</style>
 ```
 
 ### Pattern(rule)
