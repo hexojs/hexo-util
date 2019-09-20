@@ -94,4 +94,9 @@ describe('encodeURL', () => {
     const content = '#fóo-bár';
     encodeURL(content).should.eql('#f%C3%B3o-b%C3%A1r');
   });
+
+  it('data URLs', () => {
+    const content = 'data:,Hello%2C%20World!';
+    encodeURL(content).should.eql(content);
+  });
 });
