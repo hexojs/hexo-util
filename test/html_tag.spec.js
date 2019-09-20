@@ -96,4 +96,9 @@ describe('htmlTag', () => {
         /foo/b%C3%A1r.jpeg 480w,
         default.png">`);
   });
+
+  it('should not escape/encode style tag', () => {
+    const text = 'p { content: "—"; background: url("bár.jpg"); }';
+    htmlTag('style', {}, text).should.eql('<style>' + text + '</style>');
+  });
 });
