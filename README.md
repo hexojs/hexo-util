@@ -204,9 +204,9 @@ htmlTag('link', {href: 'http://foo.com/'}, '<a>bar</a>')
 htmlTag('a', {href: 'http://foo.com/'}, '<b>bold</b>', false)
 // <a href="http://foo.com/"><b>bold</b></a>
 
-/* text value of <style> won't be escaped */
-htmlTag('style', {}, 'p { content: "—"; background: url("bár.jpg"); }')
-// <style>p { content: "—"; background: url("bár.jpg"); }</style>
+/* text value of <style> won't be escaped, url is still encoded */
+htmlTag('style', {}, 'p { content: "<"; background: url("bár.jpg"); }')
+// <style>p { content: "<"; background: url("b%C3%A1r.jpg"); }</style>
 ```
 
 ### Pattern(rule)

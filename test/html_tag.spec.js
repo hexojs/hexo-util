@@ -97,8 +97,13 @@ describe('htmlTag', () => {
         default.png">`);
   });
 
-  it('should not escape/encode style tag', () => {
-    const text = 'p { content: "—"; background: url("bár.jpg"); }';
+  it('should not encode style tag', () => {
+    const text = 'p { content: "<"; }';
     htmlTag('style', {}, text).should.eql('<style>' + text + '</style>');
+  });
+
+  it('should encode url in style tag', () => {
+    const text = 'p { background: url("bár.jpg"); }';
+    htmlTag('style', {}, text).should.eql('<style>p { background: url("b%C3%A1r.jpg"); }</style>');
   });
 });
