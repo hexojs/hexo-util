@@ -394,7 +394,7 @@ url_for('/css/style.css', {relative: false})
 
 ## bind(hexo)
 
-Following utilities require `bind(hexo)` / `bind(this)` / `call(this, input)` to parse the user config when initializing:
+Following utilities require `bind(hexo)` / `bind(this)` / `call(hexo, input)` / `call(this, input)` to parse the user config when initializing:
 - [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
