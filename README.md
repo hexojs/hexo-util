@@ -99,6 +99,15 @@ Escapes diacritic characters in a string.
 
 Escapes HTML entities in a string.
 
+``` js
+escapeHTML('<p>Hello "world".</p>')
+// &lt;p&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;
+
+/* support escaped characters */
+escapeHTML('&lt;foo>bar</foo&gt;')
+// &lt;foo&gt;bar&lt;&#x2F;foo&gt;
+```
+
 ### escapeRegex(str)
 
 Escapes special characters in a regular expression.
@@ -349,6 +358,15 @@ truncate('Once upon a time in a world far far away', {length: 17, separator: ' '
 
 truncate('And they found that many people were sleeping better.', {length: 25, omission: '... (continued)'})
 // "And they f... (continued)"
+```
+
+### unescapeHTML(str)
+
+Unescapes HTML entities in a string.
+
+``` js
+unescapeHTML('&lt;p&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;')
+// <p>Hello "world".</p>
 ```
 
 ### url_for(path, [option])
