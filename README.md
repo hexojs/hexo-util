@@ -198,9 +198,6 @@ htmlTag('img', {src: 'example.png'})
 htmlTag('a', {href: 'http://hexo.io/'}, 'Hexo')
 // <a href="http://hexo.io/">Hexo</a>
 
-htmlTag('script', {src: '/foo.js'}, '')
-// <script src="foo.js"></script>
-
 htmlTag('link', {href: 'http://foo.com/'}, '<a>bar</a>')
 // <a href="http://foo.com/">&lt;bar&gt;</a>
 
