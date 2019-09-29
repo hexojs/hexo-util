@@ -198,6 +198,9 @@ htmlTag('img', {src: 'example.png'})
 htmlTag('a', {href: 'http://hexo.io/'}, 'Hexo')
 // <a href="http://hexo.io/">Hexo</a>
 
+htmlTag('script', {src: '/foo.js'}, '')
+// <script src="foo.js"></script>
+
 htmlTag('link', {href: 'http://foo.com/'}, '<a>bar</a>')
 // <a href="http://foo.com/">&lt;bar&gt;</a>
 
@@ -391,12 +394,12 @@ url_for('/css/style.css', {relative: false})
 
 ## bind(hexo)
 
-Following utilities require `bind(hexo)` / `bind(this)` to parse the user config when initializing:
+Following utilities require `bind(hexo)` / `bind(this)` / `call(this, input)` to parse the user config when initializing:
 - [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
 
-Below examples demonstrate four approaches of creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
+Below examples demonstrate different approaches to creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
 
 ``` js
 // Single function
@@ -427,6 +430,16 @@ module.exports = function(str) {
 }
 
 // index.js
+hexo.extend.helper.register('test_url', require('./test_url'));
+
+
+/******/
+// Function.call() approach also works
+const {url_for} = require('hexo-util');
+module.exports = function(str) {
+  return url_for.call(this, str);
+}
+
 hexo.extend.helper.register('test_url', require('./test_url'));
 
 
