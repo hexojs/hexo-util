@@ -12,4 +12,8 @@ describe('escapeHTML', () => {
   it('str must be a string', () => {
     escapeHTML.should.throw('str must be a string!');
   });
+
+  it('avoid double escape', () => {
+    escapeHTML('&lt;foo>bar</foo&gt;').should.eql('&lt;foo&gt;bar&lt;&#x2F;foo&gt;');
+  });
 });
