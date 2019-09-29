@@ -106,4 +106,11 @@ describe('htmlTag', () => {
     const text = 'p { background: url("bár.jpg"); }';
     htmlTag('style', {}, text).should.eql('<style>p { background: url("b%C3%A1r.jpg"); }</style>');
   });
+
+  it('script tag with async', () => {
+    htmlTag('script', {
+      src: '/foo.js',
+      async: true
+    }, '').should.eql('<script src="/foo.js" async></script>');
+  });
 });
