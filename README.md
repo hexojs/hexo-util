@@ -216,6 +216,10 @@ htmlTag('a', {href: 'http://foo.com/'}, '<b>bold</b>', false)
 /* text value of <style> won't be escaped, url is still encoded */
 htmlTag('style', {}, 'p { content: "<"; background: url("bár.jpg"); }')
 // <style>p { content: "<"; background: url("b%C3%A1r.jpg"); }</style>
+
+/* support script tag with async/defer */
+htmlTag('script', {src: '/foo.js', async: true}, '')
+// <script src="/foo.js" async></script>
 ```
 
 ### Pattern(rule)
