@@ -295,4 +295,18 @@ describe('highlight', () => {
     result.should.include('class="hljs-function"');
     validateHtmlAsync(result, done);
   });
+
+  it('codeblock inside a blockquote', (done) => {
+    const str = '> let foo = false';
+    const result = highlight(str, {gutter: false, lang: 'javascript' });
+    result.should.not.include('&gt;');
+    validateHtmlAsync(result, done);
+  });
+
+  it('codeblock inside a blockquote - exclude cmd lang', (done) => {
+    const str = '> ipconfig';
+    const result = highlight(str, {gutter: false, lang: 'cmd' });
+    result.should.include('&gt;');
+    validateHtmlAsync(result, done);
+  });
 });
