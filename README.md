@@ -8,6 +8,35 @@
 
 Utilities for [Hexo].
 
+## Table of contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [CacheStream](#cachestream)
+- [camelCaseKeys](#camelcasekeysobj-options)
+- [createSha1Hash](#createsha1hash)
+- [decodeURL](#decodeurlstr)
+- [encodeURL](#encodeurlstr)
+- [escapeDiacritic](#escapediacriticstr)
+- [escapeHTML](#escapehtmlstr)
+- [escapeRegex](#escaperegexstr)
+- [full_url_for](#full_url_forpath)
+- [gravatar](#gravatarstr-options)
+- [hash](#hashstr)
+- [highlight](#highlightstr-options)
+- [htmlTag](#htmltagtag-attrs-text-escape)
+- [Pattern](#patternrule)
+- [Permalink](#permalinkrule-options)
+- [relative_url](#relative_urlfrom-to)
+- [slugize](#slugizestr-options)
+- [spawn](#spawncommand-args-options)
+- [stripHTML](#striphtmlstr)
+- [wordWrap](#wordwrapstr-options)
+- [truncate](#truncatestr-options)
+- [unescapeHTML](#unescapehtmlstr)
+- [url_for](#url_forpath-option)
+- [bind(hexo)](#bindhexo)
+
 ## Installation
 
 ``` bash
