@@ -85,9 +85,51 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('wrap: false', done => {
-    const result = highlight(testString, {wrap: false});
-    result.should.eql(entities.encode(testString));
+  it('gutter: true, but "wrap: false" (conflict)', done => {
+    const result = highlight(testString, {gutter: true, wrap: false});
+    assertResult(result, gutter(1, 4), code(testString));
+    validateHtmlAsync(result, done);
+  });
+
+  it('wrap: false (without hljs, without lang)', done => {
+    const result = highlight(testString, {gutter: false, wrap: false});
+    result.should.eql([
+      '<pre><code class="highlight plain">',
+      entities.encode(testString),
+      '</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('wrap: false (with hljs, without lang)', done => {
+    const result = highlight(testString, {gutter: false, wrap: false, hljs: true});
+    result.should.eql([
+      '<pre><code class="hljs plain">',
+      entities.encode(testString),
+      '</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('wrap: false (without hljs, with lang)', done => {
+    const result = highlight(testString, {gutter: false, wrap: false, lang: 'json'});
+    hljs.configure({classPrefix: ''});
+    result.should.eql([
+      '<pre><code class="highlight json">',
+      hljs.highlight('json', testString).value,
+      '</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('wrap: false (with hljs, with lang)', done => {
+    const result = highlight(testString, {gutter: false, wrap: false, hljs: true, lang: 'json'});
+    hljs.configure({classPrefix: 'hljs-'});
+    result.should.eql([
+      '<pre><code class="hljs json">',
+      hljs.highlight('json', testString).value,
+      '</code></pre>'
+    ].join(''));
     validateHtmlAsync(result, done);
   });
 
