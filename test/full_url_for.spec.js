@@ -37,4 +37,9 @@ describe('full_url_for', () => {
     ctx.config.url = 'https://example.com/blog';
     fullUrlFor('#test').should.eql(ctx.config.url + '/#test');
   });
+
+  it('path with semicolon', () => {
+    ctx.config.url = 'https://example.com/blog';
+    fullUrlFor('foo:bar').should.eql(ctx.config.url + '/foo:bar');
+  });
 });

@@ -72,4 +72,12 @@ describe('url_for', () => {
   it('only hash', () => {
     urlFor('#test').should.eql('#test');
   });
+
+  it('path with semicolon', () => {
+    ctx.config.root = '/';
+    urlFor('foo:bar').should.eql('/foo:bar');
+
+    ctx.config.root = '/foo/';
+    urlFor('bar:baz').should.eql('/foo/bar:baz');
+  });
 });
