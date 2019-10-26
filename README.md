@@ -103,6 +103,11 @@ decodeURL('http://xn--br-mia.com/baz')
 
 decodeURL('/foo/b%C3%A1r/')
 // /foo/bár/
+
+/* Alternatively, Node 10+ offers native API to decode punycoded domain */
+const {format} = require('url')
+decodeURI(format(new URL('http://xn--br-mia.com.com/b%C3%A1r'), {unicode: true}))
+// http://bár.com/báz
 ```
 
 ### encodeURL(str)
