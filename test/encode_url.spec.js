@@ -16,7 +16,7 @@ describe('encodeURL', () => {
   });
 
   it('port', () => {
-    const content = 'http://foo.com:80/';
+    const content = 'http://foo.com:8080/';
     encodeURL(content).should.eql(content);
   });
 
