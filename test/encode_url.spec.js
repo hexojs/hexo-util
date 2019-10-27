@@ -67,7 +67,7 @@ describe('encodeURL', () => {
 
   it('idn', () => {
     const content = 'http://bár.com/baz';
-    encodeURL(content).should.eql('http://xn--br-mia.com/baz');
+    encodeURL(content).should.eql('http://bár.com/baz');
   });
 
   it('path', () => {
