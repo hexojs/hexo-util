@@ -488,6 +488,7 @@ Following utilities require `bind(hexo)` / `bind(this)` / `call(hexo, input)` / 
 - [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
+- [`isExternalLink()`](#isexternallinkurl)
 
 Below examples demonstrate different approaches to creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
 
