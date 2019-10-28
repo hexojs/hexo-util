@@ -25,6 +25,7 @@ Utilities for [Hexo].
 - [hash](#hashstr)
 - [highlight](#highlightstr-options)
 - [htmlTag](#htmltagtag-attrs-text-escape)
+- [isExternalLink](#isexternallinkurl)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
 - [relative_url](#relative_urlfrom-to)
@@ -255,6 +256,42 @@ htmlTag('style', {}, 'p { content: "<"; background: url("bár.jpg"); }')
 htmlTag('script', {src: '/foo.js', async: true}, '')
 // <script src="/foo.js" async></script>
 ```
+
+### isExternalLink(url)
+
+Returns if a given url is external link relative to `config.url` and `config.exclude`.
+
+``` yml
+_config.yml
+url: https://example.com # example
+```
+
+``` js
+isExternalLink('https://example.com');
+// false
+isExternalLink('/archives/foo.html');
+// false
+isExternalLink('https://foo.com/');
+// true
+```
+
+``` yml
+_config.yml
+url: https://example.com # example
+exclude:
+  - foo.com
+  - bar.com
+```
+
+``` js
+isExternalLink('https://foo.com');
+// false
+isExternalLink('https://bar.com');
+// false
+isExternalLink('https://baz.com/');
+// true
+```
+
 
 ### Pattern(rule)
 
