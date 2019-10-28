@@ -4,9 +4,7 @@ describe('isExternalLink', () => {
   const ctx = {
     config: {
       url: 'https://example.com',
-      external_link: {
-        exclude: ''
-      }
+      external_link: {}
     }
   };
 
@@ -27,6 +25,11 @@ describe('isExternalLink', () => {
     isExternalLink('#top').should.eql(false);
     isExternalLink('mailto:hi@hexo.io').should.eql(false);
     isExternalLink('javascript:alert(\'Hexo is Awesome\')').should.eql(false);
+  });
+
+  it('exclude - empty string', () => {
+    ctx.config.external_link.exclude = '';
+    isExternalLink('https://hexo.io/').should.eql(true);
   });
 
   it('exclude - string', () => {
