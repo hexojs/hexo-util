@@ -25,6 +25,7 @@ Utilities for [Hexo].
 - [hash](#hashstr)
 - [highlight](#highlightstr-options)
 - [htmlTag](#htmltagtag-attrs-text-escape)
+- [isExternalLink](#isexternallinkurl)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
 - [relative_url](#relative_urlfrom-to)
@@ -256,6 +257,42 @@ htmlTag('script', {src: '/foo.js', async: true}, '')
 // <script src="/foo.js" async></script>
 ```
 
+### isExternalLink(url)
+
+Returns if a given url is external link relative to `config.url` and `config.exclude`.
+
+``` yml
+_config.yml
+url: https://example.com # example
+```
+
+``` js
+isExternalLink('https://example.com');
+// false
+isExternalLink('/archives/foo.html');
+// false
+isExternalLink('https://foo.com/');
+// true
+```
+
+``` yml
+_config.yml
+url: https://example.com # example
+exclude:
+  - foo.com
+  - bar.com
+```
+
+``` js
+isExternalLink('https://foo.com');
+// false
+isExternalLink('https://bar.com');
+// false
+isExternalLink('https://baz.com/');
+// true
+```
+
+
 ### Pattern(rule)
 
 Parses the string and tests if the string matches the rule. `rule` can be a string, a regular expression or a function.
@@ -451,6 +488,7 @@ Following utilities require `bind(hexo)` / `bind(this)` / `call(hexo, input)` / 
 - [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
+- [`isExternalLink()`](#isexternallinkurl)
 
 Below examples demonstrate different approaches to creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
 
