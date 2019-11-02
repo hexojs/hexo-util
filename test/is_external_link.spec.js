@@ -8,7 +8,7 @@ describe('isExternalLink', () => {
     }
   };
 
-  const isExternalLink = require('../lib/isExternalLink').bind(ctx);
+  const isExternalLink = require('../lib/is_external_link').bind(ctx);
 
   it('external link', () => {
     isExternalLink('https://hexo.io/').should.eql(true);
