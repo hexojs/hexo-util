@@ -113,14 +113,11 @@ decodeURI(format(new URL('http://xn--br-mia.com.com/b%C3%A1r'), {unicode: true})
 
 ### encodeURL(str)
 
-Encode URL or path into a [safe format](https://en.wikipedia.org/wiki/Percent-encoding). Domain is encoded into [punycode](https://en.wikipedia.org/wiki/Punycode) when necessary.
+Encode URL or path into a [safe format](https://en.wikipedia.org/wiki/Percent-encoding).
 
 ``` js
 encodeURL('http://foo.com/bár')
 // http://foo.com/b%C3%A1r
-
-encodeURL('http://bár.com/baz')
-// http://xn--br-mia.com/baz
 
 encodeURL('/foo/bár/')
 // /foo/b%C3%A1r/
