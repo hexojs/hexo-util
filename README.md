@@ -254,7 +254,7 @@ htmlTag('script', {src: '/foo.js', async: true}, '')
 // <script src="/foo.js" async></script>
 ```
 
-### isExternalLink(url)
+### isExternalLink(input)
 
 Returns if a given url is external link relative to `config.url` and `config.exclude`.
 
