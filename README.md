@@ -213,13 +213,14 @@ Syntax highlighting for a code block.
 Option | Description | Default
 --- | --- | ---
 `gutter` | Whether to show line numbers | true
-`wrap` | Whether to wrap the code block | true
+`wrap` | Whether to wrap the code block in [`<table>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table) | true
 `firstLine` | First line number | 1
 `hljs` | Whether to use the `hljs-*` prefix for CSS classes | false
 `lang` | Language |
 `caption` | Caption |
 `tab`| Replace tabs |
 `autoDetect` | Detect language automatically | false
+`mark` | Mark specific line(s) |
 
 ### htmlTag(tag, attrs, text, escape)
 
