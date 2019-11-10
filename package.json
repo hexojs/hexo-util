@@ -36,6 +36,7 @@
     "chai-as-promised": "^7.1.1",
     "eslint": "^6.0.1",
     "eslint-config-hexo": "^3.0.0",
+    "html-entities": "^1.2.1",
     "html-tag-validator": "^1.5.0",
     "mocha": "^6.0.1",
     "nyc": "^14.1.1",
@@ -46,7 +47,6 @@
     "camel-case": "^3.0.0",
     "cross-spawn": "^7.0.0",
     "highlight.js": "^9.13.1",
-    "html-entities": "^1.2.1",
     "striptags": "^3.1.1"
   },
   "engines": {
