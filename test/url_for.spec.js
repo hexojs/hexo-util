@@ -2,7 +2,9 @@
 
 describe('url_for', () => {
   const ctx = {
-    config: {}
+    config: {
+      url: 'http://example.com'
+    }
   };
 
   const urlFor = require('../lib/url_for').bind(ctx);
