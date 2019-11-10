@@ -3,10 +3,7 @@
 describe('url_for', () => {
   const ctx = {
     config: {
-      url: 'http://example.com',
-      external_link: {
-        exclude: []
-      }
+      url: 'http://example.com'
     }
   };
 
