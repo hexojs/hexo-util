@@ -13,23 +13,22 @@ const testJson = {
 
 const testString = JSON.stringify(testJson, null, '  ');
 
-const start = '<figure class="highlight plain"><table><tr>';
-const end = '</tr></table></figure>';
-
 const gutterStart = '<td class="gutter"><pre>';
 const gutterEnd = '</pre></td>';
 
 const codeStart = '<td class="code"><pre>';
 const codeEnd = '</pre></td>';
 
-function gutter(start, end) {
-  let result = gutterStart;
+function gutter(start, end, disabled) {
+  let result = [];
 
   for (let i = start; i <= end; i++) {
-    result += `<span class="line">${i}</span><br>`;
+    if (disabled) {
+      result.push('');
+    } else {
+      result.push(gutterStart + `<span class="line">${i}</span>` + gutterEnd);
+    }
   }
-
-  result += gutterEnd;
 
   return result;
 }
@@ -47,13 +46,20 @@ function code(str, lang) {
 
   const lines = data.value.split('\n');
 
-  return lines.reduce((prev, current) => {
-    return `${prev}<span class="line">${current}</span><br>`;
-  }, codeStart) + codeEnd;
+  return lines.map(current => {
+    return codeStart + `<span class="line">${current}</span>` + codeEnd;
+  });
 }
 
-function assertResult(result, ...args) {
-  result.should.eql(start + args.join('') + end);
+function assertResult(result, gutter, code, className = 'plain', caption = '') {
+  const start = `<figure class="highlight ${className}">${caption}<table>`;
+  const end = '</table></figure>';
+  let res = start;
+  for (let i in gutter) {
+    res += '<tr>' + gutter[i] + code[i] + '</tr>';
+  }
+  res += end;
+  result.should.eql(res);
 }
 
 function validateHtmlAsync(str, done) {
@@ -81,7 +87,7 @@ describe('highlight', () => {
 
   it('gutter: false', done => {
     const result = highlight(testString, {gutter: false});
-    assertResult(result, code(testString));
+    assertResult(result, gutter(1, 4, true), code(testString));
     validateHtmlAsync(result, done);
   });
 
@@ -141,25 +147,13 @@ describe('highlight', () => {
 
   it('lang = json', done => {
     const result = highlight(testString, {lang: 'json'});
-
-    result.should.eql([
-      '<figure class="highlight json"><table><tr>',
-      gutter(1, 4),
-      code(testString, 'json'),
-      end
-    ].join(''));
+    assertResult(result, gutter(1, 4), code(testString, 'json'), 'json');
     validateHtmlAsync(result, done);
   });
 
   it('auto detect', done => {
     const result = highlight(testString, {autoDetect: true});
-
-    result.should.eql([
-      '<figure class="highlight json"><table><tr>',
-      gutter(1, 4),
-      code(testString, 'json'),
-      end
-    ].join(''));
+    assertResult(result, gutter(1, 4), code(testString, 'json'), 'json');
     validateHtmlAsync(result, done);
   });
 
@@ -176,12 +170,7 @@ describe('highlight', () => {
       caption: 'hello world'
     });
 
-    result.should.eql([
-      '<figure class="highlight plain"><figcaption>hello world</figcaption><table><tr>',
-      gutter(1, 4),
-      code(testString),
-      end
-    ].join(''));
+    assertResult(result, gutter(1, 4), code(testString), 'plain', '<figcaption>hello world</figcaption>');
     validateHtmlAsync(result, done);
   });
 
@@ -194,13 +183,7 @@ describe('highlight', () => {
     ].join('\n');
 
     const result = highlight(str, {tab: '  ', lang: 'js'});
-
-    result.should.eql([
-      '<figure class="highlight js"><table><tr>',
-      gutter(1, 4),
-      code(str.replace(/\t/g, '  '), 'js'),
-      end
-    ].join(''));
+    assertResult(result, gutter(1, 4), code(str.replace(/\t/g, '  '), 'js'), 'js');
     validateHtmlAsync(result, done);
   });
 
@@ -221,12 +204,7 @@ describe('highlight', () => {
   it('highlight sublanguages', function(done) {
     var str = '<node><?php echo "foo"; ?></node>';
     var result = highlight(str, {lang: 'xml'});
-    result.should.eql([
-      '<figure class="highlight xml"><table><tr>',
-      gutter(1, 1),
-      code('<span class="tag">&lt;<span class="name">node</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">node</span>&gt;</span>', null),
-      end
-    ].join(''));
+    assertResult(result, gutter(1, 1), code('<span class="tag">&lt;<span class="name">node</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">node</span>&gt;</span>', null), 'xml');
     validateHtmlAsync(result, done);
   });
 
@@ -239,13 +217,8 @@ describe('highlight', () => {
       '`'
     ].join('\n');
 
-    const result = highlight(str, {lang: 'js'});
-    result.should.eql([
-      '<figure class="highlight js"><table><tr>',
-      gutter(1, 5),
-      code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string">  line</span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
-      end
-    ].join(''));
+    const result = highlight(str, { lang: 'js' });
+    assertResult(result, gutter(1, 5), code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string">  line</span>\n<span class="string">  string</span>\n<span class="string">`</span>', null), 'js');
     validateHtmlAsync(result, done);
   });
 
@@ -258,13 +231,8 @@ describe('highlight', () => {
       '`'
     ].join('\n');
 
-    const result = highlight(str, {lang: 'js'});
-    result.should.eql([
-      '<figure class="highlight js"><table><tr>',
-      gutter(1, 5),
-      code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
-      end
-    ].join(''));
+    const result = highlight(str, { lang: 'js' });
+    assertResult(result, gutter(1, 5), code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null), 'js');
     validateHtmlAsync(result, done);
   });
 
@@ -278,13 +246,8 @@ describe('highlight', () => {
       '`'
     ].join('\n');
 
-    const result = highlight(str, {autoDetect: true});
-    result.should.eql([
-      '<figure class="highlight javascript"><table><tr>',
-      gutter(1, 6),
-      code('<span class="meta">"use strict"</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
-      end
-    ].join(''));
+    const result = highlight(str, { autoDetect: true });
+    assertResult(result, gutter(1, 6), code('<span class="meta">"use strict"</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null), 'javascript');
     validateHtmlAsync(result, done);
   });
 
@@ -318,7 +281,9 @@ describe('highlight', () => {
     result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
     result.should.include('class="hljs-function"');
-    result.should.include(gutter(1, 5));
+    gutter(1, 5).every(line => {
+      result.should.include(line);
+    });
     validateHtmlAsync(result, done);
   });
 
