@@ -201,7 +201,7 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('highlight sublanguages', function(done) {
+  it('highlight sublanguages', done => {
     var str = '<node><?php echo "foo"; ?></node>';
     var result = highlight(str, {lang: 'xml'});
     assertResult(result, gutter(1, 1), code('<span class="tag">&lt;<span class="name">node</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">node</span>&gt;</span>', null), 'xml');
@@ -268,7 +268,7 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('hljs compatibility - with lines', (done) => {
+  it('hljs compatibility - with lines', done => {
     const str = [
       'function (a) {',
       '    if (a > 3)',
@@ -282,12 +282,12 @@ describe('highlight', () => {
     result.should.include('code class="hljs javascript"');
     result.should.include('class="hljs-function"');
     gutter(1, 5).every(line => {
-      result.should.include(line);
+      return result.should.include(line);
     });
     validateHtmlAsync(result, done);
   });
 
-  it('hljs compatibility - no lines', (done) => {
+  it('hljs compatibility - no lines', done => {
     const str = [
       'function (a) {',
       '    if (a > 3)',
