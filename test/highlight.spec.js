@@ -217,7 +217,7 @@ describe('highlight', () => {
       '`'
     ].join('\n');
 
-    const result = highlight(str, { lang: 'js' });
+    const result = highlight(str, {lang: 'js'});
     assertResult(result, gutter(1, 5), code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string">  line</span>\n<span class="string">  string</span>\n<span class="string">`</span>', null), 'js');
     validateHtmlAsync(result, done);
   });
@@ -231,7 +231,7 @@ describe('highlight', () => {
       '`'
     ].join('\n');
 
-    const result = highlight(str, { lang: 'js' });
+    const result = highlight(str, {lang: 'js'});
     assertResult(result, gutter(1, 5), code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null), 'js');
     validateHtmlAsync(result, done);
   });
@@ -246,7 +246,7 @@ describe('highlight', () => {
       '`'
     ].join('\n');
 
-    const result = highlight(str, { autoDetect: true });
+    const result = highlight(str, {autoDetect: true});
     assertResult(result, gutter(1, 6), code('<span class="meta">"use strict"</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null), 'javascript');
     validateHtmlAsync(result, done);
   });
@@ -276,7 +276,7 @@ describe('highlight', () => {
       '    return false;',
       '}'
     ].join('\n');
-    const result = highlight(str, {hljs: true, lang: 'javascript' });
+    const result = highlight(str, {hljs: true, lang: 'javascript'});
     result.should.include(gutterStart);
     result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
@@ -295,7 +295,7 @@ describe('highlight', () => {
       '    return false;',
       '}'
     ].join('\n');
-    const result = highlight(str, {hljs: true, gutter: false, lang: 'javascript' });
+    const result = highlight(str, {hljs: true, gutter: false, lang: 'javascript'});
     result.should.not.include(gutterStart);
     result.should.not.include(codeStart);
     result.should.include('code class="hljs javascript"');
