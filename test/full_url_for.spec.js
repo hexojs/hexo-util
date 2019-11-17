@@ -26,10 +26,23 @@ describe('full_url_for', () => {
     fullUrlFor('/index.html').should.eql('https://example.com/index.html');
   });
 
+  it('internal url - pretty_url.trailing_index disabled', () => {
+    ctx.config.url = 'https://example.com';
+    ctx.config.pretty_url = {
+      trailing_index: false
+    };
+
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/');
+    fullUrlFor('/').should.eql(ctx.config.url + '/');
+  });
+
+
   it('external url', () => {
     [
       'https://hexo.io/',
-      '//google.com/'
+      '//google.com/',
+      // url_for shouldn't process external link even if trailing_index is disabled.
+      'https://hexo.io/docs/index.html'
     ].forEach(url => {
       fullUrlFor(url).should.eql(url);
     });
