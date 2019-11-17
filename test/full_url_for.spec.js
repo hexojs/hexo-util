@@ -40,8 +40,12 @@ describe('full_url_for', () => {
     fullUrlFor('#test').should.eql(ctx.config.url + '/#test');
   });
 
-  it('path with semicolon', () => {
-    ctx.config.url = 'https://example.com/blog';
-    fullUrlFor('foo:bar').should.eql(ctx.config.url + '/foo:bar');
+  it('data url', () => {
+    [
+      'mailto:foo@bar.com',
+      'javascript:foo()'
+    ].forEach(url => {
+      fullUrlFor(url).should.eql(url);
+    });
   });
 });

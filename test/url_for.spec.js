@@ -75,11 +75,12 @@ describe('url_for', () => {
     urlFor('#test').should.eql('#test');
   });
 
-  it('path with semicolon', () => {
-    ctx.config.root = '/';
-    urlFor('foo:bar').should.eql('/foo:bar');
-
-    ctx.config.root = '/foo/';
-    urlFor('bar:baz').should.eql('/foo/bar:baz');
+  it('data url', () => {
+    [
+      'mailto:foo@bar.com',
+      'javascript:foo()'
+    ].forEach(url => {
+      urlFor(url).should.eql(url);
+    });
   });
 });
