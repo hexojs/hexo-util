@@ -220,7 +220,7 @@ Option | Description | Default
 `caption` | Caption |
 `tab`| Replace tabs |
 `autoDetect` | Detect language automatically | false
-`mark` | Mark specific line(s) |
+`mark` | Line highlight specific line(s) |
 
 ### htmlTag(tag, attrs, text, escape)
 
