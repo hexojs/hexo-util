@@ -6,7 +6,7 @@ describe('escapeHTML', () => {
   const escapeHTML = require('../lib/escape_html');
 
   it('default', () => {
-    escapeHTML('<p>Hello "world".</p>').should.eql('&lt;p&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;');
+    escapeHTML('<p class="foo">Hello "world".</p>').should.eql('&lt;p class&#x3D;&quot;foo&quot;&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;');
   });
 
   it('str must be a string', () => {
