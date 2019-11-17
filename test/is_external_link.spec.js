@@ -3,8 +3,7 @@
 describe('isExternalLink', () => {
   const ctx = {
     config: {
-      url: 'https://example.com',
-      external_link: {}
+      url: 'https://example.com'
     }
   };
 
@@ -28,19 +27,25 @@ describe('isExternalLink', () => {
   });
 
   it('exclude - empty string', () => {
-    ctx.config.external_link.exclude = '';
+    ctx.config.external_link = {
+      exclude: ''
+    };
     isExternalLink('https://hexo.io/').should.eql(true);
   });
 
   it('exclude - string', () => {
-    ctx.config.external_link.exclude = 'foo.com';
+    ctx.config.external_link = {
+      exclude: 'foo.com'
+    };
     isExternalLink('https://foo.com/').should.eql(false);
     isExternalLink('https://bar.com/').should.eql(true);
     isExternalLink('https://baz.com/').should.eql(true);
   });
 
   it('exclude - array', () => {
-    ctx.config.external_link.exclude = ['foo.com', 'bar.com'];
+    ctx.config.external_link = {
+      exclude: ['foo.com', 'bar.com']
+    };
     isExternalLink('https://foo.com/').should.eql(false);
     isExternalLink('https://bar.com/').should.eql(false);
     isExternalLink('https://baz.com/').should.eql(true);
