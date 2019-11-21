@@ -25,7 +25,7 @@ Utilities for [Hexo].
 - [hash](#hashstr)
 - [highlight](#highlightstr-options)
 - [htmlTag](#htmltagtag-attrs-text-escape)
-- [isExternalLink](#isexternallinkurl)
+- [isExternalLink](#isexternallinkurl-sitehost-exclude)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
 - [relative_url](#relative_urlfrom-to)
@@ -255,38 +255,39 @@ htmlTag('script', {src: '/foo.js', async: true}, '')
 // <script src="/foo.js" async></script>
 ```
 
-### isExternalLink(url)
+### isExternalLink(url, sitehost, [exclude])
 
-Returns if a given url is external link relative to `config.url` and `config.exclude`.
+Option | Description | Default
+--- | --- | ---
+`url` | The input URL. |
+`sitehost` | The hostname / url of website. You can also pass `hexo.config.url`. |
+`exclude` | Exclude hostnames. Specific subdomain is required when applicable, including www. | `[]`
 
-``` yml
-_config.yml
-url: https://example.com # example
+Returns if a given url is external link relative to given `sitehost` and `[exclude]`.
+
+``` js
+// 'sitehost' can be a domain or url
+isExternalLink('https://example.com', 'example.com');
+// false
+isExternalLink('https://example.com', 'https://example.com');
+// false
+isExternalLink('https://example.com', '//example.com/blog/');
+// false
 ```
 
 ``` js
-isExternalLink('https://example.com');
+isExternalLink('/archives/foo.html', 'example.com');
 // false
-isExternalLink('/archives/foo.html');
-// false
-isExternalLink('https://foo.com/');
+isExternalLink('https://foo.com/', 'example.com');
 // true
 ```
 
-``` yml
-_config.yml
-url: https://example.com # example
-exclude:
-  - foo.com
-  - bar.com
-```
-
 ``` js
-isExternalLink('https://foo.com');
+isExternalLink('https://foo.com', 'example.com', ['foo.com', 'bar.com']);
 // false
-isExternalLink('https://bar.com');
+isExternalLink('https://bar.com', 'example.com', ['foo.com', 'bar.com']);
 // false
-isExternalLink('https://baz.com/');
+isExternalLink('https://baz.com/', 'example.com', ['foo.com', 'bar.com']);
 // true
 ```
 
@@ -486,7 +487,6 @@ Following utilities require `bind(hexo)` / `bind(this)` / `call(hexo, input)` / 
 - [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
-- [`isExternalLink()`](#isexternallinkurl)
 
 Below examples demonstrate different approaches to creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
 
