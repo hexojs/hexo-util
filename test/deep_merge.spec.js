@@ -7,6 +7,14 @@ require('chai').should();
 describe('deepMerge()', () => {
   const deepMerge = require('../lib/deep_merge');
 
+  it('should act as lodash.merge', () => {
+    const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
+
+    const obj2 = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
+
+    deepMerge(obj1, obj2).should.eql({ 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] });
+  });
+
   it('should merge object properties without affecting any object', () => {
     const obj1 = {a: 0, b: 1};
     const obj2 = {c: 2, b: 3};
