@@ -7,47 +7,47 @@ describe('isExternalLink', () => {
     }
   };
 
-  const isExternalLink = require('../lib/is_external_link').bind(ctx);
+  const isExternalLink = require('../lib/is_external_link');
 
   it('external link', () => {
-    isExternalLink('https://hexo.io/').should.eql(true);
+    isExternalLink('https://hexo.io/', ctx.config.url).should.eql(true);
   });
 
   it('internal link', () => {
-    isExternalLink('https://example.com').should.eql(false);
-    isExternalLink('//example.com').should.eql(false);
-    isExternalLink('//example.com/archives/foo.html').should.eql(false);
-    isExternalLink('/archives/foo.html').should.eql(false);
+    isExternalLink('https://example.com', ctx.config.url).should.eql(false);
+    isExternalLink('//example.com', ctx.config.url).should.eql(false);
+    isExternalLink('//example.com/archives/foo.html', ctx.config.url).should.eql(false);
+    isExternalLink('/archives/foo.html', ctx.config.url).should.eql(false);
   });
 
   it('hash, mailto, javascript', () => {
-    isExternalLink('#top').should.eql(false);
-    isExternalLink('mailto:hi@hexo.io').should.eql(false);
-    isExternalLink('javascript:alert(\'Hexo is Awesome\')').should.eql(false);
+    isExternalLink('#top', ctx.config.url).should.eql(false);
+    isExternalLink('mailto:hi@hexo.io', ctx.config.url).should.eql(false);
+    isExternalLink('javascript:alert(\'Hexo is Awesome\')', ctx.config.url).should.eql(false);
   });
 
   it('exclude - empty string', () => {
     ctx.config.external_link = {
       exclude: ''
     };
-    isExternalLink('https://hexo.io/').should.eql(true);
+    isExternalLink('https://hexo.io/', ctx.config.url, ctx.config.external_link.exclude).should.eql(true);
   });
 
   it('exclude - string', () => {
     ctx.config.external_link = {
       exclude: 'foo.com'
     };
-    isExternalLink('https://foo.com/').should.eql(false);
-    isExternalLink('https://bar.com/').should.eql(true);
-    isExternalLink('https://baz.com/').should.eql(true);
+    isExternalLink('https://foo.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(false);
+    isExternalLink('https://bar.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(true);
+    isExternalLink('https://baz.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(true);
   });
 
   it('exclude - array', () => {
     ctx.config.external_link = {
       exclude: ['foo.com', 'bar.com']
     };
-    isExternalLink('https://foo.com/').should.eql(false);
-    isExternalLink('https://bar.com/').should.eql(false);
-    isExternalLink('https://baz.com/').should.eql(true);
+    isExternalLink('https://foo.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(false);
+    isExternalLink('https://bar.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(false);
+    isExternalLink('https://baz.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(true);
   });
 });
