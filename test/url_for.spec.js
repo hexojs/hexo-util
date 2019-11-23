@@ -62,10 +62,28 @@ describe('url_for', () => {
     ctx.config.relative_link = false;
   });
 
+  it('internal url (pretty_url.trailing_index disabled)', () => {
+    ctx.config.root = '/';
+    ctx.config.pretty_url = {
+      trailing_index: false
+    };
+
+    urlFor('index.html').should.eql('/');
+    urlFor('/').should.eql('/');
+    urlFor('/index.html').should.eql('/');
+
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/');
+    urlFor('/').should.eql('/blog/');
+    urlFor('/index.html').should.eql('/blog/');
+  });
+
   it('external url', () => {
     [
       'https://hexo.io/',
-      '//google.com/'
+      '//google.com/',
+      // url_for shouldn't process external link even if trailing_index is disabled.
+      'https://hexo.io/docs/index.html'
     ].forEach(url => {
       urlFor(url).should.eql(url);
     });
