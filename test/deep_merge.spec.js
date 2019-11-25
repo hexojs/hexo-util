@@ -9,22 +9,25 @@ describe('deepMerge()', () => {
 
   it('should act as lodash.merge', () => {
     const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
-
     const obj2 = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
 
-    deepMerge(obj1, obj2).should.eql({ 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] });
+    const expected = { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] };
+
+    deepMerge(obj1, obj2).should.eql(expected);
   });
 
-  it('should merge object properties without affecting any object', () => {
-    const obj1 = {a: 0, b: 1};
-    const obj2 = {c: 2, b: 3};
+  it('should merge object properties with target object affected', () => {
+    const obj1 = {a: 0, b: 1, c: {d: 1}, e: 4};
+    const obj2 = {b: 3, c: {d: 2}};
 
     const result = deepMerge(obj1, obj2);
-    const expected = {a: 0, b: 3, c: 2 };
+    const expected = {a: 0, b: 3, c: {d: 2}, e: 4};
 
     result.should.eql(expected);
-    result.should.not.eql(obj1);
+    obj1.should.eql(expected);
+
     result.should.not.eql(obj2);
+    obj2.should.eql({b: 3, c: {d: 2}});
   });
 
   it('should do a deep merge', () => {
@@ -43,17 +46,6 @@ describe('deepMerge()', () => {
 
     const result = deepMerge(deepMerge(obj1, obj2), obj3);
     result.a.should.eql('bar');
-  });
-
-  it('should shallow clone objects during merge', () => {
-    const obj1 = {a: {b: 1}};
-    const obj2 = {a: {c: 2}};
-
-    const result = deepMerge(obj1, obj2);
-
-    result.should.eql({a: {b: 1, c: 2}});
-    result.a.should.not.eql(obj1.a);
-    result.a.should.eql(obj2.a);
   });
 
   it('should not merge an objects into an array', () => {

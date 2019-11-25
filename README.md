@@ -114,7 +114,7 @@ decodeURI(format(new URL('http://xn--br-mia.com.com/b%C3%A1r'), {unicode: true})
 
 ### deepMerge(target, source)
 
-Merges the enumerable properties of two objects deeply.
+Merges the enumerable properties of two objects deeply. Only `target` object will be changed.
 
 ``` js
 const obj1 = {a: {b: 1, c: 1, d: {e: 1, f: 1}}};
