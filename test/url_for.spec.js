@@ -64,7 +64,7 @@ describe('url_for', () => {
 
   it('internal url (pretty_url.trailing_index disabled)', () => {
     ctx.config.root = '/';
-    ctx.config.pretty_url = {
+    ctx.config.pretty_urls = {
       trailing_index: false
     };
 
