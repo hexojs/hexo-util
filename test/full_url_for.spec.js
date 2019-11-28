@@ -26,9 +26,9 @@ describe('full_url_for', () => {
     fullUrlFor('/index.html').should.eql('https://example.com/index.html');
   });
 
-  it('internal url - pretty_url.trailing_index disabled', () => {
+  it('internal url - pretty_urls.trailing_index disabled', () => {
     ctx.config.url = 'https://example.com';
-    ctx.config.pretty_url = {
+    ctx.config.pretty_urls = {
       trailing_index: false
     };
 
