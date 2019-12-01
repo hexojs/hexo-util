@@ -16,20 +16,6 @@ describe('deepMerge()', () => {
     deepMerge(obj1, obj2).should.eql(expected);
   });
 
-  it('should merge object properties with target object affected', () => {
-    const obj1 = {a: 0, b: 1, c: {d: 1}, e: 4};
-    const obj2 = {b: 3, c: {d: 2}};
-
-    const result = deepMerge(obj1, obj2);
-    const expected = {a: 0, b: 3, c: {d: 2}, e: 4};
-
-    result.should.eql(expected);
-    obj1.should.eql(expected);
-
-    result.should.not.eql(obj2);
-    obj2.should.eql({b: 3, c: {d: 2}});
-  });
-
   it('should do a deep merge', () => {
     const obj1 = {a: {b: 1, c: 1, d: {e: 1, f: 1}}};
     const obj2 = {a: {b: 2, d: {f: 'f'} }};
@@ -53,6 +39,22 @@ describe('deepMerge()', () => {
     const obj2 = {a: ['foo', 'bar']};
 
     deepMerge(obj1, obj2).should.eql({a: ['foo', 'bar']});
+  });
+
+  it('should not affect target & source', () => {
+    const obj1 = {a: 0, b: 1, c: {d: 1}, e: 4};
+    const obj2 = {b: 3, c: {d: 2}};
+
+    const result = deepMerge(obj1, obj2);
+    const expected = {a: 0, b: 3, c: {d: 2}, e: 4};
+
+    result.should.eql(expected);
+
+    result.should.not.eql(obj1);
+    obj1.should.eql({a: 0, b: 1, c: {d: 1}, e: 4});
+
+    result.should.not.eql(obj2);
+    obj2.should.eql({b: 3, c: {d: 2}});
   });
 
   it('should deep clone arrays during merge', () => {
