@@ -34,6 +34,16 @@ describe('deepMerge()', () => {
     result.a.should.eql('bar');
   });
 
+  it('should merge simple array', () => {
+    const obj1 = {a: [1, [2, 3], 4]};
+    const obj2 = {a: [1, [3, 4], [5, 6], 6]};
+
+    const result = deepMerge(obj1, obj2);
+    const expected = {a: [1, [2, 3, 4], [5, 6], 6]};
+
+    result.should.eql(expected);
+  });
+
   it('should not merge an objects into an array', () => {
     const obj1 = {a: {b: 1}};
     const obj2 = {a: ['foo', 'bar']};
