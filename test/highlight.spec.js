@@ -20,7 +20,7 @@ const codeStart = '<td class="code"><pre>';
 const codeEnd = '</pre></td>';
 
 function gutter(start, end, disabled) {
-  let result = [];
+  const result = [];
 
   for (let i = start; i <= end; i++) {
     if (disabled) {
@@ -55,7 +55,7 @@ function assertResult(result, gutter, code, className = 'plain', caption = '') {
   const start = `<figure class="highlight ${className}">${caption}<table>`;
   const end = '</table></figure>';
   let res = start;
-  for (let i in gutter) {
+  for (const i in gutter) {
     res += '<tr>' + gutter[i] + code[i] + '</tr>';
   }
   res += end;
@@ -202,8 +202,8 @@ describe('highlight', () => {
   });
 
   it('highlight sublanguages', done => {
-    var str = '<node><?php echo "foo"; ?></node>';
-    var result = highlight(str, {lang: 'xml'});
+    const str = '<node><?php echo "foo"; ?></node>';
+    const result = highlight(str, {lang: 'xml'});
     assertResult(result, gutter(1, 1), code('<span class="tag">&lt;<span class="name">node</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">node</span>&gt;</span>', null), 'xml');
     validateHtmlAsync(result, done);
   });
