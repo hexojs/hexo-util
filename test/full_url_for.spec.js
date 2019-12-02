@@ -37,12 +37,15 @@ describe('full_url_for', () => {
   });
 
 
-  it('external url', () => {
+  it('absolute url', () => {
     [
       'https://hexo.io/',
       '//google.com/',
       // url_for shouldn't process external link even if trailing_index is disabled.
-      'https://hexo.io/docs/index.html'
+      'https://hexo.io/docs/index.html',
+      // shouldn't process internal absolute url
+      'http://example.com/foo/bar/',
+      'https://example.com/foo/bar/'
     ].forEach(url => {
       fullUrlFor(url).should.eql(url);
     });
