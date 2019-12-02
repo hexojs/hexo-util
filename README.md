@@ -114,7 +114,7 @@ decodeURI(format(new URL('http://xn--br-mia.com.com/b%C3%A1r'), {unicode: true})
 
 ### deepMerge(target, source)
 
-Merges the enumerable properties of two objects deeply while neither `target` or `source` is modified.
+Merges the enumerable properties of two objects deeply. `target` and `source` remain untouched.
 
 ``` js
 // Merge deeply
@@ -126,7 +126,7 @@ deepMerge(obj1, obj2);
 ```
 
 ``` js
-// Objects will be combined at the same index in the two arrays, just as lodash.merge
+// Arrays will be combined in the same property, similar to lodash.merge
 const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
 const obj2 = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
 
