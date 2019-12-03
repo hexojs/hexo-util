@@ -46,6 +46,7 @@
     "bluebird": "^3.5.2",
     "camel-case": "^4.0.0",
     "cross-spawn": "^7.0.0",
+    "deepmerge": "^4.2.2",
     "highlight.js": "^9.13.1",
     "striptags": "^3.1.1"
   },

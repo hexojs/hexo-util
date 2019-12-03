@@ -16,6 +16,7 @@ Utilities for [Hexo].
 - [camelCaseKeys](#camelcasekeysobj-options)
 - [createSha1Hash](#createsha1hash)
 - [decodeURL](#decodeurlstr)
+- [deepMerge](#deepmergetarget-source)
 - [encodeURL](#encodeurlstr)
 - [escapeDiacritic](#escapediacriticstr)
 - [escapeHTML](#escapehtmlstr)
@@ -109,6 +110,28 @@ decodeURL('/foo/b%C3%A1r/')
 const {format} = require('url')
 decodeURI(format(new URL('http://xn--br-mia.com.com/b%C3%A1r'), {unicode: true}))
 // http://bár.com/báz
+```
+
+### deepMerge(target, source)
+
+Merges the enumerable properties of two objects deeply. `target` and `source` remain untouched.
+
+``` js
+// Merge deeply
+const obj1 = {a: {b: 1, c: 1, d: {e: 1, f: 1}}};
+const obj2 = {a: {b: 2, d: {f: 'f'} }};
+
+deepMerge(obj1, obj2);
+// {a: {b: 2, c: 1, d: {e: 1, f: 'f'} }}
+```
+
+``` js
+// Arrays will be combined in the same property, similar to lodash.merge
+const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
+const obj2 = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
+
+deepMerge(obj1, obj2);
+// { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] };
 ```
 
 ### encodeURL(str)
