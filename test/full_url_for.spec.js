@@ -29,11 +29,35 @@ describe('full_url_for', () => {
   it('internal url - pretty_urls.trailing_index disabled', () => {
     ctx.config.url = 'https://example.com';
     ctx.config.pretty_urls = {
-      trailing_index: false
+      trailing_index: false,
+      trailing_html: true
     };
 
     fullUrlFor('index.html').should.eql(ctx.config.url + '/');
     fullUrlFor('/').should.eql(ctx.config.url + '/');
+  });
+
+  it('internal url - pretty_urls.trailing_html disabled', () => {
+    ctx.config.url = 'https://example.com';
+    ctx.config.pretty_urls = {
+      trailing_index: true,
+      trailing_html: false
+    };
+
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/index.html');
+    fullUrlFor('/foo/bar.html').should.eql(ctx.config.url + '/foo/bar');
+  });
+
+  it('internal url - pretty_urls.trailing_index & pretty_urls.trailing_html disabled', () => {
+    ctx.config.url = 'https://example.com';
+    ctx.config.pretty_urls = {
+      trailing_index: false,
+      trailing_html: false
+    };
+
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/');
+    fullUrlFor('/').should.eql(ctx.config.url + '/');
+    fullUrlFor('/foo/bar.html').should.eql(ctx.config.url + '/foo/bar');
   });
 
 
