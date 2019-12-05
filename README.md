@@ -370,7 +370,7 @@ Option | Description | Default
 `trailing_index` | `/about/index.html -> /about/` when `false` | `true`
 `trailing_html` | `/about.html -> /about` when `false` | `true`
 
-Notice if only `trailing_html` is enabled, trailing `index.html` will remains the same (not to be rewritten in `index`).
+Notice if only `trailing_html` is enabled, trailing `index.html` will remains the same (not to be rewritten to `index`).
 
 ``` js
 prettyUrls('/foo/bar.html');
