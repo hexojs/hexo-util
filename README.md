@@ -29,6 +29,7 @@ Utilities for [Hexo].
 - [isExternalLink](#isexternallinkurl-sitehost-exclude)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
+- [prettyUrls](#prettyurlsurl-options)
 - [relative_url](#relative_urlfrom-to)
 - [slugize](#slugizestr-options)
 - [spawn](#spawncommand-args-options)
@@ -358,6 +359,39 @@ permalink.test('2014/01/31/test');
 
 permalink.stringify({year: '2014', month: '01', day: '31', title: 'test'})
 // 2014/01/31/test
+```
+
+### prettyUrls(url, [options])
+
+Rewrite urls to pretty URLs.
+
+Option | Description | Default
+--- | --- | ---
+`trailing_index` | `/about/index.html -> /about/` when `false` | `true`
+`trailing_html` | `/about.html -> /about` when `false` | `true`
+
+Notice if only `trailing_html` is enabled, trailing `index.html` will remains the same (not to be rewritten in `index`).
+
+``` js
+prettyUrls('/foo/bar.html');
+// /foo/bar.html
+prettyUrls('/foo/bar/index.html');
+// /foo/bar/index.html
+
+prettyUrls('/foo/bar.html', { trailing_index: false });
+// /foo/bar.html
+prettyUrls('/foo/bar/index.html', { trailing_index: false });
+// /foo/bar/
+
+prettyUrls('/foo/bar.html', { trailing_html: false });
+// /foo/bar
+prettyUrls('/foo/bar/index.html', { trailing_html: false });
+// /foo/bar/index.html
+
+prettyUrls('/foo/bar.html', { trailing_index: false, trailing_html: false });
+// /foo/bar
+prettyUrls('/foo/bar/index.html', { trailing_index: false, trailing_html: false });
+// /foo/bar/
 ```
 
 ### relative_url(from, to)
