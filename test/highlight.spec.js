@@ -295,9 +295,25 @@ describe('highlight', () => {
       '    return false;',
       '}'
     ].join('\n');
-    const result = highlight(str, {hljs: true, gutter: false, lang: 'javascript'});
+    const result = highlight(str, {hljs: true, gutter: false, wrap: false, lang: 'javascript'});
     result.should.not.include(gutterStart);
     result.should.not.include(codeStart);
+    result.should.include('code class="hljs javascript"');
+    result.should.include('class="hljs-function"');
+    validateHtmlAsync(result, done);
+  });
+
+  it('hljs compatibility - wrap is true', done => {
+    const str = [
+      'function (a) {',
+      '    if (a > 3)',
+      '        return true;',
+      '    return false;',
+      '}'
+    ].join('\n');
+    const result = highlight(str, {hljs: true, gutter: false, wrap: true, lang: 'javascript'});
+    result.should.not.include(gutterStart);
+    result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
     result.should.include('class="hljs-function"');
     validateHtmlAsync(result, done);
