@@ -62,10 +62,11 @@ describe('url_for', () => {
     ctx.config.relative_link = false;
   });
 
-  it('internal url (pretty_url.trailing_index disabled)', () => {
+  it('internal url - pretty_urls.trailing_index disabled', () => {
     ctx.config.root = '/';
     ctx.config.pretty_urls = {
-      trailing_index: false
+      trailing_index: false,
+      trailing_html: true
     };
 
     urlFor('index.html').should.eql('/');
@@ -76,6 +77,41 @@ describe('url_for', () => {
     urlFor('index.html').should.eql('/blog/');
     urlFor('/').should.eql('/blog/');
     urlFor('/index.html').should.eql('/blog/');
+  });
+
+
+  it('internal url - pretty_urls.trailing_html disabled', () => {
+    ctx.config.root = '/';
+    ctx.config.pretty_urls = {
+      trailing_index: true,
+      trailing_html: false
+    };
+
+    urlFor('index.html').should.eql('/index.html');
+    urlFor('/').should.eql('/');
+    urlFor('/foo/bar.html').should.eql('/foo/bar');
+
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/index.html');
+    urlFor('/').should.eql('/blog/');
+    urlFor('/foo/bar.html').should.eql('/blog/foo/bar');
+  });
+
+  it('internal url - pretty_urls.trailing_index & pretty_urls.trailing_html disabled', () => {
+    ctx.config.root = '/';
+    ctx.config.pretty_urls = {
+      trailing_index: false,
+      trailing_html: false
+    };
+
+    urlFor('index.html').should.eql('/');
+    urlFor('/').should.eql('/');
+    urlFor('/foo/bar.html').should.eql('/foo/bar');
+
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/');
+    urlFor('/').should.eql('/blog/');
+    urlFor('/foo/bar.html').should.eql('/blog/foo/bar');
   });
 
   it('absolute url', () => {
