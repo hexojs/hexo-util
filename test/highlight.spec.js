@@ -218,9 +218,9 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('highlight sublanguages', function(done) {
-    var str = '<node><?php echo "foo"; ?></node>';
-    var result = highlight(str, {lang: 'xml'});
+  it('highlight sublanguages', done => {
+    const str = '<node><?php echo "foo"; ?></node>';
+    const result = highlight(str, {lang: 'xml'});
     result.should.eql([
       '<figure class="highlight xml"><table><tr>',
       gutter(1, 1),
@@ -305,7 +305,7 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('hljs compatibility - with lines', (done) => {
+  it('hljs compatibility - with lines', done => {
     const str = [
       'function (a) {',
       '    if (a > 3)',
@@ -322,7 +322,7 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('hljs compatibility - no lines', (done) => {
+  it('hljs compatibility - no lines', done => {
     const str = [
       'function (a) {',
       '    if (a > 3)',
