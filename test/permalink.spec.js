@@ -13,6 +13,12 @@ describe('Permalink', () => {
     permalink.regex.should.eql(/^(.+?)\/(.+?)\/(.+?)\/(.+?)$/);
     permalink.params.should.eql(['year', 'month', 'day', 'title']);
 
+    permalink = new Permalink(':year_:i_month_:i_day_:title');
+
+    permalink.rule.should.eql(':year_:i_month_:i_day_:title');
+    permalink.regex.should.eql(/^(.+?)_(.+?)_(.+?)_(.+?)$/);
+    permalink.params.should.eql(['year', 'i_month', 'i_day', 'title']);
+
     permalink = new Permalink(':year/:month/:day/:title', {
       segments: {
         year: /(\d{4})/,

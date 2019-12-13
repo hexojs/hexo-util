@@ -16,6 +16,7 @@ Utilities for [Hexo].
 - [camelCaseKeys](#camelcasekeysobj-options)
 - [createSha1Hash](#createsha1hash)
 - [decodeURL](#decodeurlstr)
+- [deepMerge](#deepmergetarget-source)
 - [encodeURL](#encodeurlstr)
 - [escapeDiacritic](#escapediacriticstr)
 - [escapeHTML](#escapehtmlstr)
@@ -25,9 +26,10 @@ Utilities for [Hexo].
 - [hash](#hashstr)
 - [highlight](#highlightstr-options)
 - [htmlTag](#htmltagtag-attrs-text-escape)
-- [isExternalLink](#isexternallinkurl)
+- [isExternalLink](#isexternallinkurl-sitehost-exclude)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
+- [prettyUrls](#prettyurlsurl-options)
 - [relative_url](#relative_urlfrom-to)
 - [slugize](#slugizestr-options)
 - [spawn](#spawncommand-args-options)
@@ -110,6 +112,28 @@ decodeURL('/foo/b%C3%A1r/')
 const {format} = require('url')
 decodeURI(format(new URL('http://xn--br-mia.com.com/b%C3%A1r'), {unicode: true}))
 // http://bár.com/báz
+```
+
+### deepMerge(target, source)
+
+Merges the enumerable properties of two objects deeply. `target` and `source` remain untouched.
+
+``` js
+// Merge deeply
+const obj1 = {a: {b: 1, c: 1, d: {e: 1, f: 1}}};
+const obj2 = {a: {b: 2, d: {f: 'f'} }};
+
+deepMerge(obj1, obj2);
+// {a: {b: 2, c: 1, d: {e: 1, f: 'f'} }}
+```
+
+``` js
+// Arrays will be combined in the same property, similar to lodash.merge
+const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
+const obj2 = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
+
+deepMerge(obj1, obj2);
+// { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] };
 ```
 
 ### encodeURL(str)
@@ -256,38 +280,39 @@ htmlTag('script', {src: '/foo.js', async: true}, '')
 // <script src="/foo.js" async></script>
 ```
 
-### isExternalLink(url)
+### isExternalLink(url, sitehost, [exclude])
 
-Returns if a given url is external link relative to `config.url` and `config.exclude`.
+Option | Description | Default
+--- | --- | ---
+`url` | The input URL. |
+`sitehost` | The hostname / url of website. You can also pass `hexo.config.url`. |
+`exclude` | Exclude hostnames. Specific subdomain is required when applicable, including www. | `[]`
 
-``` yml
-_config.yml
-url: https://example.com # example
+Returns if a given url is external link relative to given `sitehost` and `[exclude]`.
+
+``` js
+// 'sitehost' can be a domain or url
+isExternalLink('https://example.com', 'example.com');
+// false
+isExternalLink('https://example.com', 'https://example.com');
+// false
+isExternalLink('https://example.com', '//example.com/blog/');
+// false
 ```
 
 ``` js
-isExternalLink('https://example.com');
+isExternalLink('/archives/foo.html', 'example.com');
 // false
-isExternalLink('/archives/foo.html');
-// false
-isExternalLink('https://foo.com/');
+isExternalLink('https://foo.com/', 'example.com');
 // true
 ```
 
-``` yml
-_config.yml
-url: https://example.com # example
-exclude:
-  - foo.com
-  - bar.com
-```
-
 ``` js
-isExternalLink('https://foo.com');
+isExternalLink('https://foo.com', 'example.com', ['foo.com', 'bar.com']);
 // false
-isExternalLink('https://bar.com');
+isExternalLink('https://bar.com', 'example.com', ['foo.com', 'bar.com']);
 // false
-isExternalLink('https://baz.com/');
+isExternalLink('https://baz.com/', 'example.com', ['foo.com', 'bar.com']);
 // true
 ```
 
@@ -335,6 +360,39 @@ permalink.test('2014/01/31/test');
 
 permalink.stringify({year: '2014', month: '01', day: '31', title: 'test'})
 // 2014/01/31/test
+```
+
+### prettyUrls(url, [options])
+
+Rewrite urls to pretty URLs.
+
+Option | Description | Default
+--- | --- | ---
+`trailing_index` | `/about/index.html -> /about/` when `false` | `true`
+`trailing_html` | `/about.html -> /about` when `false` | `true`
+
+Note: `trailing_html` ignores any link with a trailing `index.html`. (will not be rewritten to `index`).
+
+``` js
+prettyUrls('/foo/bar.html');
+// /foo/bar.html
+prettyUrls('/foo/bar/index.html');
+// /foo/bar/index.html
+
+prettyUrls('/foo/bar.html', { trailing_index: false });
+// /foo/bar.html
+prettyUrls('/foo/bar/index.html', { trailing_index: false });
+// /foo/bar/
+
+prettyUrls('/foo/bar.html', { trailing_html: false });
+// /foo/bar
+prettyUrls('/foo/bar/index.html', { trailing_html: false });
+// /foo/bar/index.html
+
+prettyUrls('/foo/bar.html', { trailing_index: false, trailing_html: false });
+// /foo/bar
+prettyUrls('/foo/bar/index.html', { trailing_index: false, trailing_html: false });
+// /foo/bar/
 ```
 
 ### relative_url(from, to)
@@ -548,7 +606,6 @@ Following utilities require `bind(hexo)` / `bind(this)` / `call(hexo, input)` / 
 - [`full_url_for()`](#full_url_forpath)
 - [`url_for()`](#url_forpath)
 - [`relative_url()`](#relative_urlfrom-to)
-- [`isExternalLink()`](#isexternallinkurl)
 
 Below examples demonstrate different approaches to creating a [helper](https://hexo.io/api/helper) (each example is separated by `/******/`),
 

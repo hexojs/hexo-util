@@ -62,10 +62,67 @@ describe('url_for', () => {
     ctx.config.relative_link = false;
   });
 
-  it('external url', () => {
+  it('internal url - pretty_urls.trailing_index disabled', () => {
+    ctx.config.root = '/';
+    ctx.config.pretty_urls = {
+      trailing_index: false,
+      trailing_html: true
+    };
+
+    urlFor('index.html').should.eql('/');
+    urlFor('/').should.eql('/');
+    urlFor('/index.html').should.eql('/');
+
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/');
+    urlFor('/').should.eql('/blog/');
+    urlFor('/index.html').should.eql('/blog/');
+  });
+
+
+  it('internal url - pretty_urls.trailing_html disabled', () => {
+    ctx.config.root = '/';
+    ctx.config.pretty_urls = {
+      trailing_index: true,
+      trailing_html: false
+    };
+
+    urlFor('index.html').should.eql('/index.html');
+    urlFor('/').should.eql('/');
+    urlFor('/foo/bar.html').should.eql('/foo/bar');
+
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/index.html');
+    urlFor('/').should.eql('/blog/');
+    urlFor('/foo/bar.html').should.eql('/blog/foo/bar');
+  });
+
+  it('internal url - pretty_urls.trailing_index & pretty_urls.trailing_html disabled', () => {
+    ctx.config.root = '/';
+    ctx.config.pretty_urls = {
+      trailing_index: false,
+      trailing_html: false
+    };
+
+    urlFor('index.html').should.eql('/');
+    urlFor('/').should.eql('/');
+    urlFor('/foo/bar.html').should.eql('/foo/bar');
+
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/');
+    urlFor('/').should.eql('/blog/');
+    urlFor('/foo/bar.html').should.eql('/blog/foo/bar');
+  });
+
+  it('absolute url', () => {
     [
       'https://hexo.io/',
-      '//google.com/'
+      '//google.com/',
+      // url_for shouldn't process external link even if trailing_index is disabled.
+      'https://hexo.io/docs/index.html',
+      // shouldn't process internal absolute url
+      'http://example.com/foo/bar/',
+      'https://example.com/foo/bar/'
     ].forEach(url => {
       urlFor(url).should.eql(url);
     });

@@ -26,10 +26,50 @@ describe('full_url_for', () => {
     fullUrlFor('/index.html').should.eql('https://example.com/index.html');
   });
 
-  it('external url', () => {
+  it('internal url - pretty_urls.trailing_index disabled', () => {
+    ctx.config.url = 'https://example.com';
+    ctx.config.pretty_urls = {
+      trailing_index: false,
+      trailing_html: true
+    };
+
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/');
+    fullUrlFor('/').should.eql(ctx.config.url + '/');
+  });
+
+  it('internal url - pretty_urls.trailing_html disabled', () => {
+    ctx.config.url = 'https://example.com';
+    ctx.config.pretty_urls = {
+      trailing_index: true,
+      trailing_html: false
+    };
+
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/index.html');
+    fullUrlFor('/foo/bar.html').should.eql(ctx.config.url + '/foo/bar');
+  });
+
+  it('internal url - pretty_urls.trailing_index & pretty_urls.trailing_html disabled', () => {
+    ctx.config.url = 'https://example.com';
+    ctx.config.pretty_urls = {
+      trailing_index: false,
+      trailing_html: false
+    };
+
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/');
+    fullUrlFor('/').should.eql(ctx.config.url + '/');
+    fullUrlFor('/foo/bar.html').should.eql(ctx.config.url + '/foo/bar');
+  });
+
+
+  it('absolute url', () => {
     [
       'https://hexo.io/',
-      '//google.com/'
+      '//google.com/',
+      // url_for shouldn't process external link even if trailing_index is disabled.
+      'https://hexo.io/docs/index.html',
+      // shouldn't process internal absolute url
+      'http://example.com/foo/bar/',
+      'https://example.com/foo/bar/'
     ].forEach(url => {
       fullUrlFor(url).should.eql(url);
     });
