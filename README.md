@@ -416,7 +416,7 @@ Generate a table of contents in JSON format based on the given html string.
 
 Option | Description | Default
 --- | --- | ---
-`min_depth` | The minimum level of TOC | 0
+`min_depth` | The minimum level of TOC | 1
 `max_depth` | The maximum level of TOC | 6
 
 
