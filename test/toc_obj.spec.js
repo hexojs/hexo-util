@@ -19,7 +19,7 @@ describe('tocObj', () => {
   ].join('');
 
   it('default', () => {
-    const result = [
+    const expected = [
       { text: 'Title 1', id: 'title_1', level: 1 },
       { text: 'Title 1.1', id: 'title_1_1', level: 2 },
       { text: 'Title 1.1.1', id: 'title_1_1_1', level: 3 },
@@ -32,11 +32,11 @@ describe('tocObj', () => {
       { text: 'Chapter 1 should be printed to toc', id: 'title_4', level: 1 }
     ];
 
-    tocObj(html).should.eql(result);
+    tocObj(html).should.eql(expected);
   });
 
   it('options - min_depth', () => {
-    const result = [
+    const expected = [
       { text: 'Title 1.1', id: 'title_1_1', level: 2 },
       { text: 'Title 1.1.1', id: 'title_1_1_1', level: 3 },
       { text: 'Title 1.2', id: 'title_1_2', level: 2 },
@@ -45,11 +45,11 @@ describe('tocObj', () => {
       { text: 'Title 2.1', id: 'title_2_1', level: 2 }
     ];
 
-    tocObj(html, { min_depth: 1 }).should.eql(result);
+    tocObj(html, { min_depth: 2 }).should.eql(expected);
   });
 
   it('options - max_depth', () => {
-    const result = [
+    const expected = [
       { text: 'Title 1', id: 'title_1', level: 1 },
       { text: 'Title 1.1', id: 'title_1_1', level: 2 },
       { text: 'Title 1.2', id: 'title_1_2', level: 2 },
@@ -60,6 +60,6 @@ describe('tocObj', () => {
       { text: 'Chapter 1 should be printed to toc', id: 'title_4', level: 1 }
     ];
 
-    tocObj(html, { max_depth: 2 }).should.eql(result);
+    tocObj(html, { max_depth: 2 }).should.eql(expected);
   });
 });
