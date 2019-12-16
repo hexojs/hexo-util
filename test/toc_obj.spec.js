@@ -14,7 +14,7 @@ describe('tocObj', () => {
     '<h3 id="title_1_3_1">Title 1.3.1</h3>',
     '<h1 id="title_2">Title 2</h1>',
     '<h2 id="title_2_1">Title 2.1</h2>',
-    '<h1 id="title_3">Title should escape &, <, \, and "</h1>',
+    '<h1 id="title_3">Title should escape &, <, \, and "</h1>', // eslint-disable-line no-useless-escape
     '<h1 id="title_4"><a name="chapter1">Chapter 1 should be printed to toc</a></h1>'
   ].join('');
 
