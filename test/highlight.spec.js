@@ -169,7 +169,7 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('don\'t highlight if parse failed');
+  // it('don\'t highlight if parse failed'); missing-unit-test
 
   it('caption', done => {
     const result = highlight(testString, {
