@@ -4,6 +4,7 @@ require('chai').should();
 
 describe('htmlTag', () => {
   const htmlTag = require('../lib/html_tag');
+  const encodeURL = require('../lib/encode_url');
 
   it('tag', () => {
     htmlTag('hr').should.eql('<hr>');
@@ -112,5 +113,42 @@ describe('htmlTag', () => {
       src: '/foo.js',
       async: true
     }, '').should.eql('<script src="/foo.js" async></script>');
+  });
+
+  it('meta tag', () => {
+    htmlTag('meta', {
+      property: 'og:title',
+      content: 'foo & bar'
+    }).should.eql('<meta property="og:title" content="foo &amp; bar">');
+
+    htmlTag('meta', {
+      name: 'twitter:title',
+      content: 'foo " bar'
+    }).should.eql('<meta name="twitter:title" content="foo &quot; bar">');
+  });
+
+  it('meta tag - url', () => {
+    const content = 'https://foo.com/bár.jpg';
+    const encoded = encodeURL(content);
+
+    htmlTag('meta', {
+      property: 'og:url',
+      content
+    }).should.eql(`<meta property="og:url" content="${encoded}">`);
+
+    htmlTag('meta', {
+      property: 'og:image:secure_url',
+      content
+    }).should.eql(`<meta property="og:image:secure_url" content="${encoded}">`);
+
+    htmlTag('meta', {
+      name: 'twitter:image',
+      content
+    }).should.eql(`<meta name="twitter:image" content="${encoded}">`);
+
+    htmlTag('meta', {
+      name: 'foo image',
+      content: 'bar " baz'
+    }).should.eql('<meta name="foo image" content="bar &quot; baz">');
   });
 });
