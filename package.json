@@ -48,6 +48,7 @@
     "cross-spawn": "^7.0.0",
     "deepmerge": "^4.2.2",
     "highlight.js": "^9.13.1",
+    "htmlparser2": "^4.0.0",
     "punycode.js": "^2.1.0",
     "striptags": "^3.1.1"
   },
