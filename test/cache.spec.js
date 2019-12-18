@@ -28,6 +28,12 @@ describe('Cache', () => {
     cache.apply('baz', () => 456).should.eql(123);
   });
 
+  it('del', () => {
+    cache.del('baz');
+    cache.has('foo').should.eql(true);
+    cache.has('baz').should.eql(false);
+  });
+
   it('flush', () => {
     cache.flush();
     cache.has('foo').should.eql(false);
