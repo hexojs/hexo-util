@@ -12,6 +12,7 @@ Utilities for [Hexo].
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Cache](#cache)
 - [CacheStream](#cachestream)
 - [camelCaseKeys](#camelcasekeysobj-options)
 - [createSha1Hash](#createsha1hash)
@@ -51,6 +52,47 @@ $ npm install hexo-util --save
 
 ``` js
 var util = require('hexo-util');
+```
+
+### Cache()
+
+A simple plain object cache
+
+``` js
+const cache = new Cache();
+
+// set(key, value)
+cache.set('foo', 'bar');
+
+// get(key) => value
+cache.get('foo');
+// 'bar'
+
+// has(key) => Boolean
+cache.has('foo');
+// true
+cache.has('bar');
+// false
+
+// apply(key. value)
+cache.apply('baz', () => 123);
+// 123
+cache.apply('baz', () => 456);
+// 123
+cache.apply('qux', 456);
+// 456
+cache.apply('qux', '789');
+// 456
+
+// del(key)
+cache.del('baz');
+cache.has('baz');
+// false
+
+// flush()
+cache.flush();
+cache.has('foo');
+// false
 ```
 
 ### CacheStream()
