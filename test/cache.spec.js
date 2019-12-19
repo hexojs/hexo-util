@@ -40,4 +40,9 @@ describe('Cache', () => {
     cache.has('bar').should.eql(false);
     cache.has('baz').should.eql(false);
   });
+
+  it('cache null', () => {
+    cache.apply('foo', null);
+    (cache.apply('foo', 123) === null).should.eql(true);
+  });
 });
