@@ -39,7 +39,7 @@
     "html-entities": "^1.2.1",
     "html-tag-validator": "^1.5.0",
     "mocha": "^6.0.1",
-    "nyc": "^14.1.1",
+    "nyc": "^15.0.0",
     "rewire": "^4.0.1"
   },
   "dependencies": {
