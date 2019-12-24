@@ -62,4 +62,29 @@ describe('tocObj', () => {
 
     tocObj(html, { max_depth: 2 }).should.eql(expected);
   });
+
+  it('no id attribute', () => {
+    const noid = '<h1>Title 1</h1>';
+    const result = tocObj(noid);
+    const checkNull = result[0].id === null;
+
+    result.length.should.eql(1);
+    checkNull.should.eql(true);
+  });
+
+  it('empty value in id attribute', () => {
+    const noid = '<h1 id="">Title 1</h1>';
+    const result = tocObj(noid);
+    const checkNull = result[0].id === null;
+
+    result.length.should.eql(1);
+    checkNull.should.eql(true);
+  });
+
+  it('invalid input', () => {
+    const foo = 'barbaz';
+    const result = tocObj(foo);
+
+    result.length.should.eql(0);
+  });
 });
