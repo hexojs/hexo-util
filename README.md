@@ -31,6 +31,7 @@ Utilities for [Hexo].
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
 - [prettyUrls](#prettyurlsurl-options)
+- [prismHighlight](#prismhighlightstr-options)
 - [relative_url](#relative_urlfrom-to)
 - [slugize](#slugizestr-options)
 - [spawn](#spawncommand-args-options)
@@ -436,6 +437,16 @@ prettyUrls('/foo/bar.html', { trailing_index: false, trailing_html: false });
 prettyUrls('/foo/bar/index.html', { trailing_index: false, trailing_html: false });
 // /foo/bar/
 ```
+
+### prismHighlight(str, [options])
+
+Syntax highlighting for a code block using PrismJS.
+
+Option | Description | Default
+--- | --- | ---
+`lineNumber` | Whether to show line numbers | true
+`language` | Language | `'plain'`
+`tab`| Replace tabs |
 
 ### relative_url(from, to)
 
