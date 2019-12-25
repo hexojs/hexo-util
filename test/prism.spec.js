@@ -23,8 +23,9 @@ function validateHtmlAsync(str, done) {
 
 const endTag = '</code></pre>';
 const lineNumberStartTag = '<span aria-hidden="true" class="line-numbers-rows">';
+const highlightToken = '<span class="token ';
 
-describe('highlight', () => {
+describe('prismHighlight', () => {
   const prismHighlight = require('../lib/prism');
 
   it('default (plain text)', done => {
@@ -44,6 +45,7 @@ describe('highlight', () => {
     result.should.contains(lineNumberStartTag);
     // Code should only be escaped.
     result.should.contains(escapeHTML(input));
+    result.should.not.contains(highlightToken);
 
     validateHtmlAsync(result, done);
   });
@@ -66,7 +68,23 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
-  it('language - javascript (supported by prism)', done => {
+  it('tab - replace \\t', done => {
+    const input = [
+      'function fib(i){',
+      '\tif (i <= 1) return i;',
+      '\treturn fib(i - 1) + fib(i - 2);',
+      '}'
+    ].join('\n');
+
+    // Use language: 'plain' to simplify the test
+    const result = prismHighlight(input, { tab: '  ', language: 'plain' });
+
+    result.should.contains(escapeHTML(input.replace(/\t/g, '  ')));
+
+    validateHtmlAsync(result, done);
+  });
+
+  it('language - javascript (loaded by default)', done => {
     const input = `
       const Prism = require('prismjs');
       /**
@@ -96,11 +114,31 @@ describe('highlight', () => {
     result.should.contains(endTag);
     // Line Number
     result.should.contains(lineNumberStartTag);
+    // Being highlighted
+    result.should.contains(highlightToken);
 
     validateHtmlAsync(result, done);
   });
 
-  it('language - brainfuck (unsupported by prism)', done => {
+  it('language - haml (prismjs/components/)', done => {
+    const input = '= [\'hi\', \'there\', \'reader!\'].join " "';
+
+    const result = prismHighlight(input, { language: 'haml' });
+
+    // Start Tag
+    result.should.contains('<pre class="line-numbers language-haml">');
+    result.should.contains('<code class="language-haml');
+    // End Tag
+    result.should.contains(endTag);
+    // Line Number
+    result.should.contains(lineNumberStartTag);
+    // Being highlighted
+    result.should.contains(highlightToken);
+
+    validateHtmlAsync(result, done);
+  });
+
+  it('language - unsupported by prism', done => {
     const input = `
       [ yet another pi calculation program in bf
 
@@ -126,17 +164,19 @@ describe('highlight', () => {
       <<<+<->>>>[>+<<<+++++++++<->>>-]<<<<<[>>+<<-]+<[->-<]>[>>.<<<<[+.[-]]>>-]>[>>.<<
       -]>[-]>[-]>>>[>>[<<<<<<<<+>>>>>>>>-]<<-]]>>[-]<<<[-]<<<<<<<<]++++++++++.`;
 
-    const result = prismHighlight(input, { language: 'brainfuck' });
+    // prismjs supports brainfuck, so specify a 'brainfuck-foo-bar' to trigger unsupported
+    const result = prismHighlight(input, { language: 'brainfuck-foo-bar' });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-brainfuck">');
-    result.should.contains('<code class="language-brainfuck');
+    result.should.contains('<pre class="line-numbers language-brainfuck-foo-bar">');
+    result.should.contains('<code class="language-brainfuck-foo-bar');
     // End Tag
     result.should.contains(endTag);
     // Line Number
     result.should.contains(lineNumberStartTag);
     // Code should only be escaped.
     result.should.contains(escapeHTML(input));
+    result.should.not.contains(highlightToken);
 
     validateHtmlAsync(result, done);
   });
