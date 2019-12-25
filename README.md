@@ -488,6 +488,10 @@ spawn('cat', 'test.txt').then(function(content){
 
 Removes HTML tags in a string.
 
+### stripIndent(str)
+
+Strip leading whitespace from each line in a string. The line with the least number of leading whitespace, ignoring empty lines, determines the number to remove. Useful for removing redundant indentation.
+
 ### wordWrap(str, [options])
 
 Wraps the string no longer than line width. This method breaks on the first whitespace character that does not exceed line width.
