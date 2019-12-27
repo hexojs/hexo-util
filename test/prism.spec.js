@@ -37,8 +37,8 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input);
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-plain">');
-    result.should.contains('<code class="language-plain');
+    result.should.contains('<pre class="line-numbers language-none">');
+    result.should.contains('<code class="language-none');
     // End Tag
     result.should.contains(endTag);
     // Line Number
@@ -77,7 +77,7 @@ describe('prismHighlight', () => {
     ].join('\n');
 
     // Use language: 'plain' to simplify the test
-    const result = prismHighlight(input, { tab: '  ', language: 'plain' });
+    const result = prismHighlight(input, { tab: '  ', lang: 'plain' });
 
     result.should.contains(escapeHTML(input.replace(/\t/g, '  ')));
 
@@ -105,7 +105,7 @@ describe('prismHighlight', () => {
         return escapeHTML(code);
       }`;
 
-    const result = prismHighlight(input, { language: 'js' });
+    const result = prismHighlight(input, { lang: 'js' });
 
     // Start Tag
     result.should.contains('<pre class="line-numbers language-js">');
@@ -123,7 +123,7 @@ describe('prismHighlight', () => {
   it('language - haml (prismjs/components/)', done => {
     const input = '= [\'hi\', \'there\', \'reader!\'].join " "';
 
-    const result = prismHighlight(input, { language: 'haml' });
+    const result = prismHighlight(input, { lang: 'haml' });
 
     // Start Tag
     result.should.contains('<pre class="line-numbers language-haml">');
@@ -165,7 +165,7 @@ describe('prismHighlight', () => {
       -]>[-]>[-]>>>[>>[<<<<<<<<+>>>>>>>>-]<<-]]>>[-]<<<[-]<<<<<<<<]++++++++++.`;
 
     // prismjs supports brainfuck, so specify a 'brainfuck-foo-bar' to trigger unsupported
-    const result = prismHighlight(input, { language: 'brainfuck-foo-bar' });
+    const result = prismHighlight(input, { lang: 'brainfuck-foo-bar' });
 
     // Start Tag
     result.should.contains('<pre class="line-numbers language-brainfuck-foo-bar">');

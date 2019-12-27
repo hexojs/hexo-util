@@ -445,7 +445,7 @@ Syntax highlighting for a code block using PrismJS.
 Option | Description | Default
 --- | --- | ---
 `lineNumber` | Whether to show line numbers | true
-`language` | Language | `'plain'`
+`lang` | Language | `'none'`
 `tab`| Replace tabs |
 
 ### relative_url(from, to)
