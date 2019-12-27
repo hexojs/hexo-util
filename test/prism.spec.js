@@ -180,4 +180,40 @@ describe('prismHighlight', () => {
 
     validateHtmlAsync(result, done);
   });
+
+  it('isPreprocess - false', done => {
+    const input = `
+      const Prism = require('prismjs');
+      /**
+        * Wrapper of Prism.highlight()
+        * @param {String} code
+        * @param {String} language
+        */
+      function prismHighlight(code, language) {
+        // Prism has not load the language pattern
+        if (!Prism.languages[language]) prismLoadLanguages(language);
+
+        if (Prism.languages[language]) {
+            // Prism escapes output by default
+            return Prism.highlight(unescapeHTML(code), Prism.languages[language], language);
+        }
+
+        // Current language is not supported by Prism, return origin code;
+        return escapeHTML(code);
+      }`;
+
+    const result = prismHighlight(input, { lang: 'js', isPreprocess: false });
+
+    // Start Tag
+    result.should.contains('<pre class="line-numbers language-js">');
+    result.should.contains('<code class="language-js');
+    // End Tag
+    result.should.contains(endTag);
+    // Line Number
+    result.should.not.contains(lineNumberStartTag);
+    // Being highlighted
+    result.should.not.contains(highlightToken);
+
+    validateHtmlAsync(result, done);
+  });
 });

@@ -447,6 +447,9 @@ Option | Description | Default
 `lineNumber` | Whether to show line numbers | true
 `lang` | Language | `'none'`
 `tab`| Replace tabs |
+`isPreprocess` | Enable preprocess or not | true
+
+When `isPreprocess` is enabled, `prismHighlight()` will return PrismJS processed HTML snippet. Otherwise `str` will only be escaped and `prismHighlight()` will return the HTML snippet that is suitable for `prism.js` working in the Browser.
 
 ### relative_url(from, to)
 
