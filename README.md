@@ -448,8 +448,12 @@ Option | Description | Default
 `lang` | Language | `'none'`
 `tab`| Replace tabs |
 `isPreprocess` | Enable preprocess or not | true
+`mark` | Highlight specific line |
+`firstLine` | First line number |
 
 When `isPreprocess` is enabled, `prismHighlight()` will return PrismJS processed HTML snippet. Otherwise `str` will only be escaped and `prismHighlight()` will return the HTML snippet that is suitable for `prism.js` working in the Browser.
+
+`mark` options will have effect only when `isPreprocess` is disabled. `firstLine` options will have effect only when `isPreprocess` is disabled and `lineNumber` is enabled.
 
 ### relative_url(from, to)
 
