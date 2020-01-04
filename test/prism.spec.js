@@ -216,4 +216,67 @@ describe('prismHighlight', () => {
 
     validateHtmlAsync(result, done);
   });
+
+  it('mark', done => {
+    const input = `
+      [ yet another pi calculation program in bf
+
+        Just like for pi16.b the accuracy of the result depends on the cellsize:
+
+         - using  8 bit cells causes an overflow after 4 digits
+         - using 16 bit cells causes an overflow after 537 digits
+         - using 32 bit cells causes an overflow after several millions of digits
+
+        It's about ~38 times shorter than pi16.b, ~364 times faster and works with
+        not-wrapping (bignum) implementations. 
+
+        by Felix Nawothnig (felix.nawothnig@t-online.de) ]
+
+      >  +++++ +++++ +++++ (15 digits)
+
+      [<+>>>>>>>>++++++++++<<<<<<<-]>+++++[<+++++++++>-]+>>>>>>+[<<+++[>>[-<]<[>]<-]>>
+      [>+>]<[<]>]>[[->>>>+<<<<]>>>+++>-]<[<<<<]<<<<<<<<+[->>>>>>>>>>>>[<+[->>>>+<<<<]>
+      >>>>]<<<<[>>>>>[<<<<+>>>>-]<<<<<-[<<++++++++++>>-]>>>[<<[<+<<+>>>-]<[>+<-]<++<<+
+      >>>>>>-]<<[-]<<-<[->>+<-[>>>]>[[<+>-]>+>>]<<<<<]>[-]>+<<<-[>>+<<-]<]<<<<+>>>>>>>
+      >[-]>[<<<+>>>-]<<++++++++++<[->>+<-[>>>]>[[<+>-]>+>>]<<<<<]>[-]>+>[<<+<+>>>-]<<<
+      <+<+>>[-[-[-[-[-[-[-[-[-<->[-<+<->>]]]]]]]]]]<[+++++[<<<++++++++<++++++++>>>>-]<
+      <<<+<->>>>[>+<<<+++++++++<->>>-]<<<<<[>>+<<-]+<[->-<]>[>>.<<<<[+.[-]]>>-]>[>>.<<
+      -]>[-]>[-]>>>[>>[<<<<<<<<+>>>>>>>>-]<<-]]>>[-]<<<[-]<<<<<<<<]++++++++++.`;
+
+    // isPreprocess - true (mark should be disabled)
+    const result1 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: true, mark: '1,3-6,10' });
+    // Start Tag
+    result1.should.contains('<pre class="line-numbers language-brainfuck">');
+
+    // isPreprocess - false
+    const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10' });
+    // Start Tag
+    result2.should.contains('<pre class="line-numbers language-brainfuck" data-line="1,3-6,10">');
+
+    // Only validate the result2
+    validateHtmlAsync(result2, done);
+  });
+
+  it('firstLine', done => {
+    const input = [
+      'function fib(i){',
+      '  if (i <= 1) return i;',
+      '  return fib(i - 1) + fib(i - 2);',
+      '}'
+    ].join('\n');
+
+    const result1 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: true, firstLine: '-5' });
+    result1.should.contains('<pre class="line-numbers language-js" data-start="-5">');
+
+    // isPreprocess - true (firstLine should be disabled)
+    const result2 = prismHighlight(input, { lang: 'js', isPreprocess: true, lineNumber: true, firstLine: '-5' });
+    result2.should.contains('<pre class="line-numbers language-js">');
+
+    // lineNumber - false (firstLine should be disabled)
+    const result3 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: false, firstLine: '-5' });
+    result3.should.contains('<pre class="language-js">');
+
+    // Only validate the result1
+    validateHtmlAsync(result1, done);
+  });
 });
