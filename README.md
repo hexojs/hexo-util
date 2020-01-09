@@ -453,7 +453,7 @@ Option | Description | Default
 
 When `isPreprocess` is enabled, `prismHighlight()` will return PrismJS processed HTML snippet. Otherwise `str` will only be escaped and `prismHighlight()` will return the HTML snippet that is suitable for `prism.js` working in the Browser.
 
-`mark` options will have effect only when `isPreprocess` is disabled. `firstLine` options will have effect only when `isPreprocess` is disabled and `lineNumber` is enabled.
+`mark` and `firstLine` options will have effect only when `isPreprocess` is disabled.
 
 ### relative_url(from, to)
 
