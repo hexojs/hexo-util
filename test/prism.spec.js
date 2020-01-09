@@ -279,4 +279,44 @@ describe('prismHighlight', () => {
     // Only validate the result1
     validateHtmlAsync(result1, done);
   });
+
+  it('offset - mark & firstLine', done => {
+    const input = `
+      [ yet another pi calculation program in bf
+
+        Just like for pi16.b the accuracy of the result depends on the cellsize:
+
+         - using  8 bit cells causes an overflow after 4 digits
+         - using 16 bit cells causes an overflow after 537 digits
+         - using 32 bit cells causes an overflow after several millions of digits
+
+        It's about ~38 times shorter than pi16.b, ~364 times faster and works with
+        not-wrapping (bignum) implementations. 
+
+        by Felix Nawothnig (felix.nawothnig@t-online.de) ]
+
+      >  +++++ +++++ +++++ (15 digits)
+
+      [<+>>>>>>>>++++++++++<<<<<<<-]>+++++[<+++++++++>-]+>>>>>>+[<<+++[>>[-<]<[>]<-]>>
+      [>+>]<[<]>]>[[->>>>+<<<<]>>>+++>-]<[<<<<]<<<<<<<<+[->>>>>>>>>>>>[<+[->>>>+<<<<]>
+      >>>>]<<<<[>>>>>[<<<<+>>>>-]<<<<<-[<<++++++++++>>-]>>>[<<[<+<<+>>>-]<[>+<-]<++<<+
+      >>>>>>-]<<[-]<<-<[->>+<-[>>>]>[[<+>-]>+>>]<<<<<]>[-]>+<<<-[>>+<<-]<]<<<<+>>>>>>>
+      >[-]>[<<<+>>>-]<<++++++++++<[->>+<-[>>>]>[[<+>-]>+>>]<<<<<]>[-]>+>[<<+<+>>>-]<<<
+      <+<+>>[-[-[-[-[-[-[-[-[-<->[-<+<->>]]]]]]]]]]<[+++++[<<<++++++++<++++++++>>>>-]<
+      <<<+<->>>>[>+<<<+++++++++<->>>-]<<<<<[>>+<<-]+<[->-<]>[>>.<<<<[+.[-]]>>-]>[>>.<<
+      -]>[-]>[-]>>>[>>[<<<<<<<<+>>>>>>>>-]<<-]]>>[-]<<<[-]<<<<<<<<]++++++++++.`;
+
+    // isPreprocess - true (mark should be disabled)
+    const result1 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: true, mark: '1,3-6,10', firstLine: '-5' });
+    // Start Tag
+    result1.should.contains('<pre class="line-numbers language-brainfuck">');
+
+    // isPreprocess - false
+    const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10', firstLine: '-5' });
+    // Start Tag
+    result2.should.contains('<pre class="line-numbers language-brainfuck" data-start="-5" data-line="1,3-6,10" data-line-offset="-6">');
+
+    // Only validate the result2
+    validateHtmlAsync(result2, done);
+  });
 });
