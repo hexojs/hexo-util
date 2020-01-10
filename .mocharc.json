@@ -1,6 +1,0 @@
-{
-    "reporter": "spec",
-    "opts": false,
-    "package": "./package.json",
-    "spec": "test/*.spec.js"
-}

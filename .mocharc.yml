@@ -1,0 +1,3 @@
+reporter: spec
+opts: false
+spec: "test/*.spec.js"
