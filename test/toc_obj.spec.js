@@ -66,19 +66,15 @@ describe('tocObj', () => {
   it('no id attribute', () => {
     const noid = '<h1>Title 1</h1>';
     const result = tocObj(noid);
-    const checkNull = result[0].id === null;
 
-    result.length.should.eql(1);
-    checkNull.should.eql(true);
+    result[0].id.should.eql('');
   });
 
   it('empty value in id attribute', () => {
     const noid = '<h1 id="">Title 1</h1>';
     const result = tocObj(noid);
-    const checkNull = result[0].id === null;
 
-    result.length.should.eql(1);
-    checkNull.should.eql(true);
+    result[0].id.should.eql('');
   });
 
   it('invalid input', () => {
