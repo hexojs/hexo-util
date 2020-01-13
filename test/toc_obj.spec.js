@@ -113,6 +113,20 @@ describe('tocObj', () => {
       result[0].text.should.eql('foo');
     });
 
+    it('<a> element - single permalink', () => {
+      const input = '<h1><a>#</a></h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('#');
+    });
+
+    it('<a> element - non-permalink', () => {
+      const input = '<h1><a>a</a> one</h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('a one');
+    });
+
     it('non-permalink <a> element + text', () => {
       const input = [
         '<h1><a>foo</a>bar</h1>',
