@@ -151,4 +151,11 @@ describe('htmlTag', () => {
       content: 'bar " baz'
     }).should.eql('<meta name="foo image" content="bar &quot; baz">');
   });
+
+  it('meta tag - numeric property', () => {
+    htmlTag('meta', {
+      property: 'fb:app_id',
+      content: 123456789
+    }).should.eql('<meta property="fb:app_id" content="123456789">');
+  });
 });
