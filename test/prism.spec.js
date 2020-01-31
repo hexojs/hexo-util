@@ -108,7 +108,7 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input, { lang: 'js' });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-js">');
+    result.should.contains('<pre class="line-numbers language-js" data-language="js">');
     result.should.contains('<code class="language-js');
     // End Tag
     result.should.contains(endTag);
@@ -126,7 +126,7 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input, { lang: 'haml' });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-haml">');
+    result.should.contains('<pre class="line-numbers language-haml" data-language="haml">');
     result.should.contains('<code class="language-haml');
     // End Tag
     result.should.contains(endTag);
@@ -168,7 +168,7 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input, { lang: 'brainfuck-foo-bar' });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-brainfuck-foo-bar">');
+    result.should.contains('<pre class="line-numbers language-brainfuck-foo-bar" data-language="brainfuck-foo-bar">');
     result.should.contains('<code class="language-brainfuck-foo-bar');
     // End Tag
     result.should.contains(endTag);
@@ -205,7 +205,7 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input, { lang: 'js', isPreprocess: false });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-js">');
+    result.should.contains('<pre class="line-numbers language-js" data-language="js">');
     result.should.contains('<code class="language-js');
     // End Tag
     result.should.contains(endTag);
@@ -246,12 +246,12 @@ describe('prismHighlight', () => {
     // isPreprocess - true (mark should be disabled)
     const result1 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: true, mark: '1,3-6,10' });
     // Start Tag
-    result1.should.contains('<pre class="line-numbers language-brainfuck">');
+    result1.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck">');
 
     // isPreprocess - false
     const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10' });
     // Start Tag
-    result2.should.contains('<pre class="line-numbers language-brainfuck" data-line="1,3-6,10">');
+    result2.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-line="1,3-6,10">');
 
     // Only validate the result2
     validateHtmlAsync(result2, done);
@@ -266,15 +266,15 @@ describe('prismHighlight', () => {
     ].join('\n');
 
     const result1 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: true, firstLine: '-5' });
-    result1.should.contains('<pre class="line-numbers language-js" data-start="-5">');
+    result1.should.contains('<pre class="line-numbers language-js" data-language="js" data-start="-5">');
 
     // isPreprocess - true (firstLine should be disabled)
     const result2 = prismHighlight(input, { lang: 'js', isPreprocess: true, lineNumber: true, firstLine: '-5' });
-    result2.should.contains('<pre class="line-numbers language-js">');
+    result2.should.contains('<pre class="line-numbers language-js" data-language="js">');
 
     // lineNumber - false (firstLine should be disabled)
     const result3 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: false, firstLine: '-5' });
-    result3.should.contains('<pre class="language-js">');
+    result3.should.contains('<pre class="language-js" data-language="js">');
 
     // Only validate the result1
     validateHtmlAsync(result1, done);
@@ -309,12 +309,12 @@ describe('prismHighlight', () => {
     // isPreprocess - true (mark should be disabled)
     const result1 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: true, mark: '1,3-6,10', firstLine: '-5' });
     // Start Tag
-    result1.should.contains('<pre class="line-numbers language-brainfuck">');
+    result1.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck">');
 
     // isPreprocess - false
     const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10', firstLine: '-5' });
     // Start Tag
-    result2.should.contains('<pre class="line-numbers language-brainfuck" data-start="-5" data-line="1,3-6,10" data-line-offset="-6">');
+    result2.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-start="-5" data-line="1,3-6,10" data-line-offset="-6">');
 
     // Only validate the result2
     validateHtmlAsync(result2, done);
