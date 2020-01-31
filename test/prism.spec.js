@@ -37,7 +37,7 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input);
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-none" data-language="none">');
+    result.should.contains('<pre class="line-numbers language-none">');
     result.should.contains('<code class="language-none');
     // End Tag
     result.should.contains(endTag);
