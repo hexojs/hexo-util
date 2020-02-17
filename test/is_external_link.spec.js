@@ -15,6 +15,7 @@ describe('isExternalLink', () => {
 
   it('external link', () => {
     isExternalLink('https://hexo.io/', ctx.config.url).should.eql(true);
+    isExternalLink('//hexo.io/', ctx.config.url).should.eql(true);
   });
 
   it('internal link', () => {
@@ -22,6 +23,7 @@ describe('isExternalLink', () => {
     isExternalLink('//example.com', ctx.config.url).should.eql(false);
     isExternalLink('//example.com/archives/foo.html', ctx.config.url).should.eql(false);
     isExternalLink('/archives/foo.html', ctx.config.url).should.eql(false);
+    isExternalLink('/archives//hexo.io', ctx.config.url).should.eql(false);
   });
 
   it('hash, mailto, javascript', () => {
