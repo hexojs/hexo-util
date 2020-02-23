@@ -66,19 +66,15 @@ describe('tocObj', () => {
   it('no id attribute', () => {
     const noid = '<h1>Title 1</h1>';
     const result = tocObj(noid);
-    const checkNull = result[0].id === null;
 
-    result.length.should.eql(1);
-    checkNull.should.eql(true);
+    result[0].id.should.eql('');
   });
 
   it('empty value in id attribute', () => {
     const noid = '<h1 id="">Title 1</h1>';
     const result = tocObj(noid);
-    const checkNull = result[0].id === null;
 
-    result.length.should.eql(1);
-    checkNull.should.eql(true);
+    result[0].id.should.eql('');
   });
 
   it('invalid input', () => {
@@ -86,5 +82,88 @@ describe('tocObj', () => {
     const result = tocObj(foo);
 
     result.length.should.eql(0);
+  });
+
+  it('empty text', () => {
+    const input = '<h1></h1>';
+    const result = tocObj(input);
+
+    result[0].text.should.eql('');
+  });
+
+  describe('children element', () => {
+    it('<a> element with permalink + text', () => {
+      const input = [
+        '<h1><a>#</a>foo</h1>',
+        '<h1>foo<a>#</a></h1>',
+        '<h1><a>#</a>foo<a>#</a></h1>',
+        '<h1><a># </a>foo</h1>',
+        '<h1><a># </a>foo<a> #</a></h1>',
+        '<h1><a>号</a>foo</h1>'
+      ];
+      const result = input.map(str => tocObj(str));
+
+      result.forEach(str => str[0].text.should.eql('foo'));
+    });
+
+    it('<a> element - no text', () => {
+      const input = '<h1><a>foo</a></h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('foo');
+    });
+
+    it('<a> element - single permalink', () => {
+      const input = '<h1><a>#</a></h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('#');
+    });
+
+    it('<a> element - non-permalink', () => {
+      const input = '<h1><a>a</a> one</h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('a one');
+    });
+
+    it('non-permalink <a> element + text', () => {
+      const input = [
+        '<h1><a>foo</a>bar</h1>',
+        '<h1>foo<a>bar</a></h1>'
+      ];
+      const result = input.map(str => tocObj(str));
+
+      result.forEach(str => str[0].text.should.eql('foobar'));
+    });
+
+    it('non-permalink <a> element + unicode text', () => {
+      const input = [
+        '<h1><a>这是</a>测试</h1>',
+        '<h1>这是<a>测试</a></h1>'
+      ];
+      const result = input.map(str => tocObj(str));
+
+      result.forEach(str => str[0].text.should.eql('这是测试'));
+    });
+
+    it('multiple <a> elements', () => {
+      const input = '<h1><a>foo</a><a>bar</a></h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('foobar');
+    });
+
+    it('element + text', () => {
+      const input = [
+        '<h1><i>foo</i>barbaz</h1>',
+        '<h1><i>foo</i>bar</i>baz</h1>',
+        '<h1>foo<i>bar</i>baz</h1>',
+        '<h1>foobarba<i>z</i></h1>'
+      ];
+      const result = input.map(str => tocObj(str));
+
+      result.forEach(str => str[0].text.should.eql('foobarbaz'));
+    });
   });
 });
