@@ -2,6 +2,7 @@
 
 require('chai').should();
 const escapeHTML = require('../lib/escape_html');
+const stripIndent = require('strip-indent');
 
 const validator = require('html-tag-validator');
 function validateHtmlAsync(str, done) {
@@ -44,7 +45,7 @@ describe('prismHighlight', () => {
     // Line Number
     result.should.contains(lineNumberStartTag);
     // Code should only be escaped.
-    result.should.contains(escapeHTML(input));
+    result.should.contains(escapeHTML(stripIndent(input)));
     result.should.not.contains(highlightToken);
 
     validateHtmlAsync(result, done);
@@ -175,7 +176,7 @@ describe('prismHighlight', () => {
     // Line Number
     result.should.contains(lineNumberStartTag);
     // Code should only be escaped.
-    result.should.contains(escapeHTML(input));
+    result.should.contains(escapeHTML(stripIndent(input)));
     result.should.not.contains(highlightToken);
 
     validateHtmlAsync(result, done);
