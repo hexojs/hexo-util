@@ -9,8 +9,13 @@ describe('isExternalLink', () => {
 
   const isExternalLink = require('../lib/is_external_link');
 
+  it('invalid url', () => {
+    isExternalLink('https://localhost:4000你好', ctx.config.url).should.eql(false);
+  });
+
   it('external link', () => {
     isExternalLink('https://hexo.io/', ctx.config.url).should.eql(true);
+    isExternalLink('//hexo.io/', ctx.config.url).should.eql(true);
   });
 
   it('internal link', () => {
@@ -18,6 +23,7 @@ describe('isExternalLink', () => {
     isExternalLink('//example.com', ctx.config.url).should.eql(false);
     isExternalLink('//example.com/archives/foo.html', ctx.config.url).should.eql(false);
     isExternalLink('/archives/foo.html', ctx.config.url).should.eql(false);
+    isExternalLink('/archives//hexo.io', ctx.config.url).should.eql(false);
   });
 
   it('hash, mailto, javascript', () => {
