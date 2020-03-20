@@ -7,19 +7,19 @@ describe('htmlTag', () => {
   const encodeURL = require('../lib/encode_url');
 
   it('tag', () => {
-    htmlTag('hr').should.eql('<hr>');
+    htmlTag('hr').should.eql('<hr />');
   });
 
   it('tag + attrs', () => {
     htmlTag('img', {
       src: 'http://placekitten.com/200/300'
-    }).should.eql('<img src="http://placekitten.com/200/300">');
+    }).should.eql('<img src="http://placekitten.com/200/300" />');
 
     htmlTag('img', {
       src: 'http://placekitten.com/200/300',
       width: 200,
       height: 300
-    }).should.eql('<img src="http://placekitten.com/200/300" width="200" height="300">');
+    }).should.eql('<img src="http://placekitten.com/200/300" width="200" height="300" />');
   });
 
   it('tag + attrs + text', () => {
@@ -32,7 +32,7 @@ describe('htmlTag', () => {
     htmlTag('img', {
       src: 'http://placekitten.com/200/300',
       alt: ''
-    }).should.eql('<img src="http://placekitten.com/200/300" alt="">');
+    }).should.eql('<img src="http://placekitten.com/200/300" alt="" />');
   });
 
   it('passing a zero as attribute', () => {
@@ -67,7 +67,7 @@ describe('htmlTag', () => {
   it('encode url', () => {
     htmlTag('img', {
       src: 'http://foo.com/bár.jpg'
-    }).should.eql('<img src="http://foo.com/b%C3%A1r.jpg">');
+    }).should.eql('<img src="http://foo.com/b%C3%A1r.jpg" />');
   });
 
   it('escape html tag', () => {
@@ -85,7 +85,7 @@ describe('htmlTag', () => {
   it('srcset', () => {
     htmlTag('img', {
       srcset: 'fóo.jpg 320w,/foo/bár.jpeg 480w,default.png'
-    }).should.eql('<img srcset="f%C3%B3o.jpg 320w,/foo/b%C3%A1r.jpeg 480w,default.png">');
+    }).should.eql('<img srcset="f%C3%B3o.jpg 320w,/foo/b%C3%A1r.jpeg 480w,default.png" />');
   });
 
   it('srcset with whitespace', () => {
@@ -95,7 +95,7 @@ describe('htmlTag', () => {
         default.png`
     }).should.eql(`<img srcset="f%C3%B3o.jpg 320w,
         /foo/b%C3%A1r.jpeg 480w,
-        default.png">`);
+        default.png" />`);
   });
 
   it('should not encode style tag', () => {
@@ -119,12 +119,12 @@ describe('htmlTag', () => {
     htmlTag('meta', {
       property: 'og:title',
       content: 'foo & bar'
-    }).should.eql('<meta property="og:title" content="foo &amp; bar">');
+    }).should.eql('<meta property="og:title" content="foo &amp; bar" />');
 
     htmlTag('meta', {
       name: 'twitter:title',
       content: 'foo " bar'
-    }).should.eql('<meta name="twitter:title" content="foo &quot; bar">');
+    }).should.eql('<meta name="twitter:title" content="foo &quot; bar" />');
   });
 
   it('meta tag - url', () => {
@@ -134,28 +134,28 @@ describe('htmlTag', () => {
     htmlTag('meta', {
       property: 'og:url',
       content
-    }).should.eql(`<meta property="og:url" content="${encoded}">`);
+    }).should.eql(`<meta property="og:url" content="${encoded}" />`);
 
     htmlTag('meta', {
       property: 'og:image:secure_url',
       content
-    }).should.eql(`<meta property="og:image:secure_url" content="${encoded}">`);
+    }).should.eql(`<meta property="og:image:secure_url" content="${encoded}" />`);
 
     htmlTag('meta', {
       name: 'twitter:image',
       content
-    }).should.eql(`<meta name="twitter:image" content="${encoded}">`);
+    }).should.eql(`<meta name="twitter:image" content="${encoded}" />`);
 
     htmlTag('meta', {
       name: 'foo image',
       content: 'bar " baz'
-    }).should.eql('<meta name="foo image" content="bar &quot; baz">');
+    }).should.eql('<meta name="foo image" content="bar &quot; baz" />');
   });
 
   it('meta tag - numeric property', () => {
     htmlTag('meta', {
       property: 'fb:app_id',
       content: 123456789
-    }).should.eql('<meta property="fb:app_id" content="123456789">');
+    }).should.eql('<meta property="fb:app_id" content="123456789" />');
   });
 });
