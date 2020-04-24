@@ -20,12 +20,4 @@ describe('CacheStream', () => {
       cacheStream.getCache().should.eql(content);
     });
   });
-
-  it('destroy', () => {
-    const cacheStream = new CacheStream();
-    cacheStream._cache = [Buffer.alloc(1)];
-
-    cacheStream.destroy();
-    cacheStream._cache.should.have.length(0);
-  });
 });
