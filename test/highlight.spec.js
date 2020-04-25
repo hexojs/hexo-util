@@ -220,11 +220,11 @@ describe('highlight', () => {
 
   it('highlight sublanguages', done => {
     const str = '<node><?php echo "foo"; ?></node>';
-    const result = highlight(str, {lang: 'xml'});
+    const result = highlight(str, { autoDetect: true });
     result.should.eql([
-      '<figure class="highlight xml"><table><tr>',
+      '<figure class="highlight php-template"><table><tr>',
       gutter(1, 1),
-      code('<span class="tag">&lt;<span class="name">node</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">node</span>&gt;</span>', null),
+      code('<span class="xml"><span class="tag">&lt;<span class="name">node</span>&gt;</span></span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span>', null),
       end
     ].join(''));
     validateHtmlAsync(result, done);
