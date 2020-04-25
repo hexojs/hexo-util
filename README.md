@@ -287,7 +287,7 @@ Option | Description | Default
 `lang` | Language |
 `caption` | Caption |
 `tab`| Replace tabs |
-`autoDetect` | Detect language automatically | false
+`autoDetect` | Detect language automatically (warning: slow)<br>_Sublanguage highlight requires `autoDetect` to be enabled and `lang` to be unset_  | false
 `mark` | Line highlight specific line(s) |
 
 ### htmlTag(tag, attrs, text, escape)
