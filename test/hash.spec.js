@@ -18,16 +18,6 @@ describe('hash', () => {
     hash.hash(content).should.eql(sha1(content));
   });
 
-  it('HashStream', () => {
-    const content = '123456';
-    const stream = new hash.HashStream();
-
-    stream.write(Buffer.from(content));
-    stream.end();
-
-    stream.read().should.eql(sha1(content));
-  });
-
   it('createSha1Hash', () => {
     const _sha1 = hash.createSha1Hash();
     const content = '123456';
