@@ -88,4 +88,12 @@ describe('full_url_for', () => {
       fullUrlFor(url).should.eql(url);
     });
   });
+
+  it('config url is empty', () => {
+    ctx.config.url = '';
+    fullUrlFor('test/').should.eql('/test/');
+    fullUrlFor('https://hexo.io/').should.eql('https://hexo.io/');
+    fullUrlFor('/foo/bar.html').should.eql('/foo/bar');
+    fullUrlFor('#test').should.eql('/#test');
+  });
 });
