@@ -88,4 +88,28 @@ describe('full_url_for', () => {
       fullUrlFor(url).should.eql(url);
     });
   });
+
+  it('config url is empty', () => {
+    ctx.config.url = '';
+    fullUrlFor('test/').should.eql('/test/');
+    fullUrlFor('https://hexo.io/').should.eql('https://hexo.io/');
+    fullUrlFor('/foo/bar.html').should.eql('/foo/bar');
+    fullUrlFor('#test').should.eql('/#test');
+  });
+
+  it('config url is null', () => {
+    ctx.config.url = null;
+    fullUrlFor('test/').should.eql('/test/');
+    fullUrlFor('https://hexo.io/').should.eql('https://hexo.io/');
+    fullUrlFor('/foo/bar.html').should.eql('/foo/bar');
+    fullUrlFor('#test').should.eql('/#test');
+  });
+
+  it('config url is undefined', () => {
+    delete ctx.config.url;
+    fullUrlFor('test/').should.eql('/test/');
+    fullUrlFor('https://hexo.io/').should.eql('https://hexo.io/');
+    fullUrlFor('/foo/bar.html').should.eql('/foo/bar');
+    fullUrlFor('#test').should.eql('/#test');
+  });
 });
