@@ -85,6 +85,20 @@ cache.apply('qux', 456);
 cache.apply('qux', '789');
 // 456
 
+// size()
+cache.size();
+// 3
+
+// dump()
+cache.dump();
+/*
+{
+  foo: 'bar',
+  baz: 123,
+  qux: 456
+}
+*/
+
 // del(key)
 cache.del('baz');
 cache.has('baz');
@@ -94,6 +108,8 @@ cache.has('baz');
 cache.flush();
 cache.has('foo');
 // false
+cache.size();
+// 0
 ```
 
 ### CacheStream()
