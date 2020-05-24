@@ -185,6 +185,23 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
+  it('caption (wrap: false)', done => {
+    const result = highlight(testString, {
+      gutter: false,
+      wrap: false,
+      caption: 'hello world'
+    });
+
+    result.should.eql([
+      '<pre>',
+      '<figcaption>hello world</figcaption>',
+      '<code class="highlight plain">',
+      entities.encode(testString),
+      '</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
   it('tab', done => {
     const str = [
       'function fib(i){',
