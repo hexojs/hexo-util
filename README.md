@@ -41,6 +41,7 @@ Utilities for [Hexo].
 - [truncate](#truncatestr-options)
 - [unescapeHTML](#unescapehtmlstr)
 - [url_for](#url_forpath-option)
+- [WorkerPool](#workerpool)
 - [bind(hexo)](#bindhexo)
 
 ## Installation
@@ -663,6 +664,85 @@ url_for('/css/style.css')
  */
 url_for('/css/style.css', {relative: false})
 // /css/style.css
+```
+
+## WorkerPool
+
+A worker management utility designed for multi-core job running.
+
+**`new WorkerPool(workerPath[, numberOfThreads])`**
+
+initializing a WorkerPool.
+
+- `workerPath`: `<string>` The path to `worker.js` file
+- `numberOfThreads`: `<number>` The number of workers will be created. Default value is `require('os').cpus().length`.
+
+```js
+const { WorkerPool } = require('hexo-util');
+const pool = new WorkerPool(workerPath, 2);
+```
+
+**`workerpool.run(data)`**
+
+Add tasks to the queue and execute when there is an inactive worker.
+
+- `data`: `<any>` The parameter will be passed to `worker.js` function.
+- Return: `<Promise>`
+
+```js
+async () => {
+  const result = await pool.run();
+}
+```
+
+**`workerpool.destroy(force)`**
+
+Destroy the WorkerPool by terminating every workers created under the WorkerPool.
+
+- `force`: `<boolean>`. Default is `false`.
+
+```js
+pool.destroy();
+```
+
+If there is a worker is still executing, an Error will be thrown:
+
+```
+The worker [id of the worker] is still runing!
+```
+
+You can force destroy a workerpool by passing a `true` to it:
+
+```js
+pool.destroy(true);
+```
+
+----
+
+Also, there are other internal functions. Avoid using them directly.
+
+- `workerpool.getInactiveWorkerId()` - Rerturn the id of the first incactive worker in the workerpool. Return `-1` if no incactive worker is found.
+- `workerpool.runWorker(workerId, taskObj)` - Run given task in a specific worker.
+
+----
+
+The example of the `worker.js` could be found at [`scripts/dummy_worker.js`](./scripts/dummy_worker.js):
+
+```js
+const { isMainThread, parentPort } = require('worker_threads');
+
+if (isMainThread) throw new Error('It is not a worker, it is now at Main Thread.');
+
+const job = ({ data = 10 }) => {
+  const start = new Date();
+  while (new Date() - start < data) { /* time consuming */ }
+  return 'Worker is Cool!';
+};
+
+parentPort.on('message', data => {
+  const result = job(data);
+  parentPort.postMessage(result);
+});
 ```
 
 ## bind(hexo)
