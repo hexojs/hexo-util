@@ -5,7 +5,11 @@ const { isMainThread, parentPort } = require('worker_threads');
 
 if (isMainThread) throw new Error('It is not a worker, it is now at Main Thread.');
 
-const job = ({ data = 10 }) => {
+const job = ({ data = 10, error = false }) => {
+  if (error) {
+    throw new Error('There goes an Error!');
+  }
+
   const start = new Date();
   while (new Date() - start < data) { /* */ }
 

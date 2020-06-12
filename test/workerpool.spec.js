@@ -2,6 +2,8 @@
 
 require('chai').should();
 
+const { delay } = require('bluebird');
+
 // Worker Thread is available since Node.js 10.5.0
 // eslint-disable-next-line node/no-unsupported-features/node-builtins
 const { Worker } = require('worker_threads');
@@ -37,18 +39,39 @@ describe('WorkerPool', () => {
     Object.keys(pool2._activeWorkersById).length.should.eql(3);
   });
 
+  it('init - numberOfThreads < 1', () => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const pool = new WorkerPool(workerPath, 0);
+    } catch (e) {
+      e.message.should.eql('Number of threads should be greater or equal than 1!');
+    }
+  });
+
   it('run() - this should show "(500ms)" =>', async () => {
     const result = await pool.run({ data: 500 });
     result.should.eql('Worker is Cool!');
   });
 
-  it('run() - push jobs to queue', () => {
+  it('run() - push jobs to queue', async () => {
     for (let i = 0; i < 10; i++) {
       pool3.run({ data: 1000 });
     }
 
     pool3.getInactiveWorkerId().should.eql(-1);
     pool3._queue.length.should.eql(8);
+
+    await delay(1000);
+
+    pool3._queue.length.should.lessThan(8);
+  });
+
+  it('run() - error handling', () => {
+    const pool = new WorkerPool(workerPath, 1);
+
+    pool.run({ error: true }).catch(e => {
+      e.message.should.eql('There goes an Error!');
+    });
   });
 
   it('destroy()', () => {
