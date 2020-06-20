@@ -8,7 +8,6 @@ cache:
   npm: true
 
 node_js:
-  - "10"
   - "12"
   - "13"
   - "14"
