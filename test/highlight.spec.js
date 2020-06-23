@@ -241,7 +241,7 @@ describe('highlight', () => {
     result.should.eql([
       '<figure class="highlight php-template"><table><tr>',
       gutter(1, 1),
-      code('<span class="xml"><span class="tag">&lt;<span class="name">node</span>&gt;</span></span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">"foo"</span>; <span class="meta">?&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span>', null),
+      code('<span class="xml"><span class="tag">&lt;<span class="name">node</span>&gt;</span></span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">&quot;foo&quot;</span>; <span class="meta">?&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span>', null),
       end
     ].join(''));
     validateHtmlAsync(result, done);
@@ -299,7 +299,7 @@ describe('highlight', () => {
     result.should.eql([
       '<figure class="highlight javascript"><table><tr>',
       gutter(1, 6),
-      code('<span class="meta">"use strict"</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
+      code('<span class="meta">&quot;use strict&quot;</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
       end
     ].join(''));
     validateHtmlAsync(result, done);
