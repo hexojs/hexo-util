@@ -498,7 +498,13 @@ Option | Description | Default
 `encoding` | Sets the encoding of the output string | `utf8`
 
 ``` js
-spawn('cat', 'test.txt').then(function(content){
+spawn('cat', 'test.txt').then((content) => {
+  console.log(content);
+});
+
+// $ cd "/target/folder"
+// $ cat "foo.txt" "bar.txt"
+spawn('cat', ['foo.txt', 'bar.txt'], { cwd: '/target/folder' }).then((content) => {
   console.log(content);
 });
 ```
