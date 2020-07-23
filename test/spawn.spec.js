@@ -24,6 +24,8 @@ describe('spawn', () => {
 
   it('default', () => spawn(catCommand, [fixturePath]).should.become(fixture));
 
+  it('default - string', () => spawn(catCommand, fixturePath).should.become(fixture));
+
   it('command is required', () => {
     spawn.should.throw('command is required!');
   });
