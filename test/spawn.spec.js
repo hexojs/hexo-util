@@ -26,6 +26,26 @@ describe('spawn', () => {
 
   it('default - string', () => spawn(catCommand, fixturePath).should.become(fixture));
 
+  it('default - empty argument and options', async () => {
+    if (isWindows) {
+      const out = await spawn('ver');
+      out.trim().startsWith('Microsoft Windows').should.eql(true);
+    } else {
+      const out = await spawn('uname');
+      out.trim().should.eql('Linux');
+    }
+  });
+
+  it('default - options and empty argument', async () => {
+    if (isWindows) {
+      const out = await spawn('chdir', { cwd: __dirname });
+      out.trim().should.eql(__dirname);
+    } else {
+      const out = await spawn('pwd', { cwd: __dirname });
+      out.trim().should.eql(__dirname);
+    }
+  });
+
   it('command is required', () => {
     spawn.should.throw('command is required!');
   });
