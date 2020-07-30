@@ -490,12 +490,14 @@ Option | Description | Default
 --- | --- | ---
 `cwd` | Current working directory of the child process |
 `env` | Environment key-value pairs |
-`stdio` | Child's stdio configuration |
+`stdio` | Child's stdio configuration | `pipe`
 `detached` | The child will be a process group leader |
 `uid` | Sets the user identity of the process |
 `gid` | Sets the group identity of the process |
 `verbose` | Display messages on the console | `false`
 `encoding` | Sets the encoding of the output string | `utf8`
+
+More info: [`child_process.spawn()`](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options)
 
 ``` js
 spawn('cat', 'test.txt').then((content) => {
