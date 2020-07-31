@@ -133,6 +133,28 @@ describe('highlight', () => {
     validateHtmlAsync(result, done);
   });
 
+  it('wrap: false (with mark)', done => {
+    const result = highlight(testString, {gutter: false, wrap: false, hljs: true, lang: 'json', mark: '1'});
+    hljs.configure({classPrefix: 'hljs-'});
+    result.should.eql([
+      '<pre><code class="hljs json">',
+      hljs.highlight('json', testString).value.replace('{', '<mark>{</mark>'),
+      '</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('wrap: false (retain trailing newline)', done => {
+    const result = highlight(testString + '\n', {gutter: false, wrap: false, hljs: true, lang: 'json'});
+    hljs.configure({classPrefix: 'hljs-'});
+    result.should.eql([
+      '<pre><code class="hljs json">',
+      hljs.highlight('json', testString).value,
+      '\n</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
   it('firstLine', done => {
     const result = highlight(testString, {firstLine: 3});
     assertResult(result, gutter(3, 6), code(testString));
@@ -203,6 +225,7 @@ describe('highlight', () => {
   });
 
   it('tab', done => {
+    const spaces = '  ';
     const str = [
       'function fib(i){',
       '\tif (i <= 1) return i;',
@@ -210,13 +233,26 @@ describe('highlight', () => {
       '}'
     ].join('\n');
 
-    const result = highlight(str, {tab: '  ', lang: 'js'});
+    const result = highlight(str, {tab: spaces, lang: 'js'});
 
     result.should.eql([
       '<figure class="highlight js"><table><tr>',
       gutter(1, 4),
-      code(str.replace(/\t/g, '  '), 'js'),
+      code(str.replace(/\t/g, spaces), 'js'),
       end
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('tab with wrap:false', done => {
+    const spaces = '  ';
+    const result = highlight('\t' + testString, {gutter: false, wrap: false, hljs: true, lang: 'json', tab: spaces});
+    hljs.configure({classPrefix: 'hljs-'});
+    result.should.eql([
+      '<pre><code class="hljs json">',
+      spaces,
+      hljs.highlight('json', testString).value,
+      '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
   });
