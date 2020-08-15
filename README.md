@@ -451,6 +451,7 @@ Option | Description | Default
 `isPreprocess` | Enable preprocess or not | true
 `mark` | Highlight specific line |
 `firstLine` | First line number |
+`caption` | Caption |
 
 When `isPreprocess` is enabled, `prismHighlight()` will return PrismJS processed HTML snippet. Otherwise `str` will only be escaped and `prismHighlight()` will return the HTML snippet that is suitable for `prism.js` working in the Browser.
 
