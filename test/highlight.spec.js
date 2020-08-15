@@ -194,12 +194,13 @@ describe('highlight', () => {
   // it('don\'t highlight if parse failed'); missing-unit-test
 
   it('caption', done => {
+    const caption = 'hello world';
     const result = highlight(testString, {
-      caption: 'hello world'
+      caption
     });
 
     result.should.eql([
-      '<figure class="highlight plain"><figcaption>hello world</figcaption><table><tr>',
+      `<figure class="highlight plain"><figcaption>${caption}</figcaption><table><tr>`,
       gutter(1, 4),
       code(testString),
       end
@@ -208,15 +209,16 @@ describe('highlight', () => {
   });
 
   it('caption (wrap: false)', done => {
+    const caption = 'hello world';
     const result = highlight(testString, {
       gutter: false,
       wrap: false,
-      caption: 'hello world'
+      caption
     });
 
     result.should.eql([
       '<pre>',
-      '<figcaption>hello world</figcaption>',
+      `<div>${caption}</div>`,
       '<code class="highlight plain">',
       entities.encode(testString),
       '</code></pre>'
