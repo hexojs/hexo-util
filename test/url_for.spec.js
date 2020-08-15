@@ -140,4 +140,13 @@ describe('url_for', () => {
       urlFor(url).should.eql(url);
     });
   });
+
+  it('backward to forward slash', () => {
+    ctx.config.root = '/';
+    urlFor('\\lorem\\ipsum').should.eql('/lorem/ipsum');
+
+    ctx.config.root = '/blog/';
+    urlFor('\\lorem\\ipsum').should.eql('/blog/lorem/ipsum');
+  });
+
 });
