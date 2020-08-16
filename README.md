@@ -27,6 +27,7 @@ Utilities for [Hexo].
 - [hash](#hashstr)
 - [highlight](#highlightstr-options)
 - [htmlTag](#htmltagtag-attrs-text-escape)
+- [joinPath](#joinpathpaths-option)
 - [isExternalLink](#isexternallinkurl-sitehost-exclude)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
@@ -322,6 +323,51 @@ htmlTag('style', {}, 'p { content: "<"; background: url("bár.jpg"); }')
 /* support script tag with async/defer */
 htmlTag('script', {src: '/foo.js', async: true}, '')
 // <script src="/foo.js" async></script>
+```
+
+### joinPath([...paths][, option])
+
+Join and format paths.
+
+Option | Description | Default
+--- | --- | ---
+`sep` | Path separator | [`path.sep`](https://nodejs.org/api/path.html#path_path_sep)
+
+``` js
+joinPath('foo/bar\\baz')
+// Windows: foo\bar\baz
+// Unix: foo/bar/baz
+
+joinPath('foo/bar/baz', 'lorem\\ipsum\\dolor')
+// Windows: foo\bar\baz\lorem\ipsum\dolor
+// Unix: foo/bar/baz/lorem/ipsum/dolor
+
+joinPath('foo/bar/baz', 'lorem\\ipsum\\dolor', { sep: '/' })
+// foo/bar/baz/lorem/ipsum/dolor
+
+joinPath('foo/', '/bar', '/baz')
+// Windows: foo\bar\baz
+// Unix: foo/bar/baz
+
+/* If the joined path string is a zero-length string, then '.' will be returned,
+representing the current working directory. */
+joinPath()
+// .
+
+joinPath('')
+// .
+```
+
+Platform-specific separator also can be used:
+
+``` js
+const { sep } = require('path').win32
+joinPath('foo/', '/bar', '/baz', { sep })
+// foo\bar\baz
+
+const { sep } = require('path').posix
+joinPath('foo/', '/bar', '/baz', { sep })
+// foo/bar/baz
 ```
 
 ### isExternalLink(url, sitehost, [exclude])
