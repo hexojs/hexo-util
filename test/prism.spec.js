@@ -330,7 +330,7 @@ describe('prismHighlight', () => {
     const caption = 'foo';
     const result = prismHighlight(input, { caption });
 
-    result.should.contains('<div>' + caption + '</div>');
+    result.should.contains('<div class="caption">' + caption + '</div>');
 
     validateHtmlAsync(result, done);
   });
