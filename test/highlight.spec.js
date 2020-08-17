@@ -218,7 +218,7 @@ describe('highlight', () => {
 
     result.should.eql([
       '<pre>',
-      `<div>${caption}</div>`,
+      `<div class="caption">${caption}</div>`,
       '<code class="highlight plain">',
       entities.encode(testString),
       '</code></pre>'
