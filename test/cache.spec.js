@@ -33,12 +33,20 @@ describe('Cache', () => {
     cache.apply('baz', () => 456).should.eql(123);
   });
 
+  it('apply - keyStringify', () => {
+    cache.apply({ a: 1, b: 2 }, 123, { keyStringify: true }).should.eql(123);
+    cache.apply({ a: 1, b: 2 }, 456, { keyStringify: true }).should.eql(123);
+    cache.apply({ b: 2, a: 1 }, 789, { keyStringify: true }).should.eql(789);
+  });
+
   it('dump', () => {
     cache.dump().should.eql({
       'bar': 123,
       'baz': 123,
       'foo': 123,
-      'foobar': 456
+      'foobar': 456,
+      'bdf293b90add9094d1dcb0dc43929211612434ba': 789,
+      '4acc71e0547112eb432f0a36fb1924c4a738cb49': 123
     });
   });
 

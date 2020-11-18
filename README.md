@@ -9,7 +9,6 @@
 Utilities for [Hexo].
 
 ## Table of contents
-
 - [Installation](#installation)
 - [Usage](#usage)
 - [Cache](#cache)
@@ -75,7 +74,7 @@ cache.has('foo');
 cache.has('bar');
 // false
 
-// apply(key. value)
+// apply(key, value, options)
 cache.apply('baz', () => 123);
 // 123
 cache.apply('baz', () => 456);
@@ -84,6 +83,12 @@ cache.apply('qux', 456);
 // 456
 cache.apply('qux', '789');
 // 456
+cache.apply({ a: 1, b: 2 }, 123, { keyStringify: true })
+// 123
+cache.apply({ a: 1, b: 2 }, 456, { keyStringify: true })
+// 123
+cache.apply({ b: 2, a: 1 }, 789, { keyStringify: true })
+// 789
 
 // size()
 cache.size();
