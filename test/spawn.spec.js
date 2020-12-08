@@ -32,7 +32,7 @@ describe('spawn', () => {
       out.trim().startsWith('Microsoft Windows').should.eql(true);
     } else {
       const out = await spawn('uname');
-      out.trim().should.eql('Linux');
+      ['Linux', 'Darwin'].includes(out.trim()).should.eql(true);
     }
   });
 
