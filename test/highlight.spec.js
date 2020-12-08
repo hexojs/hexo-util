@@ -335,9 +335,9 @@ describe('highlight', () => {
 
     const result = highlight(str, {autoDetect: true});
     result.should.eql([
-      '<figure class="highlight javascript"><table><tr>',
+      '<figure class="highlight typescript"><table><tr>',
       gutter(1, 6),
-      code('<span class="meta">&quot;use strict&quot;</span>;\n<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string"></span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
+      code('<span class="meta">&quot;use strict&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="built_in">string</span> = <span class="string">`</span></span><br><span class="line"><span class="string">  Multi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  string</span></span><br><span class="line"><span class="string">`</span>', null),
       end
     ].join(''));
     validateHtmlAsync(result, done);
