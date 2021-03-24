@@ -37,7 +37,9 @@ function code(str, lang) {
   let data;
 
   if (lang) {
-    data = hljs.highlight(lang.toLowerCase(), str);
+    data = hljs.highlight(str, {
+      language: lang.toLowerCase()
+    });
   } else if (lang === null) {
     data = {value: str};
   } else {
@@ -115,7 +117,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: ''});
     result.should.eql([
       '<pre><code class="highlight json">',
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -126,7 +130,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -137,7 +143,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
-      hljs.highlight('json', testString).value.replace('{', '<mark>{</mark>'),
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value.replace('{', '<mark>{</mark>'),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -148,7 +156,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '\n</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -252,7 +262,9 @@ describe('highlight', () => {
     result.should.eql([
       '<pre><code class="hljs json">',
       spaces,
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
