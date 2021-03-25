@@ -12,7 +12,7 @@ const testJson = {
 
 const testString = JSON.stringify(testJson, null, '  ');
 
-const start = '<figure class="highlight plain"><table><tr>';
+const start = '<figure class="highlight plaintext"><table><tr>';
 const end = '</tr></table></figure>';
 
 const gutterStart = '<td class="gutter"><pre>';
@@ -95,7 +95,7 @@ describe('highlight', () => {
   it('wrap: false (without hljs, without lang)', done => {
     const result = highlight(testString, {gutter: false, wrap: false});
     result.should.eql([
-      '<pre><code class="highlight plain">',
+      '<pre><code class="highlight plaintext">',
       entities.encode(testString),
       '</code></pre>'
     ].join(''));
@@ -105,7 +105,7 @@ describe('highlight', () => {
   it('wrap: false (with hljs, without lang)', done => {
     const result = highlight(testString, {gutter: false, wrap: false, hljs: true});
     result.should.eql([
-      '<pre><code class="hljs plain">',
+      '<pre><code class="hljs plaintext">',
       entities.encode(testString),
       '</code></pre>'
     ].join(''));
@@ -209,7 +209,7 @@ describe('highlight', () => {
     });
 
     result.should.eql([
-      `<figure class="highlight plain"><figcaption>${caption}</figcaption><table><tr>`,
+      `<figure class="highlight plaintext"><figcaption>${caption}</figcaption><table><tr>`,
       gutter(1, 4),
       code(testString),
       end
@@ -228,7 +228,7 @@ describe('highlight', () => {
     result.should.eql([
       '<pre>',
       `<div class="caption">${caption}</div>`,
-      '<code class="highlight plain">',
+      '<code class="highlight plaintext">',
       entities.encode(testString),
       '</code></pre>'
     ].join(''));
