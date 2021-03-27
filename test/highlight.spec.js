@@ -2,8 +2,7 @@
 
 const should = require('chai').should(); // eslint-disable-line
 const hljs = require('highlight.js');
-const Entities = require('html-entities').XmlEntities;
-const entities = new Entities();
+const entities = require('html-entities');
 const validator = require('html-tag-validator');
 
 const testJson = {
