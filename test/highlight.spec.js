@@ -12,7 +12,7 @@ const testJson = {
 
 const testString = JSON.stringify(testJson, null, '  ');
 
-const start = '<figure class="highlight plain"><table><tr>';
+const start = '<figure class="highlight plaintext"><table><tr>';
 const end = '</tr></table></figure>';
 
 const gutterStart = '<td class="gutter"><pre>';
@@ -37,7 +37,9 @@ function code(str, lang) {
   let data;
 
   if (lang) {
-    data = hljs.highlight(lang.toLowerCase(), str);
+    data = hljs.highlight(str, {
+      language: lang.toLowerCase()
+    });
   } else if (lang === null) {
     data = {value: str};
   } else {
@@ -93,7 +95,7 @@ describe('highlight', () => {
   it('wrap: false (without hljs, without lang)', done => {
     const result = highlight(testString, {gutter: false, wrap: false});
     result.should.eql([
-      '<pre><code class="highlight plain">',
+      '<pre><code class="highlight plaintext">',
       entities.encode(testString),
       '</code></pre>'
     ].join(''));
@@ -103,7 +105,7 @@ describe('highlight', () => {
   it('wrap: false (with hljs, without lang)', done => {
     const result = highlight(testString, {gutter: false, wrap: false, hljs: true});
     result.should.eql([
-      '<pre><code class="hljs plain">',
+      '<pre><code class="hljs plaintext">',
       entities.encode(testString),
       '</code></pre>'
     ].join(''));
@@ -115,7 +117,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: ''});
     result.should.eql([
       '<pre><code class="highlight json">',
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -126,7 +130,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -137,7 +143,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
-      hljs.highlight('json', testString).value.replace('{', '<mark>{</mark>'),
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value.replace('{', '<mark>{</mark>'),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -148,7 +156,9 @@ describe('highlight', () => {
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '\n</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -199,7 +209,7 @@ describe('highlight', () => {
     });
 
     result.should.eql([
-      `<figure class="highlight plain"><figcaption>${caption}</figcaption><table><tr>`,
+      `<figure class="highlight plaintext"><figcaption>${caption}</figcaption><table><tr>`,
       gutter(1, 4),
       code(testString),
       end
@@ -218,7 +228,7 @@ describe('highlight', () => {
     result.should.eql([
       '<pre>',
       `<div class="caption">${caption}</div>`,
-      '<code class="highlight plain">',
+      '<code class="highlight plaintext">',
       entities.encode(testString),
       '</code></pre>'
     ].join(''));
@@ -252,7 +262,9 @@ describe('highlight', () => {
     result.should.eql([
       '<pre><code class="hljs json">',
       spaces,
-      hljs.highlight('json', testString).value,
+      hljs.highlight(testString, {
+        language: 'json'
+      }).value,
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
