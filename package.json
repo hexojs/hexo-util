@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint lib test",
     "test": "mocha",
-    "test-cov": "nyc npm run test",
+    "test-cov": "nyc --reporter=lcovonly npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "prepare": "npm run build:highlight"
   },
