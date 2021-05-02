@@ -1,6 +1,6 @@
 # hexo-util
 
-[![Build Status](https://travis-ci.com/hexojs/hexo-util.svg?branch=master)](https://travis-ci.com/hexojs/hexo-util)
+[![Build Status](https://github.com/hexojs/hexo-util/workflows/Tester/badge.svg?branch=master)](https://github.com/hexojs/hexo-util/actions?query=workflow%3ATester)
 [![NPM version](https://badge.fury.io/js/hexo-util.svg)](https://www.npmjs.com/package/hexo-util)
 [![Coverage Status](https://coveralls.io/repos/hexojs/hexo-util/badge.svg?branch=master&service=github)](https://coveralls.io/github/hexojs/hexo-util?branch=master)
 [![dependencies Status](https://david-dm.org/hexojs/hexo-util/status.svg)](https://david-dm.org/hexojs/hexo-util)
