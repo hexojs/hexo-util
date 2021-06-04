@@ -50,7 +50,7 @@
     "highlight.js": "^11.0.1",
     "htmlparser2": "^6.0.0",
     "prismjs": "^1.17.1",
-    "strip-indent": "^3.0.0"
+    "strip-indent": "^4.0.0"
   },
   "engines": {
     "node": ">=12.4.0"
