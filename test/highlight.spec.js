@@ -145,7 +145,7 @@ describe('highlight', () => {
       '<pre><code class="hljs json">',
       hljs.highlight(testString, {
         language: 'json'
-      }).value.replace('{', '<mark>{</mark>'),
+      }).value.replace('<span class="hljs-punctuation">{</span>', '<mark><span class="hljs-punctuation">{</span></mark>'),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -290,9 +290,18 @@ describe('highlight', () => {
     result.should.eql([
       '<figure class="highlight php-template"><table><tr>',
       gutter(1, 1),
-      code('<span class="xml"><span class="tag">&lt;<span class="name">node</span>&gt;</span></span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">&quot;foo&quot;</span>; <span class="meta">?&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span>', null),
+      code('<span class="language-xml"><span class="tag">&lt;<span class="name">node</span>&gt;</span></span><span class="language-php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">&quot;foo&quot;</span>; <span class="meta">?&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span>', null),
       end
     ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  // https://github.com/hexojs/hexo/issues/4726
+  it('highlight sublanguages with tab', done => {
+    const spaces = '  ';
+    const str = '<script>\n\tfunction a() {\n\t\treturn;\n\t}\n</script>';
+    const result = highlight(str, { tab: spaces, autoDetect: true });
+    result.should.not.include('\t');
     validateHtmlAsync(result, done);
   });
 
@@ -383,7 +392,7 @@ describe('highlight', () => {
     result.should.include(gutterStart);
     result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
-    result.should.include('class="hljs-function"');
+    result.should.include('class="hljs-keyword"');
     result.should.include(gutter(1, 5));
     validateHtmlAsync(result, done);
   });
@@ -400,7 +409,7 @@ describe('highlight', () => {
     result.should.not.include(gutterStart);
     result.should.not.include(codeStart);
     result.should.include('code class="hljs javascript"');
-    result.should.include('class="hljs-function"');
+    result.should.include('class="hljs-keyword"');
     validateHtmlAsync(result, done);
   });
 
@@ -416,7 +425,7 @@ describe('highlight', () => {
     result.should.not.include(gutterStart);
     result.should.include(codeStart);
     result.should.include('code class="hljs javascript"');
-    result.should.include('class="hljs-function"');
+    result.should.include('class="hljs-keyword"');
     validateHtmlAsync(result, done);
   });
 });
