@@ -128,6 +128,20 @@ describe('url_for', () => {
     });
   });
 
+  it('absolute url - should not be processed by relative_url', () => {
+    ctx.config.relative_link = true;
+    [
+      'https://hexo.io/',
+      '//google.com/',
+      'https://hexo.io/docs/index.html',
+      'http://example.com/foo/bar/',
+      'https://example.com/foo/bar/'
+    ].forEach(url => {
+      urlFor(url).should.eql(url);
+    });
+    ctx.config.relative_link = false;
+  });
+
   it('only hash', () => {
     urlFor('#test').should.eql('#test');
   });
