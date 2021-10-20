@@ -51,4 +51,11 @@ describe('stripHTML', () => {
 
     stripHTML(html).should.eql(text);
   });
+
+  it('should strip non string parameters', () => {
+    const html = ['X'];
+    const text = '';
+
+    stripHTML(html).should.eql(text);
+  });
 });
