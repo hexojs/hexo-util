@@ -544,7 +544,7 @@ wordWrap('Once upon a time', {width: 1})
 
 ### tocObj(str, [options])
 
-Generate a table of contents in JSON format based on the given html string. Headings with attribute `data-toc-unnumbered="true"` will be mark unnumbered.
+Generate a table of contents in JSON format based on the given html string. Headings with attribute `data-toc-unnumbered="true"` will be marked as unnumbered.
 
 Option | Description | Default
 --- | --- | ---
