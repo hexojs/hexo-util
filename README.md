@@ -10,38 +10,42 @@ Utilities for [Hexo].
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Cache](#cache)
-- [CacheStream](#cachestream)
-- [camelCaseKeys](#camelcasekeysobj-options)
-- [createSha1Hash](#createsha1hash)
-- [decodeURL](#decodeurlstr)
-- [deepMerge](#deepmergetarget-source)
-- [encodeURL](#encodeurlstr)
-- [escapeDiacritic](#escapediacriticstr)
-- [escapeHTML](#escapehtmlstr)
-- [escapeRegex](#escaperegexstr)
-- [full_url_for](#full_url_forpath)
-- [gravatar](#gravatarstr-options)
-- [hash](#hashstr)
-- [highlight](#highlightstr-options)
-- [htmlTag](#htmltagtag-attrs-text-escape)
-- [isExternalLink](#isexternallinkurl-sitehost-exclude)
-- [Pattern](#patternrule)
-- [Permalink](#permalinkrule-options)
-- [prettyUrls](#prettyurlsurl-options)
-- [prismHighlight](#prismhighlightstr-options)
-- [relative_url](#relative_urlfrom-to)
-- [slugize](#slugizestr-options)
-- [spawn](#spawncommand-args-options)
-- [stripHTML](#striphtmlstr)
-- [wordWrap](#wordwrapstr-options)
-- [tocObj](#tocobjstr-options)
-- [truncate](#truncatestr-options)
-- [unescapeHTML](#unescapehtmlstr)
-- [url_for](#url_forpath-option)
-- [bind(hexo)](#bindhexo)
+- [hexo-util](#hexo-util)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Cache()](#cache)
+    - [CacheStream()](#cachestream)
+    - [camelCaseKeys(obj, options)](#camelcasekeysobj-options)
+    - [createSha1Hash()](#createsha1hash)
+    - [decodeURL(str)](#decodeurlstr)
+    - [deepMerge(target, source)](#deepmergetarget-source)
+    - [encodeURL(str)](#encodeurlstr)
+    - [escapeDiacritic(str)](#escapediacriticstr)
+    - [escapeHTML(str)](#escapehtmlstr)
+    - [escapeRegex(str)](#escaperegexstr)
+    - [full_url_for(path)](#full_url_forpath)
+    - [gravatar(str, [options])](#gravatarstr-options)
+    - [hash(str)](#hashstr)
+    - [highlight(str, [options])](#highlightstr-options)
+    - [htmlTag(tag, attrs, text, escape)](#htmltagtag-attrs-text-escape)
+    - [isExternalLink(url, sitehost, [exclude])](#isexternallinkurl-sitehost-exclude)
+    - [Pattern(rule)](#patternrule)
+    - [Permalink(rule, [options])](#permalinkrule-options)
+    - [prettyUrls(url, [options])](#prettyurlsurl-options)
+    - [prismHighlight(str, [options])](#prismhighlightstr-options)
+    - [relative_url(from, to)](#relative_urlfrom-to)
+    - [slugize(str, [options])](#slugizestr-options)
+    - [spawn(command, [args], [options])](#spawncommand-args-options)
+    - [stripHTML(str)](#striphtmlstr)
+    - [stripIndent(str)](#stripindentstr)
+    - [wordWrap(str, [options])](#wordwrapstr-options)
+    - [tocObj(str, [options])](#tocobjstr-options)
+    - [truncate(str, [options])](#truncatestr-options)
+    - [unescapeHTML(str)](#unescapehtmlstr)
+    - [url_for(path, [option])](#url_forpath-option)
+  - [bind(hexo)](#bindhexo)
+  - [License](#license)
 
 ## Installation
 
@@ -544,7 +548,7 @@ wordWrap('Once upon a time', {width: 1})
 
 ### tocObj(str, [options])
 
-Generate a table of contents in JSON format based on the given html string.
+Generate a table of contents in JSON format based on the given html string. Headings with attribute `data-toc-unnumbered="true"` will be mark unnumbered.
 
 Option | Description | Default
 --- | --- | ---
@@ -599,6 +603,13 @@ tocObj(html, { max_depth: 2 });
   { text: 'Title 1.3', id: 'title_1_3', level: 2 },
   { text: 'Title 2', id: 'title_2', level: 1 },
   { text: 'Title 2.1', id: 'title_2_1', level: 2 },
+]
+*/
+
+tocObj('<h1 id="reference" data-toc-unnumbered="true">Reference</h1>')
+/*
+[
+  { text: 'Reference', id: 'reference', level: 1, unnumbered: true }
 ]
 */
 ```
