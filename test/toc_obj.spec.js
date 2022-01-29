@@ -165,5 +165,19 @@ describe('tocObj', () => {
 
       result.forEach(str => str[0].text.should.eql('foobarbaz'));
     });
+
+    it('unnumbered headings', () => {
+      const input = [
+        '<h1 id="title_1" data-toc-unnumbered="true">Title 1</h1>',
+        '<h2 data-toc-unnumbered="false" id="title_2">Title 2</h2>'
+      ].join('');
+
+      const expected = [
+        { text: 'Title 1', id: 'title_1', level: 1, unnumbered: true },
+        { text: 'Title 2', id: 'title_2', level: 2 }
+      ];
+
+      tocObj(input).should.eql(expected);
+    });
   });
 });
