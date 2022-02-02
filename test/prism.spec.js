@@ -77,8 +77,8 @@ describe('prismHighlight', () => {
       '}'
     ].join('\n');
 
-    // Use language: 'plain' to simplify the test
-    const result = prismHighlight(input, { tab: '  ', lang: 'plain' });
+    // Use language: 'plain-text' for not supported language with Prism
+    const result = prismHighlight(input, { tab: '  ', lang: 'plain-text' });
 
     result.should.contains(escapeHTML(input.replace(/\t/g, '  ')));
 
