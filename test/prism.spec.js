@@ -109,8 +109,8 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input, { lang: 'js' });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-js" data-language="js">');
-    result.should.contains('<code class="language-js');
+    result.should.contains('<pre class="line-numbers language-javascript" data-language="javascript">');
+    result.should.contains('<code class="language-javascript');
     // End Tag
     result.should.contains(endTag);
     // Line Number
@@ -129,6 +129,24 @@ describe('prismHighlight', () => {
     // Start Tag
     result.should.contains('<pre class="line-numbers language-haml" data-language="haml">');
     result.should.contains('<code class="language-haml');
+    // End Tag
+    result.should.contains(endTag);
+    // Line Number
+    result.should.contains(lineNumberStartTag);
+    // Being highlighted
+    result.should.contains(highlightToken);
+
+    validateHtmlAsync(result, done);
+  });
+
+  it('language - ts (an alias for typescript)', done => {
+    const input = 'const a: string = "";';
+
+    const result = prismHighlight(input, { lang: 'ts' });
+
+    // Start Tag
+    result.should.contains('<pre class="line-numbers language-typescript" data-language="typescript">');
+    result.should.contains('<code class="language-typescript');
     // End Tag
     result.should.contains(endTag);
     // Line Number
@@ -206,8 +224,8 @@ describe('prismHighlight', () => {
     const result = prismHighlight(input, { lang: 'js', isPreprocess: false });
 
     // Start Tag
-    result.should.contains('<pre class="line-numbers language-js" data-language="js">');
-    result.should.contains('<code class="language-js');
+    result.should.contains('<pre class="line-numbers language-javascript" data-language="javascript">');
+    result.should.contains('<code class="language-javascript');
     // End Tag
     result.should.contains(endTag);
     // Line Number
@@ -267,15 +285,15 @@ describe('prismHighlight', () => {
     ].join('\n');
 
     const result1 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: true, firstLine: '-5' });
-    result1.should.contains('<pre class="line-numbers language-js" data-language="js" data-start="-5">');
+    result1.should.contains('<pre class="line-numbers language-javascript" data-language="javascript" data-start="-5">');
 
     // isPreprocess - true (firstLine should be disabled)
     const result2 = prismHighlight(input, { lang: 'js', isPreprocess: true, lineNumber: true, firstLine: '-5' });
-    result2.should.contains('<pre class="line-numbers language-js" data-language="js">');
+    result2.should.contains('<pre class="line-numbers language-javascript" data-language="javascript">');
 
     // lineNumber - false (firstLine should be disabled)
     const result3 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: false, firstLine: '-5' });
-    result3.should.contains('<pre class="language-js" data-language="js">');
+    result3.should.contains('<pre class="language-javascript" data-language="javascript">');
 
     // Only validate the result1
     validateHtmlAsync(result1, done);
