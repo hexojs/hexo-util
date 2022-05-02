@@ -1,6 +1,6 @@
 {
   "name": "hexo-util",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Utilities for Hexo.",
   "main": "lib/index",
   "scripts": {
