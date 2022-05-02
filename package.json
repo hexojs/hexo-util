@@ -48,7 +48,7 @@
     "cross-spawn": "^7.0.0",
     "deepmerge": "^4.2.2",
     "highlight.js": "^11.0.1",
-    "htmlparser2": "^7.0.0",
+    "htmlparser2": "^8.0.1",
     "prismjs": "^1.17.1",
     "strip-indent": "^3.0.0"
   },
