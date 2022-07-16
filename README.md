@@ -290,6 +290,7 @@ Option | Description | Default
 `tab`| Replace tabs |
 `autoDetect` | Detect language automatically (warning: slow)<br>_Sublanguage highlight requires `autoDetect` to be enabled and `lang` to be unset_  | false
 `mark` | Line highlight specific line(s) |
+`languageAttr` | Output code language into `data-language` attr | false
 
 ### htmlTag(tag, attrs, text, escape)
 

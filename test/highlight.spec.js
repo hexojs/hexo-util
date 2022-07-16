@@ -428,4 +428,34 @@ describe('highlight', () => {
     result.should.include('class="hljs-keyword"');
     validateHtmlAsync(result, done);
   });
+
+  it('languageAttr: true', done => {
+    const str = [
+      'var string = `',
+      '  Multi',
+      '  line',
+      '  string',
+      '`'
+    ].join('\n');
+
+    const result = highlight(str, {languageAttr: true, lang: 'js'});
+    result.should.eql([
+      '<figure class="highlight js" data-language="js"><table><tr>',
+      gutter(1, 5),
+      code('<span class="keyword">var</span> string = <span class="string">`</span>\n<span class="string">  Multi</span>\n<span class="string">  line</span>\n<span class="string">  string</span>\n<span class="string">`</span>', null),
+      end
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('languageAttr: true (wrap: false)', done => {
+    const result = highlight(testString, {gutter: false, wrap: false, languageAttr: true});
+    console.log(result);
+    result.should.eql([
+      '<pre><code class="highlight plaintext" data-language="plaintext">',
+      entities.encode(testString),
+      '</code></pre>'
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
 });
