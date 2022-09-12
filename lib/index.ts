@@ -1,5 +1,3 @@
-'use strict';
-
 const hash = require('./hash');
 
 exports.Cache = require('./cache');

@@ -1,5 +1,3 @@
-'use strict';
-
 const { parse } = require('url');
 
 const Cache = require('./cache');

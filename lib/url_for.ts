@@ -1,5 +1,3 @@
-'use strict';
-
 const { parse } = require('url');
 const encodeURL = require('./encode_url');
 const relative_url = require('./relative_url');

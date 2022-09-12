@@ -1,5 +1,3 @@
-'use strict';
-
 const { camelCase } = require('camel-case');
 
 function getter(key) {

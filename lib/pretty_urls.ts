@@ -1,5 +1,3 @@
-'use strict';
-
 function prettyUrls(url, options = {}) {
   options = Object.assign({
     trailing_index: true,

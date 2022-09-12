@@ -1,5 +1,3 @@
-'use strict';
-
 const { Transform } = require('stream');
 
 class CacheStream extends Transform {

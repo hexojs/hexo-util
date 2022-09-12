@@ -1,5 +1,3 @@
-'use strict';
-
 const escapeRegExp = require('./escape_regexp');
 
 const rParam = /([:*])([\w?]*)?/g;

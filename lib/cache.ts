@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = class Cache {
   constructor() {
     this.cache = new Map();

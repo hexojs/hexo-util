@@ -1,5 +1,3 @@
-'use strict';
-
 const encodeURL = require('./encode_url');
 
 const Cache = require('./cache');

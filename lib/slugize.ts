@@ -1,5 +1,3 @@
-'use strict';
-
 const escapeDiacritic = require('./escape_diacritic');
 const escapeRegExp = require('./escape_regexp');
 // eslint-disable-next-line no-control-regex

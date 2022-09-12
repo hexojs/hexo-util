@@ -1,5 +1,3 @@
-'use strict';
-
 const { parse, format } = require('url');
 const { unescape } = require('querystring');
 

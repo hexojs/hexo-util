@@ -1,5 +1,3 @@
-'use strict';
-
 const spawn = require('cross-spawn');
 const Promise = require('bluebird');
 const CacheStream = require('./cache_stream');

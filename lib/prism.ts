@@ -1,5 +1,3 @@
-'use strict';
-
 const Prism = require('prismjs');
 const stripIndent = require('strip-indent');
 const prismLoadLanguages = require('prismjs/components/');

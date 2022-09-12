@@ -1,5 +1,3 @@
-'use strict';
-
 const deepmerge = require('deepmerge');
 
 const arrayMerge = (target, source, options) => {

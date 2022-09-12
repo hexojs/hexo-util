@@ -1,5 +1,3 @@
-'use strict';
-
 const STATE_PLAINTEXT = Symbol('plaintext');
 const STATE_HTML = Symbol('html');
 const STATE_COMMENT = Symbol('comment');

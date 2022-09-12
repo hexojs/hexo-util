@@ -1,5 +1,3 @@
-'use strict';
-
 const encodeURL = require('./encode_url');
 const escapeHTML = require('./escape_html');
 const regexUrl = /(cite|download|href|src|url)$/i;

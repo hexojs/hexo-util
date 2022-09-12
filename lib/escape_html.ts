@@ -1,5 +1,3 @@
-'use strict';
-
 const unescapeHTML = require('./unescape_html');
 
 const htmlEntityMap = {

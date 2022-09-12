@@ -1,5 +1,3 @@
-'use strict';
-
 function truncate(str, options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 

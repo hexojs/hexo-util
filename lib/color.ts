@@ -1,5 +1,3 @@
-'use strict';
-
 // https://github.com/imathis/hsl-picker/blob/master/assets/javascripts/modules/color.coffee
 const rHex3 = /^#[0-9a-f]{3}$/;
 const rHex6 = /^#[0-9a-f]{6}$/;

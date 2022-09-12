@@ -1,4 +1,3 @@
-'use strict';
 const { DomHandler, DomUtils, Parser } = require('htmlparser2');
 const escapeHTML = require('./escape_html');
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;

@@ -1,5 +1,3 @@
-'use strict';
-
 function escapeRegExp(str) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
