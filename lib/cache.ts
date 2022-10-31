@@ -1,4 +1,8 @@
-module.exports = class Cache {
+'use strict';
+
+export default class Cache {
+  cache: Map<any, any>;
+
   constructor() {
     this.cache = new Map();
   }

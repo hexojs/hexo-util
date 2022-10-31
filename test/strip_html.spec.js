@@ -30,7 +30,6 @@ describe('stripHTML', () => {
     stripHTML(html).should.eql(text);
   });
 
-
   it('should not fail with nested quotes', () => {
     const html = '<article attr="foo \'bar\'">lorem</article> ipsum';
     const text = 'lorem ipsum';

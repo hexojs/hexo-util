@@ -1,9 +1,11 @@
-const Prism = require('prismjs');
-const stripIndent = require('strip-indent');
-const prismLoadLanguages = require('prismjs/components/');
+'use strict';
+
+import Prism from 'prismjs';
+import stripIndent from 'strip-indent';
+import prismLoadLanguages from 'prismjs/components/';
 
 // https://github.com/PrismJS/prism/issues/2145
-const prismComponents = require('prismjs/components');
+import prismComponents from 'prismjs/components';
 
 const prismAlias = Object.entries(prismComponents.languages).reduce((acc, [key, value]) => {
   if (value.alias) {
@@ -18,7 +20,7 @@ const prismAlias = Object.entries(prismComponents.languages).reduce((acc, [key, 
 
 const prismSupportedLanguages = Object.keys(prismComponents.languages).concat(Object.keys(prismAlias));
 
-const escapeHTML = require('./escape_html');
+import escapeHTML from './escape_html';
 
 /**
  * Wrapper of Prism.highlight()
@@ -123,4 +125,4 @@ function PrismUtil(str, options = {}) {
   return startTag + parsedCode + endTag;
 }
 
-module.exports = PrismUtil;
+export default PrismUtil;

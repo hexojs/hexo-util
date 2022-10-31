@@ -1,8 +1,9 @@
-const { parse } = require('url');
-const encodeURL = require('./encode_url');
-const prettyUrls = require('./pretty_urls');
+'use strict';
 
-const Cache = require('./cache');
+import {parse} from 'url';
+import encodeURL from './encode_url';
+import prettyUrls from './pretty_urls';
+import Cache from './cache';
 const cache = new Cache();
 
 function fullUrlForHelper(path = '/') {
@@ -29,4 +30,4 @@ function fullUrlForHelper(path = '/') {
   });
 }
 
-module.exports = fullUrlForHelper;
+export default fullUrlForHelper;

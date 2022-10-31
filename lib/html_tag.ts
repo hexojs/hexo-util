@@ -1,5 +1,7 @@
-const encodeURL = require('./encode_url');
-const escapeHTML = require('./escape_html');
+'use strict';
+
+import encodeURL from './encode_url';
+import escapeHTML from './escape_html';
 const regexUrl = /(cite|download|href|src|url)$/i;
 const regexMeta = /^(og:|twitter:)(audio|image|url|video)(:secure_url)?$/i;
 
@@ -44,4 +46,4 @@ function htmlTag(tag, attrs, text, escape = true) {
   return result;
 }
 
-module.exports = htmlTag;
+export default htmlTag;

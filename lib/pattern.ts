@@ -1,9 +1,13 @@
-const escapeRegExp = require('./escape_regexp');
+'use strict';
+
+import escapeRegExp from './escape_regexp';
 
 const rParam = /([:*])([\w?]*)?/g;
 
 class Pattern {
-  constructor(rule) {
+  match: Function;
+
+  constructor(rule: Pattern | Function | RegExp | string) {
     if (rule instanceof Pattern) {
       return rule;
     } else if (typeof rule === 'function') {
@@ -68,4 +72,4 @@ function stringFilter(rule) {
   };
 }
 
-module.exports = Pattern;
+export default Pattern;

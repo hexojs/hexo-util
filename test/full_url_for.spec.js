@@ -60,7 +60,6 @@ describe('full_url_for', () => {
     fullUrlFor('/foo/bar.html').should.eql(ctx.config.url + '/foo/bar');
   });
 
-
   it('absolute url', () => {
     [
       'https://hexo.io/',

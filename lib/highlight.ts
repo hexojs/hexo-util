@@ -1,8 +1,22 @@
-const hljs = require('highlight.js');
-const stripIndent = require('strip-indent');
+'use strict';
+
+import hljs from 'highlight.js';
+import stripIndent from 'strip-indent';
 const alias = require('../highlight_alias.json');
 
-function highlightUtil(str, options = {}) {
+interface Options {
+  hljs?: boolean;
+  gutter?: boolean;
+  firstLine?: number;
+  caption?: string;
+  mark?: number[];
+  languageAttr?: boolean;
+  tab?: string;
+  wrap?: boolean;
+  lang?: string;
+}
+
+function highlightUtil(str, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
   str = stripIndent(str);
 
@@ -27,7 +41,6 @@ function highlightUtil(str, options = {}) {
 
   const before = useHljs ? `<pre><code class="${classNames}"${languageAttr && lang ? ` data-language="${lang}"` : ''}>` : '<pre>';
   const after = useHljs ? '</code></pre>' : '</pre>';
-
 
   const lines = data.value.split('\n');
   let numbers = '';
@@ -127,4 +140,4 @@ function closeTags(res) {
   return res;
 }
 
-module.exports = highlightUtil;
+export default highlightUtil;

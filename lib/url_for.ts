@@ -1,9 +1,10 @@
-const { parse } = require('url');
-const encodeURL = require('./encode_url');
-const relative_url = require('./relative_url');
-const prettyUrls = require('./pretty_urls');
+'use strict';
 
-const Cache = require('./cache');
+import {parse} from 'url';
+import encodeURL from './encode_url';
+import relative_url from './relative_url';
+import prettyUrls from './pretty_urls';
+import Cache from './cache';
 const cache = new Cache();
 
 function urlForHelper(path = '/', options) {
@@ -45,4 +46,4 @@ function urlForHelper(path = '/', options) {
   });
 }
 
-module.exports = urlForHelper;
+export default urlForHelper;

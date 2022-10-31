@@ -17,4 +17,4 @@ const unescapeHTML = str => {
   return str.replace(regexHtml, a => htmlEntityMap[a]);
 };
 
-module.exports = unescapeHTML;
+export default unescapeHTML;

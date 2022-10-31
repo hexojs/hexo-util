@@ -184,11 +184,16 @@ const convertRGB = value => {
 const mixValue = (a, b, ratio) => a + ((b - a) * ratio);
 
 class Color {
+  r?: number;
+  g?: number;
+  b?: number;
+  a?: number;
 
   /**
    * @param {string|{ r: number; g: number; b: number; a: number;}} color
    */
   constructor(color) {
+
     if (typeof color === 'string') {
       this._parse(color);
     } else if (color != null && typeof color === 'object') {
@@ -333,4 +338,4 @@ class Color {
   }
 }
 
-module.exports = Color;
+export default Color;

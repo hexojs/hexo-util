@@ -1,4 +1,6 @@
-const { camelCase } = require('camel-case');
+'use strict';
+
+import {camelCase} from 'camel-case';
 
 function getter(key) {
   return function() {
@@ -47,4 +49,4 @@ function camelCaseKeys(obj) {
   return result;
 }
 
-module.exports = camelCaseKeys;
+export default camelCaseKeys;

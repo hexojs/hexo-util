@@ -1,1 +1,3 @@
-module.exports = require('strip-indent');
+'use strict';
+
+export default require('strip-indent');

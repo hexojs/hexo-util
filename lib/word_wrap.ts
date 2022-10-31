@@ -1,5 +1,11 @@
+'use strict';
+
+interface Options {
+  width?: number;
+}
+
 // https://github.com/rails/rails/blob/v4.2.0/actionview/lib/action_view/helpers/text_helper.rb#L240
-function wordWrap(str, options = {}) {
+function wordWrap(str, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const width = options.width || 80;
@@ -17,4 +23,4 @@ function wordWrap(str, options = {}) {
   return lines.join('\n');
 }
 
-module.exports = wordWrap;
+export default wordWrap;

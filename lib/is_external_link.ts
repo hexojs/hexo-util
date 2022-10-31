@@ -1,6 +1,7 @@
-const { parse } = require('url');
+'use strict';
 
-const Cache = require('./cache');
+import {parse} from 'url';
+import Cache from './cache';
 const cache = new Cache();
 
 /**
@@ -50,4 +51,4 @@ function isExternalLink(input, sitehost, exclude) {
   });
 }
 
-module.exports = isExternalLink;
+export default isExternalLink;

@@ -1,8 +1,14 @@
-const escapeRegExp = require('./escape_regexp');
+'use strict';
+
+import escapeRegExp from './escape_regexp';
 
 const rParam = /:(\w*[^_\W])/g;
 
 class Permalink {
+  rule: any;
+  regex: RegExp;
+  params: any[];
+
   constructor(rule, options) {
     if (!rule) { throw new TypeError('rule is required!'); }
     options = options || {};
@@ -45,5 +51,4 @@ class Permalink {
   }
 }
 
-
-module.exports = Permalink;
+export default Permalink;

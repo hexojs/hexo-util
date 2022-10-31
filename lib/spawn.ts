@@ -1,6 +1,8 @@
-const spawn = require('cross-spawn');
-const Promise = require('bluebird');
-const CacheStream = require('./cache_stream');
+'use strict';
+
+import spawn from 'cross-spawn';
+import Promise from 'bluebird';
+import CacheStream from './cache_stream';
 
 function promiseSpawn(command, args = [], options = {}) {
   if (!command) throw new TypeError('command is required!');
@@ -66,4 +68,4 @@ function getCache(stream, encoding) {
   return buf.toString(encoding);
 }
 
-module.exports = promiseSpawn;
+export default promiseSpawn;

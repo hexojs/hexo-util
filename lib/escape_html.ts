@@ -1,4 +1,6 @@
-const unescapeHTML = require('./unescape_html');
+'use strict';
+
+import unescapeHTML from './unescape_html';
 
 const htmlEntityMap = {
   '&': '&amp;',
@@ -20,4 +22,4 @@ function escapeHTML(str) {
   return str.replace(/[&<>"'`/=]/g, a => htmlEntityMap[a]);
 }
 
-module.exports = escapeHTML;
+export default escapeHTML;

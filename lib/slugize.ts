@@ -1,10 +1,17 @@
-const escapeDiacritic = require('./escape_diacritic');
-const escapeRegExp = require('./escape_regexp');
+'use strict';
+
+import escapeDiacritic from './escape_diacritic';
+import escapeRegExp from './escape_regexp';
 // eslint-disable-next-line no-control-regex
 const rControl = /[\u0000-\u001f]/g;
 const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'<>,.?/]+/g;
 
-function slugize(str, options = {}) {
+interface Options {
+  separator?: string;
+  transform?: number;
+}
+
+function slugize(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const separator = options.separator || '-';
@@ -32,4 +39,4 @@ function slugize(str, options = {}) {
   }
 }
 
-module.exports = slugize;
+export default slugize;

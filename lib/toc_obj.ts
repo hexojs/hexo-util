@@ -1,5 +1,6 @@
-const { DomHandler, DomUtils, Parser } = require('htmlparser2');
-const escapeHTML = require('./escape_html');
+'use strict';
+import {DomHandler, DomUtils, Parser} from 'htmlparser2';
+import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
 const parseHtml = html => {
@@ -58,4 +59,4 @@ function tocObj(str, options = {}) {
   return result;
 }
 
-module.exports = tocObj;
+export default tocObj;

@@ -1,7 +1,8 @@
-const { createHash } = require('crypto');
-const { stringify } = require('querystring');
+'use strict';
 
-const Cache = require('./cache');
+import {createHash} from 'crypto';
+import {stringify} from 'querystring';
+import Cache from './cache';
 const cache = new Cache();
 
 function md5(str) {
@@ -25,4 +26,4 @@ function gravatarHelper(email, options) {
   return str;
 }
 
-module.exports = gravatarHelper;
+export default gravatarHelper;
