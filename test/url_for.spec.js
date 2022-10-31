@@ -79,7 +79,6 @@ describe('url_for', () => {
     urlFor('/index.html').should.eql('/blog/');
   });
 
-
   it('internal url - pretty_urls.trailing_html disabled', () => {
     ctx.config.root = '/';
     ctx.config.pretty_urls = {
