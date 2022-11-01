@@ -56,7 +56,17 @@ function replaceTabs(str, tab) {
   return str.replace(/^\t+/gm, match => tab.repeat(match.length));
 }
 
-function PrismUtil(str, options = {}) {
+interface Options {
+  lineNumber?: boolean;
+  lang?: string;
+  tab?: string;
+  mark?: string;
+  firstLine?: number;
+  isPreprocess?: boolean;
+  caption?: string;
+}
+
+function PrismUtil(str, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
   str = stripIndent(str);
 

@@ -16,7 +16,9 @@ function encSrcset(str) {
   return str;
 }
 
-function htmlTag(tag, attrs, text, escape = true) {
+function htmlTag(tag: string, attrs: {
+  [key: string]: string | boolean;
+}, text, escape = true) {
   if (!tag) throw new TypeError('tag is required!');
 
   let result = `<${escapeHTML(tag)}`;

@@ -4,7 +4,13 @@ import spawn from 'cross-spawn';
 import Promise from 'bluebird';
 import CacheStream from './cache_stream';
 
-function promiseSpawn(command, args = [], options = {}) {
+import * as child_process from 'child_process';
+interface Options extends child_process.SpawnOptions {
+  verbose?: boolean;
+  encoding?: string;
+}
+
+function promiseSpawn(command: string, args = [], options: Options = {}) {
   if (!command) throw new TypeError('command is required!');
 
   if (typeof args === 'string') args = [args];
