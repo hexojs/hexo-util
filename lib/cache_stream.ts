@@ -1,6 +1,6 @@
 'use strict';
 
-import {Transform} from 'stream';
+import { Transform } from 'stream';
 
 class CacheStream extends Transform {
   _cache: any[];

@@ -1,7 +1,7 @@
 'use strict';
 
-import {createHash} from 'crypto';
-import {stringify} from 'querystring';
+import { createHash } from 'crypto';
+import { stringify } from 'querystring';
 import Cache from './cache';
 const cache = new Cache();
 

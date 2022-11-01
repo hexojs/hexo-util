@@ -193,7 +193,6 @@ class Color {
    * @param {string|{ r: number; g: number; b: number; a: number;}} color
    */
   constructor(color) {
-
     if (typeof color === 'string') {
       this._parse(color);
     } else if (color != null && typeof color === 'object') {

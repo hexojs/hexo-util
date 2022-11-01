@@ -1,6 +1,6 @@
 'use strict';
 
-import {parse} from 'url';
+import { parse } from 'url';
 import encodeURL from './encode_url';
 import relative_url from './relative_url';
 import prettyUrls from './pretty_urls';

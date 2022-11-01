@@ -1,7 +1,7 @@
 'use strict';
 
-import {parse, format} from 'url';
-import {unescape} from 'querystring';
+import { parse, format } from 'url';
+import { unescape } from 'querystring';
 
 const decodeURL = str => {
   if (parse(str).protocol) {

@@ -1,6 +1,6 @@
 'use strict';
 
-import {camelCase} from 'camel-case';
+import { camelCase } from 'camel-case';
 
 function getter(key) {
   return function() {

@@ -1,5 +1,5 @@
 'use strict';
-import {DomHandler, DomUtils, Parser} from 'htmlparser2';
+import { DomHandler, DomUtils, Parser } from 'htmlparser2';
 import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
