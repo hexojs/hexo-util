@@ -1,5 +1,3 @@
-'use strict';
-
 interface Options {
   trailing_index?: boolean,
   trailing_html?: boolean

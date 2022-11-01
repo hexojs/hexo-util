@@ -1,5 +1,3 @@
-'use strict';
-
 const should = require('chai').should(); // eslint-disable-line
 const hljs = require('highlight.js');
 const entities = require('html-entities');

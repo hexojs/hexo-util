@@ -1,5 +1,3 @@
-'use strict';
-
 export default class Cache {
   cache: Map<any, any>;
 

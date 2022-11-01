@@ -1,5 +1,3 @@
-'use strict';
-
 describe('relative_url', () => {
   const relativeURL = require('../lib/relative_url');
 

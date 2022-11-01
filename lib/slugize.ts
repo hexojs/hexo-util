@@ -1,5 +1,3 @@
-'use strict';
-
 import escapeDiacritic from './escape_diacritic';
 import escapeRegExp from './escape_regexp';
 // eslint-disable-next-line no-control-regex

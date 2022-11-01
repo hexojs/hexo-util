@@ -1,5 +1,3 @@
-'use strict';
-
 interface Options {
   length?: number;
   omission?: string;

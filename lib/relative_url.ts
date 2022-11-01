@@ -1,5 +1,3 @@
-'use strict';
-
 import encodeURL from './encode_url';
 import Cache from './cache';
 const cache = new Cache();

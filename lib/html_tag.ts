@@ -1,5 +1,3 @@
-'use strict';
-
 import encodeURL from './encode_url';
 import escapeHTML from './escape_html';
 const regexUrl = /(cite|download|href|src|url)$/i;

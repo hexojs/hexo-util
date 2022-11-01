@@ -1,5 +1,3 @@
-'use strict';
-
 import deepmerge from 'deepmerge';
 
 const arrayMerge = (target, source, options) => {

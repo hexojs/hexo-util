@@ -1,5 +1,3 @@
-'use strict';
-
 import escapeRegExp from './escape_regexp';
 
 const rParam = /:(\w*[^_\W])/g;

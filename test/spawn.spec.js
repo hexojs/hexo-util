@@ -1,5 +1,3 @@
-'use strict';
-
 require('chai').use(require('chai-as-promised')).should();
 const { join } = require('path');
 const { writeFile, unlink } = require('fs');

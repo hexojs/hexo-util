@@ -1,5 +1,3 @@
-'use strict';
-
 import hljs from 'highlight.js';
 import stripIndent from 'strip-indent';
 const alias = require('../highlight_alias.json');

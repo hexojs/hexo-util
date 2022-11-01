@@ -1,5 +1,3 @@
-'use strict';
-
 export {default as Cache} from './cache';
 export {default as CacheStream} from './cache_stream';
 export {default as camelCaseKeys} from './camel_case_keys';

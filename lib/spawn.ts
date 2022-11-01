@@ -1,13 +1,15 @@
-'use strict';
-
 import spawn from 'cross-spawn';
 import Promise from 'bluebird';
 import CacheStream from './cache_stream';
 
-import * as child_process from 'child_process';
-interface Options extends child_process.SpawnOptions {
+import { SpawnOptions } from 'child_process';
+interface Options extends SpawnOptions {
   verbose?: boolean;
   encoding?: string;
+}
+
+class StatusError extends Error {
+  code: number | undefined;
 }
 
 function promiseSpawn(command: string, args = [], options: Options = {}) {
@@ -39,7 +41,7 @@ function promiseSpawn(command: string, args = [], options: Options = {}) {
 
     task.on('close', code => {
       if (code) {
-        const e = new Error(getCache(stderrCache, encoding));
+        const e = new StatusError(getCache(stderrCache, encoding));
         e.code = code;
 
         return reject(e);
@@ -54,7 +56,7 @@ function promiseSpawn(command: string, args = [], options: Options = {}) {
     if (!task.stdout && !task.stderr) {
       task.on('exit', code => {
         if (code) {
-          const e = new Error('Spawn failed');
+          const e = new StatusError('Spawn failed');
           e.code = code;
 
           return reject(e);

@@ -1,5 +1,3 @@
-'use strict';
-
 import crypto from 'crypto';
 
 const ALGORITHM = 'sha1';

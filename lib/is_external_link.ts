@@ -1,5 +1,3 @@
-'use strict';
-
 import { parse } from 'url';
 import Cache from './cache';
 const cache = new Cache();

@@ -1,5 +1,3 @@
-'use strict';
-
 require('chai').should();
 
 const { Readable } = require('stream');

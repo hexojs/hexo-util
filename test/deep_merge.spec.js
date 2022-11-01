@@ -1,5 +1,3 @@
-'use strict';
-
 require('chai').should();
 
 // The test is modified based on https://github.com/jonschlinkert/merge-deep/blob/master/test.js

@@ -1,5 +1,3 @@
-'use strict';
-
 describe('url_for', () => {
   const ctx = {
     config: {

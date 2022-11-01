@@ -1,5 +1,3 @@
-'use strict';
-
 import unescapeHTML from './unescape_html';
 
 const htmlEntityMap = {

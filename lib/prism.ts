@@ -1,5 +1,3 @@
-'use strict';
-
 import Prism from 'prismjs';
 import stripIndent from 'strip-indent';
 import prismLoadLanguages from 'prismjs/components/';

@@ -1,5 +1,5 @@
-'use strict';
 import { DomHandler, DomUtils, Parser } from 'htmlparser2';
+import { AnyNode } from 'domhandler';
 import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
@@ -9,7 +9,7 @@ const parseHtml = html => {
   return handler.dom;
 };
 
-const getId = ({ attribs = {}, parent }) => {
+const getId = ({ attribs = {}, parent }: AnyNode) => {
   return attribs.id || (!parent ? '' : getId(parent));
 };
 

@@ -1,5 +1,3 @@
-'use strict';
-
 require('chai').should();
 
 describe('encodeURL', () => {

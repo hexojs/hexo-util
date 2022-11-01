@@ -1,5 +1,3 @@
-'use strict';
-
 import { createHash } from 'crypto';
 import { stringify } from 'querystring';
 import Cache from './cache';

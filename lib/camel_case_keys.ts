@@ -1,5 +1,3 @@
-'use strict';
-
 import { camelCase } from 'camel-case';
 
 function getter(key) {
