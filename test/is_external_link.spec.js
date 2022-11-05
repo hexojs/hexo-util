@@ -1,3 +1,5 @@
+'use strict';
+
 describe('isExternalLink', () => {
   const ctx = {
     config: {

@@ -1,3 +1,5 @@
+'use strict';
+
 require('chai').should();
 const escapeHTML = require('../lib/escape_html');
 const stripIndent = require('strip-indent');

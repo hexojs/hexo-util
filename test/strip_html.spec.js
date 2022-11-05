@@ -1,3 +1,5 @@
+'use strict';
+
 const stripHTML = require('../lib/strip_html');
 
 describe('stripHTML', () => {

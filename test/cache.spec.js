@@ -1,3 +1,5 @@
+'use strict';
+
 require('chai').should();
 
 describe('Cache', () => {
