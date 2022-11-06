@@ -1,5 +1,6 @@
 import hljs, { HighlightResult } from 'highlight.js';
 import stripIndent from 'strip-indent';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const alias = require('../highlight_alias.json');
 
 interface Options {

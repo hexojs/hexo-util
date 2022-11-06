@@ -1,5 +1,6 @@
 import { DomHandler, DomUtils, Parser } from 'htmlparser2';
-import { Text, Element } from 'domhandler';
+// eslint-disable-next-line node/no-extraneous-import
+import type { Element } from 'domhandler';
 import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
@@ -34,7 +35,7 @@ function tocObj(str: string, options = {}) {
   }, options);
 
   const headingsSelector = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].slice(min_depth - 1, max_depth);
-  const headings = DomUtils.find((element) => 'tagName' in element && headingsSelector.includes(element.tagName), parseHtml(str), true, Infinity) as Element[];
+  const headings = DomUtils.find(element => 'tagName' in element && headingsSelector.includes(element.tagName), parseHtml(str), true, Infinity) as Element[];
   const headingsLen = headings.length;
 
   if (!headingsLen) return [];
