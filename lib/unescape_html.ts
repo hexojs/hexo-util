@@ -11,10 +11,10 @@ const htmlEntityMap = {
 
 const regexHtml = new RegExp(Object.keys(htmlEntityMap).join('|'), 'g');
 
-const unescapeHTML = str => {
+const unescapeHTML = (str: string) => {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   return str.replace(regexHtml, a => htmlEntityMap[a]);
 };
 
-export default unescapeHTML;
+export = unescapeHTML;

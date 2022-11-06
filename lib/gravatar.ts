@@ -1,13 +1,13 @@
-import { createHash } from 'crypto';
-import { stringify } from 'querystring';
+import { BinaryLike, createHash } from 'crypto';
+import { ParsedUrlQueryInput, stringify } from 'querystring';
 import Cache from './cache';
 const cache = new Cache();
 
-function md5(str) {
+function md5(str: BinaryLike) {
   return createHash('md5').update(str).digest('hex');
 }
 
-function gravatarHelper(email, options) {
+function gravatarHelper(email: string, options: ParsedUrlQueryInput) {
   if (typeof options === 'number') {
     options = {s: options};
   }
@@ -24,4 +24,4 @@ function gravatarHelper(email, options) {
   return str;
 }
 
-export default gravatarHelper;
+export = gravatarHelper;

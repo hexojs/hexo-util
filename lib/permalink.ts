@@ -3,11 +3,11 @@ import escapeRegExp from './escape_regexp';
 const rParam = /:(\w*[^_\W])/g;
 
 class Permalink {
-  rule: any;
+  rule: string;
   regex: RegExp;
   params: any[];
 
-  constructor(rule, options) {
+  constructor(rule: string, options: { segments?: any; }) {
     if (!rule) { throw new TypeError('rule is required!'); }
     options = options || {};
     const segments = options.segments || {};
@@ -29,11 +29,11 @@ class Permalink {
     this.params = params;
   }
 
-  test(str) {
+  test(str: string) {
     return this.regex.test(str);
   }
 
-  parse(str) {
+  parse(str: string) {
     const match = str.match(this.regex);
     const { params } = this;
     const result = {};
@@ -49,4 +49,4 @@ class Permalink {
   }
 }
 
-export default Permalink;
+export = Permalink;

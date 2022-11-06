@@ -3,9 +3,9 @@ import escapeRegExp from './escape_regexp';
 const rParam = /([:*])([\w?]*)?/g;
 
 class Pattern {
-  match: Function;
+  match: (str: string) => any;
 
-  constructor(rule: Pattern | Function | RegExp | string) {
+  constructor(rule: Pattern | ((str: string) => any) | RegExp | string) {
     if (rule instanceof Pattern) {
       return rule;
     } else if (typeof rule === 'function') {
@@ -19,16 +19,16 @@ class Pattern {
     }
   }
 
-  test(str) {
+  test(str: string) {
     return Boolean(this.match(str));
   }
 }
 
-function regexFilter(rule) {
-  return str => str.match(rule);
+function regexFilter(rule: RegExp) {
+  return (str: string) => str.match(rule);
 }
 
-function stringFilter(rule) {
+function stringFilter(rule: string) {
   const params = [];
 
   const regex = escapeRegExp(rule)
@@ -54,7 +54,7 @@ function stringFilter(rule) {
       return str;
     });
 
-  return str => {
+  return (str: string) => {
     const match = str.match(regex);
     if (!match) return;
 
@@ -70,4 +70,4 @@ function stringFilter(rule) {
   };
 }
 
-export default Pattern;
+export = Pattern;

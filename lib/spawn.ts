@@ -5,11 +5,11 @@ import CacheStream from './cache_stream';
 import { SpawnOptions } from 'child_process';
 interface Options extends SpawnOptions {
   verbose?: boolean;
-  encoding?: string;
+  encoding?: BufferEncoding;
 }
 
 class StatusError extends Error {
-  code: number | undefined;
+  code?: number;
 }
 
 function promiseSpawn(command: string, args = [], options: Options = {}) {
@@ -41,7 +41,7 @@ function promiseSpawn(command: string, args = [], options: Options = {}) {
 
     task.on('close', code => {
       if (code) {
-        const e = new StatusError(getCache(stderrCache, encoding));
+        const e = new StatusError(getCache(stderrCache, encoding) as string);
         e.code = code;
 
         return reject(e);
@@ -68,7 +68,7 @@ function promiseSpawn(command: string, args = [], options: Options = {}) {
   });
 }
 
-function getCache(stream, encoding) {
+function getCache(stream: CacheStream, encoding?: BufferEncoding) {
   const buf = stream.getCache();
   stream.destroy();
   if (!encoding) return buf;
@@ -76,4 +76,4 @@ function getCache(stream, encoding) {
   return buf.toString(encoding);
 }
 
-export default promiseSpawn;
+export = promiseSpawn;

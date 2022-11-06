@@ -155,7 +155,7 @@ const colorNames = {
   yellowgreen: {r: 154, g: 205, b: 50, a: 1}
 };
 
-const convertHue = (p, q, h) => {
+const convertHue = (p: number, q: number, h: number) => {
   if (h < 0) h++;
   if (h > 1) h--;
 
@@ -174,14 +174,21 @@ const convertHue = (p, q, h) => {
   return Math.round(color * 255);
 };
 
-const convertRGB = value => {
+const convertRGB = (value: number) => {
   const str = value.toString(16);
   if (value < 16) return `0${str}`;
 
   return str;
 };
 
-const mixValue = (a, b, ratio) => a + ((b - a) * ratio);
+const mixValue = (a: number, b: number, ratio: number) => a + ((b - a) * ratio);
+
+interface RGBA {
+  r?: number;
+  g?: number;
+  b?: number;
+  a?: number;
+}
 
 class Color {
   r?: number;
@@ -192,7 +199,7 @@ class Color {
   /**
    * @param {string|{ r: number; g: number; b: number; a: number;}} color
    */
-  constructor(color) {
+  constructor(color: string | RGBA) {
     if (typeof color === 'string') {
       this._parse(color);
     } else if (color != null && typeof color === 'object') {
@@ -215,7 +222,7 @@ class Color {
   /**
    * @param {string} color
    */
-  _parse(color) {
+  _parse(color: string) {
     color = color.toLowerCase();
 
     if (Object.prototype.hasOwnProperty.call(colorNames, color)) {
@@ -256,9 +263,9 @@ class Color {
     let match = color.match(rRGB);
 
     if (match) {
-      this.r = match[1] | 0;
-      this.g = match[2] | 0;
-      this.b = match[3] | 0;
+      this.r = Number(match[1]) | 0;
+      this.g = Number(match[2]) | 0;
+      this.b = Number(match[3]) | 0;
       this.a = match[4] ? +match[4] : 1;
 
       return;
@@ -316,7 +323,7 @@ class Color {
    * @param {string|{ r: number; g: number; b: number; a: number;}} color
    * @param {number} ratio
    */
-  mix(color, ratio) {
+  mix(color: RGBA, ratio: number) {
     if (ratio > 1 || ratio < 0) {
       throw new RangeError('Valid numbers is only between 0 and 1.');
     }
@@ -337,4 +344,4 @@ class Color {
   }
 }
 
-export default Color;
+export = Color;

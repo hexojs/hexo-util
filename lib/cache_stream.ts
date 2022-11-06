@@ -1,7 +1,7 @@
 import { Transform } from 'stream';
 
 class CacheStream extends Transform {
-  _cache: any[];
+  _cache: Buffer[];
 
   constructor() {
     super();
@@ -21,4 +21,4 @@ class CacheStream extends Transform {
   }
 }
 
-export default CacheStream;
+export = CacheStream;

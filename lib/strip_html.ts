@@ -120,4 +120,4 @@ function striptags(html: string | String = '') {
   return output;
 }
 
-export default striptags;
+export = striptags;

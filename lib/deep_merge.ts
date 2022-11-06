@@ -19,4 +19,4 @@ function deepMerge(target, source) {
   return deepmerge(target, source, { arrayMerge });
 }
 
-export default deepMerge;
+export = deepMerge;

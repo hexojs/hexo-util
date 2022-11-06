@@ -25,7 +25,7 @@ import escapeHTML from './escape_html';
  * @param {String} code
  * @param {String} language
  */
-function prismHighlight(code, language) {
+function prismHighlight(code: string, language: string) {
   // Prism has not load the language pattern
   if (!Prism.languages[language] && prismSupportedLanguages.includes(language)) prismLoadLanguages(language);
 
@@ -42,7 +42,7 @@ function prismHighlight(code, language) {
  * Generate line number required HTML snippet
  * @param {String} code - Highlighted code
  */
-function lineNumberUtil(code) {
+function lineNumberUtil(code: string) {
   const matched = code.match(/\n(?!$)/g);
   const num = matched ? matched.length + 1 : 1;
   const lines = new Array(num + 1).join('<span></span>');
@@ -50,21 +50,21 @@ function lineNumberUtil(code) {
   return `<span aria-hidden="true" class="line-numbers-rows">${lines}</span>`;
 }
 
-function replaceTabs(str, tab) {
+function replaceTabs(str: string, tab: string) {
   return str.replace(/^\t+/gm, match => tab.repeat(match.length));
 }
 
 interface Options {
-  lineNumber?: boolean;
-  lang?: string;
-  tab?: string;
-  mark?: string;
+  caption?: string;
   firstLine?: number;
   isPreprocess?: boolean;
-  caption?: string;
+  lang?: string;
+  lineNumber?: boolean;
+  mark?: string;
+  tab?: string;
 }
 
-function PrismUtil(str, options: Options = {}) {
+function PrismUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
   str = stripIndent(str);
 
@@ -133,4 +133,4 @@ function PrismUtil(str, options: Options = {}) {
   return startTag + parsedCode + endTag;
 }
 
-export default PrismUtil;
+export = PrismUtil;

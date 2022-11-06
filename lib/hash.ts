@@ -6,7 +6,7 @@ function createSha1Hash() {
   return crypto.createHash(ALGORITHM);
 }
 
-function hash(content) {
+function hash(content: crypto.BinaryLike) {
   const hash = createSha1Hash();
   hash.update(content);
   return hash.digest();

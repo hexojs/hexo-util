@@ -3,7 +3,7 @@ import escapeHTML from './escape_html';
 const regexUrl = /(cite|download|href|src|url)$/i;
 const regexMeta = /^(og:|twitter:)(audio|image|url|video)(:secure_url)?$/i;
 
-function encSrcset(str) {
+function encSrcset(str: string) {
   str.split(' ')
     .forEach(subStr => {
       if (subStr.match(/\S/)) {
@@ -16,7 +16,7 @@ function encSrcset(str) {
 
 function htmlTag(tag: string, attrs: {
   [key: string]: string | boolean;
-}, text, escape = true) {
+}, text?: string, escape = true) {
   if (!tag) throw new TypeError('tag is required!');
 
   let result = `<${escapeHTML(tag)}`;
@@ -25,10 +25,10 @@ function htmlTag(tag: string, attrs: {
     if (attrs[i] == null) result += '';
     else {
       if (i.match(regexUrl)
-        || (tag === 'meta' && !String(attrs[i]).match(regexMeta) && Object.values(attrs)[0].match(regexMeta))) {
-        result += ` ${escapeHTML(i)}="${encodeURL(attrs[i])}"`;
+        || (tag === 'meta' && !String(attrs[i]).match(regexMeta) && String(Object.values(attrs)[0]).match(regexMeta))) {
+        result += ` ${escapeHTML(i)}="${encodeURL(String(attrs[i]))}"`;
       } else if (attrs[i] === true || i === attrs[i]) result += ` ${escapeHTML(i)}`;
-      else if (i.match(/srcset$/i)) result += ` ${escapeHTML(i)}="${encSrcset(attrs[i])}"`;
+      else if (i.match(/srcset$/i)) result += ` ${escapeHTML(i)}="${encSrcset(String(attrs[i]))}"`;
       else result += ` ${escapeHTML(i)}="${escapeHTML(String(attrs[i]))}"`;
     }
   }
@@ -46,4 +46,4 @@ function htmlTag(tag: string, attrs: {
   return result;
 }
 
-export default htmlTag;
+export = htmlTag;

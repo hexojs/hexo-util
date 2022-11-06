@@ -1,20 +1,21 @@
-import hljs from 'highlight.js';
+import hljs, { HighlightResult } from 'highlight.js';
 import stripIndent from 'strip-indent';
 const alias = require('../highlight_alias.json');
 
 interface Options {
-  hljs?: boolean;
-  gutter?: boolean;
-  firstLine?: number;
+  autoDetect?: boolean;
   caption?: string;
-  mark?: number[];
+  firstLine?: number;
+  gutter?: boolean;
+  hljs?: boolean;
+  lang?: string;
   languageAttr?: boolean;
+  mark?: number[];
   tab?: string;
   wrap?: boolean;
-  lang?: string;
 }
 
-function highlightUtil(str, options: Options = {}) {
+function highlightUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
   str = stripIndent(str);
 
@@ -79,7 +80,7 @@ function highlightUtil(str, options: Options = {}) {
   return result;
 }
 
-function formatLine(line, lineno, marked, options, wrap) {
+function formatLine(line: string, lineno: number, marked: number[], options: Options, wrap: boolean) {
   const useHljs = (options.hljs || false) || !wrap;
   const br = wrap ? '<br>' : '\n';
   let res = useHljs ? '' : '<span class="line';
@@ -94,11 +95,11 @@ function formatLine(line, lineno, marked, options, wrap) {
   return res;
 }
 
-function replaceTabs(str, tab) {
+function replaceTabs(str: string, tab: string) {
   return str.replace(/\t+/, match => tab.repeat(match.length));
 }
 
-function highlight(str, options) {
+function highlight(str: string, options: Options) {
   let { lang } = options;
   const { autoDetect = false } = options;
 
@@ -122,7 +123,7 @@ function highlight(str, options) {
 }
 
 // https://github.com/hexojs/hexo-util/issues/10
-function closeTags(res) {
+function closeTags(res: HighlightResult) {
   const tokenStack = [];
 
   res.value = res.value.split('\n').map(line => {
@@ -138,4 +139,4 @@ function closeTags(res) {
   return res;
 }
 
-export default highlightUtil;
+export = highlightUtil;

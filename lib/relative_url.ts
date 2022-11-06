@@ -30,4 +30,4 @@ function relativeUrlHelper(from = '', to = '') {
   });
 }
 
-export default relativeUrlHelper;
+export = relativeUrlHelper;

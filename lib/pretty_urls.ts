@@ -3,7 +3,7 @@ interface Options {
   trailing_html?: boolean
 }
 
-function prettyUrls(url, options: Options = {}) {
+function prettyUrls(url: string, options: Options = {}) {
   options = Object.assign({
     trailing_index: true,
     trailing_html: true
@@ -18,4 +18,4 @@ function prettyUrls(url, options: Options = {}) {
   return url;
 }
 
-export default prettyUrls;
+export = prettyUrls;

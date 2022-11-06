@@ -28,4 +28,4 @@ function fullUrlForHelper(path = '/') {
   });
 }
 
-export default fullUrlForHelper;
+export = fullUrlForHelper;

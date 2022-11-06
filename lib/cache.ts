@@ -1,4 +1,4 @@
-export default class Cache {
+export = class Cache {
   cache: Map<any, any>;
 
   constructor() {

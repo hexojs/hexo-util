@@ -44,4 +44,4 @@ function urlForHelper(path = '/', options) {
   });
 }
 
-export default urlForHelper;
+export = urlForHelper;

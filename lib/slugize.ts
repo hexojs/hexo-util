@@ -37,4 +37,4 @@ function slugize(str: string, options: Options = {}) {
   }
 }
 
-export default slugize;
+export = slugize;

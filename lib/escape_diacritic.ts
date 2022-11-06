@@ -97,7 +97,7 @@ for (const i of defaultDiacriticsRemovalap) {
   }
 }
 
-function escapeDiacritic(str) {
+function escapeDiacritic(str: string) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   // http://stackoverflow.com/a/18391901
@@ -105,4 +105,4 @@ function escapeDiacritic(str) {
   return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
 }
 
-export default escapeDiacritic;
+export = escapeDiacritic;

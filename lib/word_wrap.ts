@@ -3,7 +3,7 @@ interface Options {
 }
 
 // https://github.com/rails/rails/blob/v4.2.0/actionview/lib/action_view/helpers/text_helper.rb#L240
-function wordWrap(str, options: Options = {}) {
+function wordWrap(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const width = options.width || 80;
@@ -21,4 +21,4 @@ function wordWrap(str, options: Options = {}) {
   return lines.join('\n');
 }
 
-export default wordWrap;
+export = wordWrap;

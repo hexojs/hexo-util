@@ -1,1 +1,1 @@
-export default require('strip-indent');
+export = require('strip-indent');
