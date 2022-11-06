@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('color', () => {
-  const Color = require('../lib/color');
+  const Color = require('../dist/color');
 
   it('name', () => {
     const red = new Color('red');

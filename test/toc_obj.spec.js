@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('tocObj', () => {
-  const tocObj = require('../lib/toc_obj');
+  const tocObj = require('../dist/toc_obj');
 
   const html = [
     '<h1 id="title_1">Title 1</h1>',

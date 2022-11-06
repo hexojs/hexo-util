@@ -11,7 +11,7 @@ function sha1(content) {
 }
 
 describe('hash', () => {
-  const hash = require('../lib/hash');
+  const hash = require('../dist/hash');
 
   it('hash', () => {
     const content = '123456';

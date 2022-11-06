@@ -1,6 +1,6 @@
 'use strict';
 
-const stripHTML = require('../lib/strip_html');
+const stripHTML = require('../dist/strip_html');
 
 describe('stripHTML', () => {
   it('should not strip invalid tags', () => {

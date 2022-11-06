@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('encodeURL', () => {
-  const encodeURL = require('../lib/encode_url');
+  const encodeURL = require('../dist/encode_url');
 
   it('regular', () => {
     const content = 'http://foo.com/';

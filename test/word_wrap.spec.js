@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('wordWrap', () => {
-  const wordWrap = require('../lib/word_wrap');
+  const wordWrap = require('../dist/word_wrap');
 
   it('default', () => {
     wordWrap('Once upon a time').should.eql('Once upon a time');

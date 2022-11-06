@@ -5,7 +5,7 @@ require('chai').should();
 // The test is modified based on https://github.com/jonschlinkert/merge-deep/blob/master/test.js
 
 describe('deepMerge()', () => {
-  const deepMerge = require('../lib/deep_merge');
+  const deepMerge = require('../dist/deep_merge');
 
   it('should act as lodash.merge', () => {
     const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };

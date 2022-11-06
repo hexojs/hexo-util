@@ -7,7 +7,7 @@ describe('full_url_for', () => {
     }
   };
 
-  const fullUrlFor = require('../lib/full_url_for').bind(ctx);
+  const fullUrlFor = require('../dist/full_url_for').bind(ctx);
 
   it('internal url - root directory', () => {
     ctx.config.url = 'https://example.com';

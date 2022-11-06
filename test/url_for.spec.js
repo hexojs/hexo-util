@@ -7,7 +7,7 @@ describe('url_for', () => {
     }
   };
 
-  const urlFor = require('../lib/url_for').bind(ctx);
+  const urlFor = require('../dist/url_for').bind(ctx);
 
   it('should encode path', () => {
     ctx.config.root = '/';
