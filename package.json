@@ -23,7 +23,7 @@
     "scripts/",
     "highlight_alias.json"
   ],
-  "types": "./dist/**/*.d.ts",
+  "types": "./dist/index.d.ts",
   "repository": "hexojs/hexo-util",
   "homepage": "https://hexo.io/",
   "keywords": [
