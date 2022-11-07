@@ -1,6 +1,6 @@
 import { parse } from 'url';
 import Cache from './cache';
-const cache = new Cache();
+const cache = new Cache<boolean>();
 
 /**
  * Check whether the link is external

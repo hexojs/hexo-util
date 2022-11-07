@@ -191,10 +191,10 @@ interface RGBA {
 }
 
 class Color {
-  r?: number;
-  g?: number;
-  b?: number;
-  a?: number;
+  r: number;
+  g: number;
+  b: number;
+  a: number;
 
   /**
    * @param {string|{ r: number; g: number; b: number; a: number;}} color

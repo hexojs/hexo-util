@@ -5,7 +5,7 @@ const rParam = /:(\w*[^_\W])/g;
 class Permalink {
   rule: string;
   regex: RegExp;
-  params: any[];
+  params: string[];
 
   constructor(rule: string, options: { segments?: any; }) {
     if (!rule) { throw new TypeError('rule is required!'); }
