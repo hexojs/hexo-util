@@ -15,7 +15,7 @@ const arrayMerge = (target, source, options) => {
   return destination;
 };
 
-function deepMerge(target, source) {
+function deepMerge<T>(target: Partial<T>, source: Partial<T>) {
   return deepmerge(target, source, { arrayMerge });
 }
 
