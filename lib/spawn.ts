@@ -12,7 +12,7 @@ class StatusError extends Error {
   code?: number;
 }
 
-function promiseSpawn(command: string, args = [], options: Options = {}) {
+function promiseSpawn(command: string, args: string | string[] | Options = [], options: Options = {}) {
   if (!command) throw new TypeError('command is required!');
 
   if (typeof args === 'string') args = [args];
@@ -22,8 +22,8 @@ function promiseSpawn(command: string, args = [], options: Options = {}) {
     args = [];
   }
 
-  return new Promise((resolve, reject) => {
-    const task = spawn(command, args, options);
+  return new Promise<string | Buffer | void>((resolve, reject) => {
+    const task = spawn(command, args as string[], options);
     const verbose = options.verbose;
     const { encoding = 'utf8' } = options;
     const stdoutCache = new CacheStream();

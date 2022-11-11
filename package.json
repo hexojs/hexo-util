@@ -38,6 +38,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/bluebird": "^3.5.37",
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^18.11.8",
     "@types/prismjs": "^1.26.0",
