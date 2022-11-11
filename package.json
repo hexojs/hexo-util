@@ -4,7 +4,7 @@
   "description": "Utilities for Hexo.",
   "main": "lib/index",
   "scripts": {
-    "prepublish": "npm install && npm run clean && npm run build",
+    "prepublishOnly": "npm install && npm run clean && npm run build",
     "build": "tsc -b",
     "clean": "tsc -b --clean",
     "preeslint": "npm run clean && npm run build",
