@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('slugize', () => {
-  const slugize = require('../lib/slugize');
+  const slugize = require('../dist/slugize');
 
   it('spaces', () => {
     slugize('Hello World').should.eql('Hello-World');

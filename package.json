@@ -4,8 +4,13 @@
   "description": "Utilities for Hexo.",
   "main": "lib/index",
   "scripts": {
+    "prepublishOnly": "npm install && npm run clean && npm run build",
+    "build": "tsc -b",
+    "clean": "tsc -b --clean",
+    "preeslint": "npm run clean && npm run build",
     "eslint": "eslint lib test",
-    "test": "mocha",
+    "pretest": "npm run clean && npm run build",
+    "test": "mocha --require ts-node/register",
     "test-cov": "nyc --reporter=lcovonly npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "prepare": "npm run build:highlight"
@@ -15,10 +20,11 @@
     "scripts": "./scripts"
   },
   "files": [
-    "lib/",
+    "dist/**",
     "scripts/",
     "highlight_alias.json"
   ],
+  "types": "./dist/index.d.ts",
   "repository": "hexojs/hexo-util",
   "homepage": "https://hexo.io/",
   "keywords": [
@@ -32,6 +38,12 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/bluebird": "^3.5.37",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/node": "^18.11.8",
+    "@types/prismjs": "^1.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.23.0",
@@ -40,7 +52,9 @@
     "html-tag-validator": "^1.6.0",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
-    "rewire": "^6.0.0"
+    "rewire": "^6.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   },
   "dependencies": {
     "bluebird": "^3.7.2",

@@ -1,10 +1,18 @@
-'use strict';
+import spawn from 'cross-spawn';
+import Promise from 'bluebird';
+import CacheStream from './cache_stream';
 
-const spawn = require('cross-spawn');
-const Promise = require('bluebird');
-const CacheStream = require('./cache_stream');
+import { SpawnOptions } from 'child_process';
+interface Options extends SpawnOptions {
+  verbose?: boolean;
+  encoding?: BufferEncoding;
+}
 
-function promiseSpawn(command, args = [], options = {}) {
+class StatusError extends Error {
+  code?: number;
+}
+
+function promiseSpawn(command: string, args: string | string[] | Options = [], options: Options = {}) {
   if (!command) throw new TypeError('command is required!');
 
   if (typeof args === 'string') args = [args];
@@ -14,8 +22,8 @@ function promiseSpawn(command, args = [], options = {}) {
     args = [];
   }
 
-  return new Promise((resolve, reject) => {
-    const task = spawn(command, args, options);
+  return new Promise<string | Buffer | void>((resolve, reject) => {
+    const task = spawn(command, args as string[], options);
     const verbose = options.verbose;
     const { encoding = 'utf8' } = options;
     const stdoutCache = new CacheStream();
@@ -33,7 +41,7 @@ function promiseSpawn(command, args = [], options = {}) {
 
     task.on('close', code => {
       if (code) {
-        const e = new Error(getCache(stderrCache, encoding));
+        const e = new StatusError(getCache(stderrCache, encoding) as string);
         e.code = code;
 
         return reject(e);
@@ -48,7 +56,7 @@ function promiseSpawn(command, args = [], options = {}) {
     if (!task.stdout && !task.stderr) {
       task.on('exit', code => {
         if (code) {
-          const e = new Error('Spawn failed');
+          const e = new StatusError('Spawn failed');
           e.code = code;
 
           return reject(e);
@@ -60,7 +68,7 @@ function promiseSpawn(command, args = [], options = {}) {
   });
 }
 
-function getCache(stream, encoding) {
+function getCache(stream: CacheStream, encoding?: BufferEncoding) {
   const buf = stream.getCache();
   stream.destroy();
   if (!encoding) return buf;
@@ -68,4 +76,4 @@ function getCache(stream, encoding) {
   return buf.toString(encoding);
 }
 
-module.exports = promiseSpawn;
+export = promiseSpawn;

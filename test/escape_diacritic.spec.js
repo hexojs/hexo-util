@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('escapeDiacritic', () => {
-  const escapeDiacritic = require('../lib/escape_diacritic');
+  const escapeDiacritic = require('../dist/escape_diacritic');
 
   it('default', () => {
     escapeDiacritic('Hell\u00F2 w\u00F2rld').should.eql('Hello world');

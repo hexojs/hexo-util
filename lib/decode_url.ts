@@ -1,9 +1,7 @@
-'use strict';
+import { parse, format } from 'url';
+import { unescape } from 'querystring';
 
-const { parse, format } = require('url');
-const { unescape } = require('querystring');
-
-const decodeURL = str => {
+const decodeURL = (str: string) => {
   if (parse(str).protocol) {
     const parsed = new URL(str);
 
@@ -17,4 +15,4 @@ const decodeURL = str => {
   return unescape(str);
 };
 
-module.exports = decodeURL;
+export = decodeURL;

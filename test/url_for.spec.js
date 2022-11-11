@@ -7,7 +7,7 @@ describe('url_for', () => {
     }
   };
 
-  const urlFor = require('../lib/url_for').bind(ctx);
+  const urlFor = require('../dist/url_for').bind(ctx);
 
   it('should encode path', () => {
     ctx.config.root = '/';
@@ -78,7 +78,6 @@ describe('url_for', () => {
     urlFor('/').should.eql('/blog/');
     urlFor('/index.html').should.eql('/blog/');
   });
-
 
   it('internal url - pretty_urls.trailing_html disabled', () => {
     ctx.config.root = '/';

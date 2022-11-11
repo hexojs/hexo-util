@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('decodeURL', () => {
-  const decodeURL = require('../lib/decode_url');
+  const decodeURL = require('../dist/decode_url');
 
   it('regular', () => {
     const content = 'http://foo.com/';

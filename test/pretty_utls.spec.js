@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('prettyUrls', () => {
-  const prettyUrls = require('../lib/pretty_urls');
+  const prettyUrls = require('../dist/pretty_urls');
 
   it('default', () => {
     prettyUrls('//example.com/index.html').should.eql('//example.com/index.html');

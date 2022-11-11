@@ -1,6 +1,4 @@
-'use strict';
-
-const unescapeHTML = require('./unescape_html');
+import unescapeHTML from './unescape_html';
 
 const htmlEntityMap = {
   '&': '&amp;',
@@ -13,7 +11,7 @@ const htmlEntityMap = {
   '=': '&#x3D;'
 };
 
-function escapeHTML(str) {
+function escapeHTML(str: string) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   str = unescapeHTML(str);
@@ -22,4 +20,4 @@ function escapeHTML(str) {
   return str.replace(/[&<>"'`/=]/g, a => htmlEntityMap[a]);
 }
 
-module.exports = escapeHTML;
+export = escapeHTML;

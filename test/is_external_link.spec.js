@@ -7,7 +7,7 @@ describe('isExternalLink', () => {
     }
   };
 
-  const isExternalLink = require('../lib/is_external_link');
+  const isExternalLink = require('../dist/is_external_link');
 
   it('invalid url', () => {
     isExternalLink('https://localhost:4000你好', ctx.config.url).should.eql(false);

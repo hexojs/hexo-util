@@ -3,8 +3,8 @@
 require('chai').should();
 
 describe('htmlTag', () => {
-  const htmlTag = require('../lib/html_tag');
-  const encodeURL = require('../lib/encode_url');
+  const htmlTag = require('../dist/html_tag');
+  const encodeURL = require('../dist/encode_url');
 
   it('tag', () => {
     htmlTag('hr').should.eql('<hr>');

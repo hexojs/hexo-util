@@ -1,10 +1,9 @@
-'use strict';
-
 const STATE_PLAINTEXT = Symbol('plaintext');
 const STATE_HTML = Symbol('html');
 const STATE_COMMENT = Symbol('comment');
 
-function striptags(html = '') {
+// eslint-disable-next-line @typescript-eslint/ban-types
+function striptags(html: string | String = '') {
   // if not string, then safely return an empty string
   if (typeof html !== 'string' && !(html instanceof String)) {
     return '';
@@ -122,4 +121,4 @@ function striptags(html = '') {
   return output;
 }
 
-module.exports = striptags;
+export = striptags;

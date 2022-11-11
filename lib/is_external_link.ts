@@ -1,9 +1,6 @@
-'use strict';
-
-const { parse } = require('url');
-
-const Cache = require('./cache');
-const cache = new Cache();
+import { parse } from 'url';
+import Cache from './cache';
+const cache = new Cache<boolean>();
 
 /**
  * Check whether the link is external
@@ -13,7 +10,7 @@ const cache = new Cache();
  * @returns {Boolean} True if the link doesn't have protocol or link has same host with config.url
  */
 
-function isExternalLink(input, sitehost, exclude) {
+function isExternalLink(input: string, sitehost: string, exclude: string[]): boolean {
   return cache.apply(`${input}-${sitehost}-${exclude}`, () => {
     // Return false early for internal link
     if (!/^(\/\/|http(s)?:)/.test(input)) return false;
@@ -52,4 +49,4 @@ function isExternalLink(input, sitehost, exclude) {
   });
 }
 
-module.exports = isExternalLink;
+export = isExternalLink;

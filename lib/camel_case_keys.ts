@@ -1,20 +1,18 @@
-'use strict';
+import { camelCase } from 'camel-case';
 
-const { camelCase } = require('camel-case');
-
-function getter(key) {
+function getter(key: string) {
   return function() {
     return this[key];
   };
 }
 
-function setter(key) {
+function setter(key: string) {
   return function(value) {
     this[key] = value;
   };
 }
 
-function toCamelCase(str) {
+function toCamelCase(str: string) {
   let prefixLength = -1;
 
   while (str[++prefixLength] === '_');
@@ -25,7 +23,7 @@ function toCamelCase(str) {
   return str.substring(0, prefixLength) + camelCase(str.substring(prefixLength));
 }
 
-function camelCaseKeys(obj) {
+function camelCaseKeys(obj: object) {
   if (typeof obj !== 'object') throw new TypeError('obj must be an object!');
 
   const keys = Object.keys(obj);
@@ -49,4 +47,4 @@ function camelCaseKeys(obj) {
   return result;
 }
 
-module.exports = camelCaseKeys;
+export = camelCaseKeys;

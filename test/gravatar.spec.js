@@ -3,7 +3,7 @@
 const { createHash } = require('crypto');
 
 describe('gravatar', () => {
-  const gravatar = require('../lib/gravatar');
+  const gravatar = require('../dist/gravatar');
 
   function md5(str) {
     return createHash('md5').update(str).digest('hex');

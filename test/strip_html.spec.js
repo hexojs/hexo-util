@@ -1,6 +1,6 @@
 'use strict';
 
-const stripHTML = require('../lib/strip_html');
+const stripHTML = require('../dist/strip_html');
 
 describe('stripHTML', () => {
   it('should not strip invalid tags', () => {
@@ -29,7 +29,6 @@ describe('stripHTML', () => {
 
     stripHTML(html).should.eql(text);
   });
-
 
   it('should not fail with nested quotes', () => {
     const html = '<article attr="foo \'bar\'">lorem</article> ipsum';

@@ -1,5 +1,3 @@
-'use strict';
-
 const hljs = require('highlight.js');
 const languages = hljs.listLanguages();
 const fs = require('fs');

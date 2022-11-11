@@ -9,8 +9,8 @@ const isWindows = process.platform === 'win32';
 const catCommand = isWindows ? 'type' : 'cat';
 
 describe('spawn', () => {
-  const spawn = require('../lib/spawn');
-  const CacheStream = require('../lib/cache_stream');
+  const spawn = require('../dist/spawn');
+  const CacheStream = require('../dist/cache_stream');
   const fixturePath = join(__dirname, 'spawn_test.txt');
   const fixture = 'test content';
 
@@ -59,7 +59,7 @@ describe('spawn', () => {
   });
 
   it('verbose - stdout', () => {
-    const spawn = rewire('../lib/spawn');
+    const spawn = rewire('../dist/spawn');
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
     const content = 'something';
@@ -82,7 +82,7 @@ describe('spawn', () => {
   });
 
   it('verbose - stderr', () => {
-    const spawn = rewire('../lib/spawn');
+    const spawn = rewire('../dist/spawn');
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
 

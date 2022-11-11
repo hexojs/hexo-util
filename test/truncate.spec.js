@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('truncate', () => {
-  const truncate = require('../lib/truncate');
+  const truncate = require('../dist/truncate');
 
   it('default', () => {
     truncate('Once upon a time in a world far far away')

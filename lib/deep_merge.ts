@@ -1,6 +1,4 @@
-'use strict';
-
-const deepmerge = require('deepmerge');
+import deepmerge from 'deepmerge';
 
 const arrayMerge = (target, source, options) => {
   const destination = target.slice();
@@ -17,9 +15,8 @@ const arrayMerge = (target, source, options) => {
   return destination;
 };
 
-
-function deepMerge(target, source) {
+function deepMerge<T>(target: Partial<T>, source: Partial<T>) {
   return deepmerge(target, source, { arrayMerge });
 }
 
-module.exports = deepMerge;
+export = deepMerge;

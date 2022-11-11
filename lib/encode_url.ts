@@ -1,9 +1,7 @@
-'use strict';
+import { parse, format } from 'url';
+import { unescape } from 'querystring';
 
-const { parse, format } = require('url');
-const { unescape } = require('querystring');
-
-const encodeURL = str => {
+const encodeURL = (str: string) => {
   if (parse(str).protocol) {
     const parsed = new URL(str);
 
@@ -18,4 +16,4 @@ const encodeURL = str => {
   return encodeURI(unescape(str));
 };
 
-module.exports = encodeURL;
+export = encodeURL;

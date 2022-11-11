@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('escapeHTML', () => {
-  const escapeHTML = require('../lib/escape_html');
+  const escapeHTML = require('../dist/escape_html');
 
   it('default', () => {
     escapeHTML('<p class="foo">Hello "world".</p>').should.eql('&lt;p class&#x3D;&quot;foo&quot;&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;');

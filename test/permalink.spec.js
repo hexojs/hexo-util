@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('Permalink', () => {
-  const Permalink = require('../lib/permalink');
+  const Permalink = require('../dist/permalink');
   let permalink;
 
   it('constructor', () => {

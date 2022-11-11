@@ -1,10 +1,22 @@
-'use strict';
-
-const hljs = require('highlight.js');
-const stripIndent = require('strip-indent');
+import hljs, { HighlightResult } from 'highlight.js';
+import stripIndent from 'strip-indent';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const alias = require('../highlight_alias.json');
 
-function highlightUtil(str, options = {}) {
+interface Options {
+  autoDetect?: boolean;
+  caption?: string;
+  firstLine?: number;
+  gutter?: boolean;
+  hljs?: boolean;
+  lang?: string;
+  languageAttr?: boolean;
+  mark?: number[];
+  tab?: string;
+  wrap?: boolean;
+}
+
+function highlightUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
   str = stripIndent(str);
 
@@ -29,7 +41,6 @@ function highlightUtil(str, options = {}) {
 
   const before = useHljs ? `<pre><code class="${classNames}"${languageAttr && lang ? ` data-language="${lang}"` : ''}>` : '<pre>';
   const after = useHljs ? '</code></pre>' : '</pre>';
-
 
   const lines = data.value.split('\n');
   let numbers = '';
@@ -70,7 +81,7 @@ function highlightUtil(str, options = {}) {
   return result;
 }
 
-function formatLine(line, lineno, marked, options, wrap) {
+function formatLine(line: string, lineno: number, marked: number[], options: Options, wrap: boolean) {
   const useHljs = (options.hljs || false) || !wrap;
   const br = wrap ? '<br>' : '\n';
   let res = useHljs ? '' : '<span class="line';
@@ -85,11 +96,11 @@ function formatLine(line, lineno, marked, options, wrap) {
   return res;
 }
 
-function replaceTabs(str, tab) {
+function replaceTabs(str: string, tab: string) {
   return str.replace(/\t+/, match => tab.repeat(match.length));
 }
 
-function highlight(str, options) {
+function highlight(str: string, options: Options) {
   let { lang } = options;
   const { autoDetect = false } = options;
 
@@ -113,7 +124,7 @@ function highlight(str, options) {
 }
 
 // https://github.com/hexojs/hexo-util/issues/10
-function closeTags(res) {
+function closeTags(res: HighlightResult) {
   const tokenStack = [];
 
   res.value = res.value.split('\n').map(line => {
@@ -129,4 +140,4 @@ function closeTags(res) {
   return res;
 }
 
-module.exports = highlightUtil;
+export = highlightUtil;

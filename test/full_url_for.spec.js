@@ -7,7 +7,7 @@ describe('full_url_for', () => {
     }
   };
 
-  const fullUrlFor = require('../lib/full_url_for').bind(ctx);
+  const fullUrlFor = require('../dist/full_url_for').bind(ctx);
 
   it('internal url - root directory', () => {
     ctx.config.url = 'https://example.com';
@@ -59,7 +59,6 @@ describe('full_url_for', () => {
     fullUrlFor('/').should.eql(ctx.config.url + '/');
     fullUrlFor('/foo/bar.html').should.eql(ctx.config.url + '/foo/bar');
   });
-
 
   it('absolute url', () => {
     [

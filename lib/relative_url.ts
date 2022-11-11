@@ -1,8 +1,5 @@
-'use strict';
-
-const encodeURL = require('./encode_url');
-
-const Cache = require('./cache');
+import encodeURL from './encode_url';
+import Cache from './cache';
 const cache = new Cache();
 
 function relativeUrlHelper(from = '', to = '') {
@@ -33,4 +30,4 @@ function relativeUrlHelper(from = '', to = '') {
   });
 }
 
-module.exports = relativeUrlHelper;
+export = relativeUrlHelper;

@@ -1,8 +1,8 @@
-'use strict';
-
-const { Transform } = require('stream');
+import { Transform } from 'stream';
 
 class CacheStream extends Transform {
+  _cache: Buffer[];
+
   constructor() {
     super();
 
@@ -21,4 +21,4 @@ class CacheStream extends Transform {
   }
 }
 
-module.exports = CacheStream;
+export = CacheStream;

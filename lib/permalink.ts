@@ -1,11 +1,13 @@
-'use strict';
-
-const escapeRegExp = require('./escape_regexp');
+import escapeRegExp from './escape_regexp';
 
 const rParam = /:(\w*[^_\W])/g;
 
 class Permalink {
-  constructor(rule, options) {
+  rule: string;
+  regex: RegExp;
+  params: string[];
+
+  constructor(rule: string, options: { segments?: any; }) {
     if (!rule) { throw new TypeError('rule is required!'); }
     options = options || {};
     const segments = options.segments || {};
@@ -27,11 +29,11 @@ class Permalink {
     this.params = params;
   }
 
-  test(str) {
+  test(str: string) {
     return this.regex.test(str);
   }
 
-  parse(str) {
+  parse(str: string) {
     const match = str.match(this.regex);
     const { params } = this;
     const result = {};
@@ -47,5 +49,4 @@ class Permalink {
   }
 }
 
-
-module.exports = Permalink;
+export = Permalink;

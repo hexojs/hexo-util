@@ -1,7 +1,7 @@
 'use strict';
 
 require('chai').should();
-const escapeHTML = require('../lib/escape_html');
+const escapeHTML = require('../dist/escape_html');
 const stripIndent = require('strip-indent');
 
 const validator = require('html-tag-validator');
@@ -27,7 +27,7 @@ const lineNumberStartTag = '<span aria-hidden="true" class="line-numbers-rows">'
 const highlightToken = '<span class="token ';
 
 describe('prismHighlight', () => {
-  const prismHighlight = require('../lib/prism');
+  const prismHighlight = require('../dist/prism');
 
   it('default (plain text)', done => {
     const input = `
