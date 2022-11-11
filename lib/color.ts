@@ -184,10 +184,10 @@ const convertRGB = (value: number) => {
 const mixValue = (a: number, b: number, ratio: number) => a + ((b - a) * ratio);
 
 interface RGBA {
-  r?: number;
-  g?: number;
-  b?: number;
-  a?: number;
+  r: number;
+  g: number;
+  b: number;
+  a: number;
 }
 
 class Color {
@@ -199,7 +199,7 @@ class Color {
   /**
    * @param {string|{ r: number; g: number; b: number; a: number;}} color
    */
-  constructor(color: string | RGBA) {
+  constructor(color: string | Partial<RGBA>) {
     if (typeof color === 'string') {
       this._parse(color);
     } else if (color != null && typeof color === 'object') {
