@@ -12,4 +12,4 @@ function hash(content: crypto.BinaryLike) {
   return hash.digest();
 }
 
-export {hash, createSha1Hash};
+export { hash, createSha1Hash };
