@@ -2,7 +2,7 @@
   "name": "hexo-util",
   "version": "3.0.0",
   "description": "Utilities for Hexo.",
-  "main": "lib/index",
+  "main": "dist/index",
   "scripts": {
     "prepublishOnly": "npm install && npm run clean && npm run build",
     "build": "tsc -b",
@@ -16,7 +16,7 @@
     "prepare": "npm run build:highlight"
   },
   "directories": {
-    "lib": "./lib",
+    "lib": "./dist",
     "scripts": "./scripts"
   },
   "files": [
