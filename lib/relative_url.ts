@@ -1,6 +1,6 @@
 import encodeURL from './encode_url';
 import Cache from './cache';
-const cache = new Cache();
+const cache = new Cache<string>();
 
 function relativeUrlHelper(from = '', to = '') {
   return cache.apply(`${from}-${to}`, () => {

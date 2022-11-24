@@ -21,7 +21,7 @@ export = class Cache<T> {
     this.cache.delete(id);
   }
 
-  apply(id: string, value) {
+  apply(id: string, value): T {
     if (this.has(id)) return this.get(id);
 
     if (typeof value === 'function') value = value();

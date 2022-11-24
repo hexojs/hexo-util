@@ -7,9 +7,8 @@ class Permalink {
   regex: RegExp;
   params: string[];
 
-  constructor(rule: string, options: { segments?: any; }) {
+  constructor(rule: string, options: { segments?: any; } = {}) {
     if (!rule) { throw new TypeError('rule is required!'); }
-    options = options || {};
     const segments = options.segments || {};
     const params = [];
     const regex = escapeRegExp(rule)
