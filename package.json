@@ -34,7 +34,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@types/bluebird": "^3.5.37",
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^18.11.8",
     "@types/prismjs": "^1.26.0",
@@ -53,7 +52,6 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "bluebird": "^3.7.2",
     "camel-case": "^4.1.2",
     "cross-spawn": "^7.0.3",
     "deepmerge": "^4.2.2",

@@ -1,5 +1,4 @@
 import spawn from 'cross-spawn';
-import Promise from 'bluebird';
 import CacheStream from './cache_stream';
 
 import { SpawnOptions } from 'child_process';
