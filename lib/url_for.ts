@@ -3,7 +3,7 @@ import encodeURL from './encode_url';
 import relative_url from './relative_url';
 import prettyUrls from './pretty_urls';
 import Cache from './cache';
-const cache = new Cache();
+const cache = new Cache<string>();
 
 function urlForHelper(path = '/', options) {
   if (/^(#|\/\/|http(s)?:)/.test(path)) return path;

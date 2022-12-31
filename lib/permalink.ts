@@ -2,14 +2,19 @@ import escapeRegExp from './escape_regexp';
 
 const rParam = /:(\w*[^_\W])/g;
 
+interface Options {
+  segments?: {
+    [key: string]: RegExp | string;
+  }
+}
+
 class Permalink {
   rule: string;
   regex: RegExp;
   params: string[];
 
-  constructor(rule: string, options: { segments?: any; }) {
+  constructor(rule: string, options: Options = {}) {
     if (!rule) { throw new TypeError('rule is required!'); }
-    options = options || {};
     const segments = options.segments || {};
     const params = [];
     const regex = escapeRegExp(rule)

@@ -15,7 +15,7 @@ function encSrcset(str: string) {
 }
 
 function htmlTag(tag: string, attrs: {
-  [key: string]: string | boolean;
+  [key: string]: string | boolean | null | undefined;
 }, text?: string, escape = true) {
   if (!tag) throw new TypeError('tag is required!');
 
