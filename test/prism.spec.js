@@ -284,15 +284,15 @@ describe('prismHighlight', () => {
       '}'
     ].join('\n');
 
-    const result1 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: true, firstLine: '-5' });
+    const result1 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: true, firstLine: -5 });
     result1.should.contains('<pre class="line-numbers language-javascript" data-language="javascript" data-start="-5">');
 
     // isPreprocess - true (firstLine should be disabled)
-    const result2 = prismHighlight(input, { lang: 'js', isPreprocess: true, lineNumber: true, firstLine: '-5' });
+    const result2 = prismHighlight(input, { lang: 'js', isPreprocess: true, lineNumber: true, firstLine: -5 });
     result2.should.contains('<pre class="line-numbers language-javascript" data-language="javascript">');
 
     // lineNumber - false (firstLine should be disabled)
-    const result3 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: false, firstLine: '-5' });
+    const result3 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: false, firstLine: -5 });
     result3.should.contains('<pre class="language-javascript" data-language="javascript">');
 
     // Only validate the result1
@@ -326,12 +326,12 @@ describe('prismHighlight', () => {
       -]>[-]>[-]>>>[>>[<<<<<<<<+>>>>>>>>-]<<-]]>>[-]<<<[-]<<<<<<<<]++++++++++.`;
 
     // isPreprocess - true (mark should be disabled)
-    const result1 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: true, mark: '1,3-6,10', firstLine: '-5' });
+    const result1 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: true, mark: '1,3-6,10', firstLine: -5 });
     // Start Tag
     result1.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck">');
 
     // isPreprocess - false
-    const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10', firstLine: '-5' });
+    const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10', firstLine: -5 });
     // Start Tag
     result2.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-start="-5" data-line="1,3-6,10" data-line-offset="-6">');
 
