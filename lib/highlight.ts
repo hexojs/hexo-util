@@ -1,7 +1,9 @@
-import hljs, { HighlightResult } from 'highlight.js';
+import type { HLJSApi, HighlightResult } from 'highlight.js';
 import stripIndent from 'strip-indent';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const alias = require('../highlight_alias.json');
+
+let hljs: HLJSApi | undefined;
 
 interface Options {
   autoDetect?: boolean;
@@ -31,7 +33,10 @@ function highlightUtil(str: string, options: Options = {}) {
   } = options;
   let { wrap = true } = options;
 
-  hljs.configure({ classPrefix: useHljs ? 'hljs-' : ''});
+  if (!hljs) {
+    hljs = require('highlight.js');
+  }
+  hljs.configure({ classPrefix: useHljs ? 'hljs-' : '' });
 
   const data = highlight(str, options);
   const lang = options.lang || data.language || '';
@@ -103,6 +108,10 @@ function replaceTabs(str: string, tab: string) {
 function highlight(str: string, options: Options) {
   let { lang } = options;
   const { autoDetect = false } = options;
+
+  if (!hljs) {
+    hljs = require('highlight.js');
+  }
 
   if (lang) {
     lang = lang.toLowerCase();

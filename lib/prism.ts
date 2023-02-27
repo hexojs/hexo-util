@@ -1,6 +1,7 @@
-import Prism from 'prismjs';
 import stripIndent from 'strip-indent';
 import prismLoadLanguages from 'prismjs/components/';
+
+let Prism: typeof import('prismjs') | undefined;
 
 // https://github.com/PrismJS/prism/issues/2145
 import prismComponents from 'prismjs/components';
@@ -26,6 +27,8 @@ import escapeHTML from './escape_html';
  * @param {String} language
  */
 function prismHighlight(code: string, language: string) {
+  if (!Prism) Prism = require('prismjs');
+
   // Prism has not load the language pattern
   if (!Prism.languages[language] && prismSupportedLanguages.includes(language)) prismLoadLanguages(language);
 
