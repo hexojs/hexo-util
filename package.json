@@ -3,6 +3,7 @@
   "version": "3.0.1",
   "description": "Utilities for Hexo.",
   "main": "dist/index",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "npm install && npm run clean && npm run build",
     "build": "tsc -b",
@@ -20,7 +21,6 @@
     "scripts/",
     "highlight_alias.json"
   ],
-  "types": "./dist/index.d.ts",
   "repository": "hexojs/hexo-util",
   "homepage": "https://hexo.io/",
   "keywords": [
