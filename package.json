@@ -14,7 +14,7 @@
     "test": "mocha --require ts-node/register",
     "test-cov": "nyc --reporter=lcovonly npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js",
-    "prepare": "npm run build:highlight"
+    "postinstall": "npm run build:highlight"
   },
   "files": [
     "dist/**",
