@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "npm install && npm run clean && npm run build",
-    "build": "tsc -b",
+    "build": "npm run build:highlight && tsc -b",
     "clean": "tsc -b --clean",
     "preeslint": "npm run clean && npm run build",
     "eslint": "eslint lib test",
