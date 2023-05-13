@@ -68,8 +68,8 @@ class CacheMapper<K, V> implements Map<K, V> {
   }
 }
 
-export default class Cache<V> {
-  private _innerMap: CacheMapper<string, V>;
+export = class Cache<V> {
+  _innerMap: CacheMapper<string, V>;
   constructor() {
     this._innerMap = new CacheMapper<string, V>();
   }
