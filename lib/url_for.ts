@@ -15,6 +15,16 @@ interface url_for_options {
   relative?: boolean;
 }
 
+/**
+ * get url relative to base URL (config_yml.url)
+ * @param path relative path inside `source` folder (config_yml.source_dir)
+ * @param options
+ * @returns
+ * @example
+ * // global `hexo` must be exist when used this function inside plugin
+ * const Hutil = require('hexo-util')
+ * console.log(Hutil.url_for.bind(hexo)('path/to/file/inside/source.css')); // https://example.com/path/to/file/inside/source.css
+ */
 function urlForHelper(path = '/', options: url_for_options | null = {}) {
   if (/^(#|\/\/|http(s)?:)/.test(path)) return path;
 
