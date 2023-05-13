@@ -9,7 +9,7 @@ const cache = new Cache<string>();
  * url_for options type
  * @example
  * // to call this type
- * type urlOpt = Parameters<typef import('hexo-util')['url_for']>[1];
+ * type urlOpt = Parameters<typeof import('hexo-util')['url_for']>[1];
  */
 interface url_for_options {
   relative?: boolean;
