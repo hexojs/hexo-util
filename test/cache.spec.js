@@ -3,7 +3,7 @@
 require('chai').should();
 
 describe('Cache', () => {
-  const Cache = require('../dist/cache');
+  const { Cache } = require('../dist');
   const cache = new Cache();
 
   it('get & set', () => {
@@ -35,10 +35,10 @@ describe('Cache', () => {
 
   it('dump', () => {
     cache.dump().should.eql({
-      'bar': 123,
-      'baz': 123,
-      'foo': 123,
-      'foobar': 456
+      bar: 123,
+      baz: 123,
+      foo: 123,
+      foobar: 456
     });
   });
 
