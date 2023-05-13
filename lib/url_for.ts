@@ -5,14 +5,28 @@ import prettyUrls from './pretty_urls';
 import Cache from './cache';
 const cache = new Cache<string>();
 
-function urlForHelper(path = '/', options) {
+/**
+ * url_for options type
+ * @example
+ * // to call this type
+ * type urlOpt = Parameters<typef import('hexo-util')['url_for']>[1];
+ */
+interface url_for_options {
+  relative?: boolean;
+}
+
+function urlForHelper(path = '/', options: url_for_options | null = {}) {
   if (/^(#|\/\/|http(s)?:)/.test(path)) return path;
 
   const { config } = this;
 
-  options = Object.assign({
-    relative: config.relative_link
-  }, options);
+  options = Object.assign(
+    {
+      relative: config.relative_link
+    },
+    // fallback empty object when options filled with NULL
+    options || {}
+  );
 
   // Resolve relative url
   if (options.relative) {
@@ -20,28 +34,34 @@ function urlForHelper(path = '/', options) {
   }
 
   const { root } = config;
-  const prettyUrlsOptions = Object.assign({
-    trailing_index: true,
-    trailing_html: true
-  }, config.pretty_urls);
+  const prettyUrlsOptions = Object.assign(
+    {
+      trailing_index: true,
+      trailing_html: true
+    },
+    config.pretty_urls
+  );
 
   // cacheId is designed to works across different hexo.config & options
-  return cache.apply(`${config.url}-${root}-${prettyUrlsOptions.trailing_index}-${prettyUrlsOptions.trailing_html}-${path}`, () => {
-    const sitehost = parse(config.url).hostname || config.url;
-    const data = new URL(path, `http://${sitehost}`);
+  return cache.apply(
+    `${config.url}-${root}-${prettyUrlsOptions.trailing_index}-${prettyUrlsOptions.trailing_html}-${path}`,
+    () => {
+      const sitehost = parse(config.url).hostname || config.url;
+      const data = new URL(path, `http://${sitehost}`);
 
-    // Exit if input is an external link or a data url
-    if (data.hostname !== sitehost || data.origin === 'null') {
+      // Exit if input is an external link or a data url
+      if (data.hostname !== sitehost || data.origin === 'null') {
+        return path;
+      }
+
+      // Prepend root path
+      path = encodeURL((root + path).replace(/\/{2,}/g, '/'));
+
+      path = prettyUrls(path, prettyUrlsOptions);
+
       return path;
     }
-
-    // Prepend root path
-    path = encodeURL((root + path).replace(/\/{2,}/g, '/'));
-
-    path = prettyUrls(path, prettyUrlsOptions);
-
-    return path;
-  });
+  );
 }
 
 export = urlForHelper;
