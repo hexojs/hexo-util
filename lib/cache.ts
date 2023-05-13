@@ -73,34 +73,34 @@ class CacheMapper<K, V> implements Map<K, V> {
 }
 
 export = class Cache<V> {
-  _innerMap: CacheMapper<string, V>;
+  cache: CacheMapper<string, V>;
   constructor() {
-    this._innerMap = new CacheMapper<string, V>();
+    this.cache = new CacheMapper<string, V>();
   }
   has(key: string) {
-    return this._innerMap.has(key);
+    return this.cache.has(key);
   }
   get(key: string) {
-    return this._innerMap.get(key);
+    return this.cache.get(key);
   }
   set(key: string, value:V) {
-    return this._innerMap.set(key, value);
+    return this.cache.set(key, value);
   }
   dump() {
-    return this._innerMap.dump();
+    return this.cache.dump();
   }
   size() {
-    return this._innerMap.size;
+    return this.cache.size;
   }
   apply(key: string, value: V): V;
   apply(key: string, value: () => V): V;
   apply(key: string, value: (() => V) | V) {
-    return this._innerMap.apply(key, value);
+    return this.cache.apply(key, value);
   }
   del(key: string) {
-    return this._innerMap.del(key);
+    return this.cache.del(key);
   }
   flush() {
-    return this._innerMap.flush();
+    return this.cache.flush();
   }
 }
