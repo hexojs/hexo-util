@@ -35,6 +35,8 @@ class CacheMapper<K, V> implements Map<K, V> {
 
   set(id: K, value: V) {
     this.cache.set(id, value);
+    // set cache size while set new value
+    this.size = this.cache.size;
     return this;
   }
 
@@ -48,6 +50,8 @@ class CacheMapper<K, V> implements Map<K, V> {
 
   del(id: K) {
     this.cache.delete(id);
+    // set cache size while delete value
+    this.size = this.cache.size;
   }
 
   apply(id: K, value: unknown) {
