@@ -3,7 +3,7 @@
 const should = require('chai').should();
 
 describe('Cache', () => {
-  const { Cache } = require('../dist');
+  const Cache = require('../dist').Cache;
   const cache = new Cache();
 
   it('get & set', () => {
