@@ -68,4 +68,7 @@ describe('Cache', () => {
     cache.apply('foo', null);
     should.equal(cache.apply('foo', 123) === null, true);
   });
+
+  // include typescript test
+  require('./cache.test.ts');
 });
