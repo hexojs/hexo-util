@@ -71,23 +71,63 @@ export class CacheMapper<K, V> implements Map<K, V> {
   }
 }
 
+/**
+ * Generic Mutable Cache with `Map`
+ * * A Map holds key-value pairs where the keys can be any datatype (Generic)
+ * @example
+ * import { Cache } from 'hexo-util';
+ * const c = new Cache<number>;
+ * // error
+ * c.set('key', 'xxxx'); // cache value must be instance of number
+ * // pass
+ * c.set('key', 1);
+ */
 export class Cache<V> {
   private cache: CacheMapper<string, V>;
   constructor() {
     this.cache = new CacheMapper<string, V>();
   }
+
+  /**
+   * check cache is exist with given key
+   * @param key cache key string
+   * @returns
+   */
   has(key: string) {
     return this.cache.has(key);
   }
+
+  /**
+   * get cache
+   * @param key
+   * @returns
+   */
   get(key: string) {
     return this.cache.get(key);
   }
+
+  /**
+   * set cache
+   * @param key
+   * @param value cache value must same as constructor generic type
+   * @returns
+   */
   set(key: string, value: V) {
     return this.cache.set(key, value);
   }
+
+  /**
+   * dump cache
+   * @returns
+   */
   dump() {
     return Object.fromEntries(this.cache);
   }
+
+  /**
+   * get cache total
+   * @returns
+   */
   size() {
     return this.cache.size;
   }
