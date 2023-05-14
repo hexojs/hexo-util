@@ -26,6 +26,8 @@ describe('Cache - Typescript', () => {
       expect(cache.size()).to.equal(3);
       // add with function
       expect(cache.apply('another', () => 3)).to.equal(3);
+      // size should be still 3
+      expect(cache.size()).to.equal(3);
       // delete `another`
       cache.del('another');
     });
