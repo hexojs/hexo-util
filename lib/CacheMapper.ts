@@ -91,8 +91,26 @@ export class Cache<V> {
   size() {
     return this.cache.size;
   }
+
+  /**
+   * apply cache non-function
+   * @param key cache key string
+   * @param value cache value must same as constructor generic type
+   */
   apply(key: string, value: V): V;
+
+  /**
+   * apply cache with function
+   * @param key cache key string
+   * @param value cache value must same as constructor generic type
+   */
   apply(key: string, value: () => V): V;
+
+  /**
+   * apply cache
+   * @param key cache key string
+   * @param value cache value must same as constructor generic type
+   */
   apply(key: string, value: (() => V) | V) {
     return this.cache.apply(key, value);
   }
