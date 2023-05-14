@@ -72,7 +72,7 @@ export class CacheMapper<K, V> implements Map<K, V> {
 }
 
 export class Cache<V> {
-  cache: CacheMapper<string, V>;
+  private cache: CacheMapper<string, V>;
   constructor() {
     this.cache = new CacheMapper<string, V>();
   }
