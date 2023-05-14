@@ -69,10 +69,6 @@ class CacheMapper<K, V> implements Map<K, V> {
     // set cache size while flusing cache
     this.size = this._innerMap.size;
   }
-
-  dump() {
-    return Object.fromEntries(this._innerMap);
-  }
 }
 
 export = class Cache<V> {
@@ -90,7 +86,7 @@ export = class Cache<V> {
     return this.cache.set(key, value);
   }
   dump() {
-    return this.cache.dump();
+    return Object.fromEntries(this.cache);
   }
   size() {
     return this.cache.size;
