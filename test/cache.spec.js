@@ -70,5 +70,5 @@ describe('Cache', () => {
   });
 
   // include typescript test
-  require('./cache.test.ts');
+  require('./cache.number.test.ts');
 });
