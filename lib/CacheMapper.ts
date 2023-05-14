@@ -70,3 +70,18 @@ export class CacheMapper<K, V> implements Map<K, V> {
     this.size = this._innerMap.size;
   }
 }
+
+export interface CacheType<V> {
+  cache: CacheMapper<string, V>;
+  has(key: string): boolean;
+  get(key: string): V;
+  set(key: string, value: V): CacheMapper<string, V>;
+  dump(): {
+      [k: string]: V;
+  };
+  size(): number;
+  apply(key: string, value: V): V;
+  apply(key: string, value: () => V): V;
+  del(key: string): void;
+  flush(): void;
+}

@@ -1,6 +1,6 @@
-import { CacheMapper } from './CacheMapper';
+import { CacheMapper, CacheType } from './CacheMapper';
 
-export = class Cache<V> {
+export = class Cache<V> implements CacheType<V> {
   cache: CacheMapper<string, V>;
   constructor() {
     this.cache = new CacheMapper<string, V>();
