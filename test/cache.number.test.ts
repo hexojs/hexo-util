@@ -19,7 +19,7 @@ describe('Cache - Typescript', () => {
       expect(cache.apply('bar', () => 2)).to.be.an('number');
     });
 
-    it('add another', () => {
+    it('add another and delete it', () => {
       // add `another`
       expect(cache.apply('another', 3)).to.equal(3);
       // size should be 3
