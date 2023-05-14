@@ -1,6 +1,8 @@
 'use strict';
 
-const should = require('chai').should();
+const chai = require('chai');
+const should = chai.should();
+const expect = chai.expect;
 
 describe('Cache', () => {
   // const Cache = require('../dist').Cache; // <-- this also works
@@ -29,12 +31,18 @@ describe('Cache', () => {
   });
 
   it('apply - function', () => {
-    should.equal(cache.apply('baz', () => 123), 123);
-    should.equal(cache.apply('baz', () => 456), 123);
+    should.equal(
+      cache.apply('baz', () => 123),
+      123
+    );
+    should.equal(
+      cache.apply('baz', () => 456),
+      123
+    );
   });
 
   it('dump', () => {
-    should.equal(cache.dump(), {
+    expect(cache.dump()).to.include({
       bar: 123,
       baz: 123,
       foo: 123,
