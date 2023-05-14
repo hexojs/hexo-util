@@ -1,5 +1,13 @@
 {
   "extends": "hexo/test",
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "node/no-unsupported-features/es-syntax": 0
+      }
+    }
+  ],
   "rules": {
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/no-empty-function": 0
