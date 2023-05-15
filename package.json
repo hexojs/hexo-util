@@ -13,6 +13,7 @@
     "pretest": "npm run clean && npm run build",
     "test": "mocha --require ts-node/register",
     "test-cov": "nyc --reporter=lcovonly npm run test",
+    "test-single": "npm run pretest && mocha --require ts-node/register --exit --grep",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "postinstall": "npm run build:highlight"
   },
