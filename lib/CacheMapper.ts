@@ -63,13 +63,6 @@ export class CacheMapper<K, V> implements Map<K, V> {
     this.set(id, value as V);
     return value as V;
   }
-
-  flush() {
-    this._innerMap.clear();
-
-    // set cache size while flusing cache
-    // this.size = this._innerMap.size;
-  }
 }
 
 /**
@@ -159,6 +152,6 @@ export class Cache<V> {
     return this.cache.del(key);
   }
   flush() {
-    return this.cache.flush();
+    this.cache.clear();
   }
 }
