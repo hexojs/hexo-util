@@ -6,5 +6,6 @@ import { describe } from 'mocha';
 // npm run test-single -- "Cache - Typescript"
 
 describe('Cache - Typescript', async () => {
-  await import('./cache-number.test');
+  await import('./cache-number.spec');
+  await import('./cache-object.spec');
 });
