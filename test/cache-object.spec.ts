@@ -44,6 +44,8 @@ describe('Cache - object', () => {
   };
   const valueMap = new Map(Object.entries(value));
   const cacheMap = new Cache<typeof valueMap>();
+  const valueSet = new Set(Object.keys(value));
+  const cacheSet = new Cache<typeof valueSet>();
 
   describe('plain object', () => {
     it('set', () => {
@@ -61,7 +63,7 @@ describe('Cache - object', () => {
     });
   });
 
-  describe('map object', () => {
+  describe('object Map', () => {
     it('set', () => {
       cacheMap.set('foo', valueMap);
       should().equal(cacheMap.size(), 1);
@@ -78,6 +80,23 @@ describe('Cache - object', () => {
       expect(targetValue?.has('page')).to.be.true;
       // targetValue.page should same as value.page
       should().equal(targetValue?.get('page'), value.page);
+    });
+  });
+
+  describe('object Set', () => {
+    it('set', () => {
+      cacheSet.set('foo', valueSet);
+      should().equal(cacheSet.size(), 1);
+    });
+    it('apply', () => {
+      // should applied and return the same value
+      should().equal(cacheSet.apply('bar', valueSet), valueSet);
+    });
+    it('is valid map', () => {
+      const targetValue = cacheSet.get('bar');
+      // built-in Map validate
+      expect(targetValue! instanceof Set).to.be.true;
+      expect(targetValue?.has('page')).to.be.true;
     });
   });
 
