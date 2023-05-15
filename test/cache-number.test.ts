@@ -17,6 +17,8 @@ describe('Cache - number', () => {
     expect(cache.apply('foo', 1)).to.be.an('number');
     // apply with function
     expect(cache.apply('bar', () => 2)).to.be.an('number');
+    // validate cache exist
+    expect(cache.has('foo') && cache.has('bar')).to.be.true;
   });
 
   it('add another and delete it', () => {
