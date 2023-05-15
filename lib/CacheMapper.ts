@@ -136,13 +136,17 @@ export class Cache<V> {
    * @param key cache key string
    * @param value cache value must same as constructor generic type
    */
-  apply(id: string, value: unknown) {
+  apply(id: string, value: V & (() => V)) {
     if (this.has(id)) return this.get(id);
+    let newValue: V;
+    if (typeof value === 'function') {
+      newValue = value();
+    } else {
+      newValue = value;
+    }
 
-    if (typeof value === 'function') value = value();
-
-    this.set(id, value as V);
-    return value as V;
+    this.cache.set(id, newValue);
+    return newValue;
   }
 
   del(key: string) {
