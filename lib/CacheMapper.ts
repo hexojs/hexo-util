@@ -1,6 +1,6 @@
 export class CacheMapper<K, V> implements Map<K, V> {
   private _innerMap: Map<K, V>;
-  size: number;
+  readonly size: number;
 
   constructor() {
     this._innerMap = new Map();
@@ -36,7 +36,7 @@ export class CacheMapper<K, V> implements Map<K, V> {
   set(id: K, value: V) {
     this._innerMap.set(id, value);
     // set cache size while set new value
-    this.size = this._innerMap.size;
+    // this.size = this._innerMap.size;
     return this;
   }
 
@@ -51,7 +51,7 @@ export class CacheMapper<K, V> implements Map<K, V> {
   del(id: K) {
     this._innerMap.delete(id);
     // set cache size while delete value
-    this.size = this._innerMap.size;
+    // this.size = this._innerMap.size;
   }
 
   apply(id: K, value: unknown) {
@@ -67,7 +67,7 @@ export class CacheMapper<K, V> implements Map<K, V> {
     this._innerMap.clear();
 
     // set cache size while flusing cache
-    this.size = this._innerMap.size;
+    // this.size = this._innerMap.size;
   }
 }
 
@@ -129,7 +129,7 @@ export class Cache<V> {
    * @returns
    */
   size() {
-    return this.cache.size;
+    return Object.keys(this.cache).length;
   }
 
   /**
