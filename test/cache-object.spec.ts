@@ -3,7 +3,7 @@
 
 import { Cache } from '../lib';
 import { describe, it } from 'mocha';
-import { expect } from 'chai';
+import { expect, should } from 'chai';
 
 // to run single test
 // npm run test-single -- "Cache - object"
@@ -43,8 +43,22 @@ describe('Cache - object', () => {
     site: {}
   };
 
-  it('apply cache', () => {
-    expect(cache.set('set', value)).to.deep.equal(value);
-    expect(cache.apply('apply', value)).to.deep.equal(value);
+  it('set', () => {
+    cache.set('foo', value);
+    should().equal(cache.size(), 1);
+  });
+
+  it('apply', () => {
+    expect(cache.has('bar')).to.be.false;
+    // should applied and return the same value
+    should().equal(cache.apply('bar', value), value);
+    // should not apply new value
+    should().equal(cache.apply('bar', {} as typeof value), value);
+    should().equal(cache.size(), 2);
+  });
+
+  it('size 0 after flush', () => {
+    cache.flush();
+    expect(cache.size()).to.equal(0);
   });
 });
