@@ -42,23 +42,49 @@ describe('Cache - object', () => {
     view_dir: '',
     site: {}
   };
+  const valueMap = new Map(Object.entries(value));
+  const cacheMap = new Cache<typeof valueMap>();
 
-  it('set', () => {
-    cache.set('foo', value);
-    should().equal(cache.size(), 1);
+  describe('plain object', () => {
+    it('set', () => {
+      cache.set('foo', value);
+      should().equal(cache.size(), 1);
+    });
+
+    it('apply', () => {
+      expect(cache.has('bar')).to.be.false;
+      // should applied and return the same value
+      should().equal(cache.apply('bar', value), value);
+      // should not apply new value
+      should().equal(cache.apply('bar', {} as typeof value), value);
+      should().equal(cache.size(), 2);
+    });
   });
 
-  it('apply', () => {
-    expect(cache.has('bar')).to.be.false;
-    // should applied and return the same value
-    should().equal(cache.apply('bar', value), value);
-    // should not apply new value
-    should().equal(cache.apply('bar', {} as typeof value), value);
-    should().equal(cache.size(), 2);
+  describe('map object', () => {
+    it('set', () => {
+      cacheMap.set('foo', valueMap);
+      should().equal(cacheMap.size(), 1);
+    });
+    it('apply', () => {
+      // should applied and return the same value
+      should().equal(cacheMap.apply('bar', valueMap), valueMap);
+    });
+    it('is valid map', () => {
+      const targetValue = cacheMap.get('bar');
+      // built-in Map validate
+      expect(targetValue! instanceof Map).to.be.true;
+      expect('has' in targetValue!).to.be.true;
+      expect(targetValue?.has('page')).to.be.true;
+      // targetValue.page should same as value.page
+      should().equal(targetValue?.get('page'), value.page);
+    });
   });
 
   it('size 0 after flush', () => {
     cache.flush();
     expect(cache.size()).to.equal(0);
+    cacheMap.flush();
+    expect(cacheMap.size()).to.equal(0);
   });
 });
