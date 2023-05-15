@@ -4,8 +4,8 @@ import { describe, it } from 'mocha';
 import * as Hutil from '../lib';
 import { expect } from 'chai';
 
-// to run single test
-// mocha --require ts-node/register --exit --grep "Cache - number"
+// to run single test (using yarn dlx https://yarnpkg.com/cli/dlx#examples)
+// yarn dlx -p typescript -p ts-node -p chai -p mocha mocha --require ts-node/register --exit --grep "Cache - number"
 
 
 describe('Cache - number', () => {
