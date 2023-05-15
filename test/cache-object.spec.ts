@@ -44,6 +44,7 @@ describe('Cache - object', () => {
   };
   const valueMap = new Map(Object.entries(value));
   const cacheMap = new Cache<typeof valueMap>();
+  // built-in Set same as Array
   const valueSet = new Set(Object.keys(value));
   const cacheSet = new Cache<typeof valueSet>();
 
