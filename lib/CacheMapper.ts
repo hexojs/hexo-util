@@ -1,6 +1,6 @@
 /** @internal */
 export class CacheMapper<K, V> implements Map<K, V> {
-  private _innerMap: Map<K, V>;
+  private readonly _innerMap: Map<K, V>;
   readonly size: number;
 
   constructor() {
