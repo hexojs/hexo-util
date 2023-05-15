@@ -114,7 +114,7 @@ export class Cache<V> {
    * @returns
    */
   size() {
-    return Object.keys(this.cache).length;
+    return Array.from(this.cache.keys()).length;
   }
 
   /**
