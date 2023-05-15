@@ -44,6 +44,7 @@ describe('Cache - object', () => {
   };
   const valueMap = new Map(Object.entries(value));
   const cacheMap = new Cache<typeof valueMap>();
+  // built-in Set same as Array
   const valueSet = new Set(Object.keys(value));
   const cacheSet = new Cache<typeof valueSet>();
 
@@ -72,7 +73,7 @@ describe('Cache - object', () => {
       // should applied and return the same value
       should().equal(cacheMap.apply('bar', valueMap), valueMap);
     });
-    it('is valid map', () => {
+    it('is valid Map', () => {
       const targetValue = cacheMap.get('bar');
       // built-in Map validate
       expect(targetValue! instanceof Map).to.be.true;
@@ -92,7 +93,7 @@ describe('Cache - object', () => {
       // should applied and return the same value
       should().equal(cacheSet.apply('bar', valueSet), valueSet);
     });
-    it('is valid map', () => {
+    it('is valid Set', () => {
       const targetValue = cacheSet.get('bar');
       // built-in Map validate
       expect(targetValue! instanceof Set).to.be.true;
