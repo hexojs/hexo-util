@@ -54,15 +54,6 @@ export class CacheMapper<K, V> implements Map<K, V> {
     // set cache size while delete value
     // this.size = this._innerMap.size;
   }
-
-  apply(id: K, value: unknown) {
-    if (this.has(id)) return this.get(id);
-
-    if (typeof value === 'function') value = value();
-
-    this.set(id, value as V);
-    return value as V;
-  }
 }
 
 /**
@@ -145,9 +136,15 @@ export class Cache<V> {
    * @param key cache key string
    * @param value cache value must same as constructor generic type
    */
-  apply(key: string, value: (() => V) | V) {
-    return this.cache.apply(key, value);
+  apply(id: string, value: unknown) {
+    if (this.has(id)) return this.get(id);
+
+    if (typeof value === 'function') value = value();
+
+    this.set(id, value as V);
+    return value as V;
   }
+
   del(key: string) {
     return this.cache.del(key);
   }
