@@ -35,7 +35,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
-    "@types/node": "^18.11.8",
+    "@types/node": "^20.1.7",
     "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
