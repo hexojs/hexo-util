@@ -13,6 +13,7 @@
     "pretest": "npm run clean && npm run build",
     "test": "mocha --require ts-node/register",
     "test-cov": "nyc --reporter=lcovonly npm run test",
+    "test-single": "npm run pretest && mocha --require ts-node/register --exit --grep",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "postinstall": "npm run build:highlight"
   },
@@ -34,7 +35,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/chai": "^4.3.5",
     "@types/cross-spawn": "^6.0.2",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.8",
     "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
