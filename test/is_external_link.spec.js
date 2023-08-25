@@ -56,4 +56,11 @@ describe('isExternalLink', () => {
     isExternalLink('https://bar.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(false);
     isExternalLink('https://baz.com/', ctx.config.url, ctx.config.external_link.exclude).should.eql(true);
   });
+
+  it('invalid sitehost', () => {
+    ctx.config.url = '';
+    isExternalLink('https://localhost:4000', ctx.config.url).should.eql(false);
+    ctx.config.url = 'https://example.com';
+  });
+
 });
