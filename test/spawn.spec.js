@@ -120,6 +120,6 @@ describe('spawn', () => {
     if (isWindows) {
       return spawn('cmd.exe', ['/c', 'exit', '1'], { stdio: 'inherit' }).should.rejectedWith('Spawn failed');
     }
-    return spawn('sh', ['-c', 'exit', '1'], { stdio: 'inherit' }).should.rejectedWith('Spawn failed');
+    return spawn('sh', ['/c', 'exit', '1'], { stdio: 'inherit' }).should.rejectedWith('Spawn failed');
   });
 });
