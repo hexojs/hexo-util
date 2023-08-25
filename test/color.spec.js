@@ -54,7 +54,7 @@ describe('color', () => {
 
     // s=0
     const grey = new Color('hsl(207, 0%, 49%)');
-    // l=0
+    // h=0
     const red1 = new Color('hsl(0, 100%, 50%)');
     // h=360
     const red2 = new Color('hsl(360, 100%, 50%)');
