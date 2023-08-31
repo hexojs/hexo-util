@@ -51,5 +51,53 @@ describe('color', () => {
     `${steelblue}`.should.eql('#4682b4');
     `${mid1}`.should.eql('rgba(70, 130, 180, 0.53)');
     `${mid2}`.should.eql('rgba(70, 130, 180, 0.77)');
+
+    // s=0
+    const grey = new Color('hsl(207, 0%, 49%)');
+    // h=0
+    const red1 = new Color('hsl(0, 100%, 50%)');
+    // h=360
+    const red2 = new Color('hsl(360, 100%, 50%)');
+
+    `${grey}`.should.eql('#7d7d7d');
+    `${red1}`.should.eql('#f00');
+    `${red2}`.should.eql('#f00');
   });
+
+  it('invalid color', () => {
+    let color;
+    try {
+      color = new Color(200);
+    } catch (e) {
+      e.message.should.eql('color is required!');
+    }
+    try {
+      color = new Color('rgb(300, 130, 180)');
+    } catch (e) {
+      e.message.should.eql('{r: 300, g: 130, b: 180, a: 1} is invalid.');
+    }
+    try {
+      color = new Color('cmyk(0%,0%,0%,0%)');
+    } catch (e) {
+      e.message.should.eql('cmyk(0%,0%,0%,0%) is not a supported color format.');
+    }
+    (typeof color).should.eql('undefined');
+  });
+
+  it('mix()', () => {
+    const red = new Color('red');
+    const pink = new Color('pink');
+    const mid1 = red.mix(pink, 0);
+    const mid2 = red.mix(pink, 1);
+
+    `${mid1}`.should.eql('#f00');
+    `${mid2}`.should.eql('#ffc0cb');
+
+    try {
+      red.mix(pink, 2);
+    } catch (e) {
+      e.message.should.eql('Valid numbers is only between 0 and 1.');
+    }
+  });
+
 });
