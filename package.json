@@ -12,7 +12,7 @@
     "eslint": "eslint lib test",
     "pretest": "npm run clean && npm run build",
     "test": "mocha --require ts-node/register",
-    "test-cov": "nyc --reporter=lcovonly npm run test",
+    "test-cov": "c8 --reporter=lcovonly npm run test",
     "build:highlight": "node scripts/build_highlight_alias.js",
     "postinstall": "npm run build:highlight"
   },
@@ -39,6 +39,7 @@
     "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "c8": "^8.0.1",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.23.0",
@@ -46,7 +47,6 @@
     "html-entities": "^2.3.3",
     "html-tag-validator": "^1.6.0",
     "mocha": "^10.0.0",
-    "nyc": "^15.1.0",
     "rewire": "^6.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.3"
