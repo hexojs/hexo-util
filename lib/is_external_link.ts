@@ -10,7 +10,7 @@ const cache = new Cache<boolean>();
  * @returns {Boolean} True if the link doesn't have protocol or link has same host with config.url
  */
 
-function isExternalLink(input: string, sitehost: string, exclude?: string[]): boolean {
+function isExternalLink(input: string, sitehost: string, exclude?: string | string[]): boolean {
   return cache.apply(`${input}-${sitehost}-${exclude}`, () => {
     // Return false early for internal link
     if (!/^(\/\/|http(s)?:)/.test(input)) return false;
