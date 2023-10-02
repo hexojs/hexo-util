@@ -52,7 +52,7 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
-    "camel-case": "^4.1.2",
+    "camel-case": "^5.0.0",
     "cross-spawn": "^7.0.3",
     "deepmerge": "^4.2.2",
     "highlight.js": "^11.6.0",
