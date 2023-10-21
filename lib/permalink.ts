@@ -50,7 +50,12 @@ class Permalink {
   }
 
   stringify(data) {
-    return this.rule.replace(rParam, (match, name) => data[name]);
+    return this.rule.replace(rParam, (match, name) => {
+      if (['permalink', 'path'].includes(name)) {
+        throw new Error('Invalid permalink setting!');
+      }
+      return data[name];
+    });
   }
 }
 

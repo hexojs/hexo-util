@@ -76,4 +76,11 @@ describe('Permalink', () => {
       title: 'test'
     }).should.eql('2014/01/31/test');
   });
+
+  it('stringify() - avoid infinite loops', () => {
+    permalink = new Permalink('/:permalink');
+    (() => permalink.stringify({})).should.throw('Invalid permalink setting!');
+    permalink = new Permalink('/:path');
+    (() => permalink.stringify({})).should.throw('Invalid permalink setting!');
+  });
 });
