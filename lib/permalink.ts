@@ -51,7 +51,8 @@ class Permalink {
 
   stringify(data) {
     return this.rule.replace(rParam, (match, name) => {
-      if (['permalink', 'path'].includes(name)) {
+      const descriptor = Object.getOwnPropertyDescriptor(data, name);
+      if (descriptor && typeof descriptor.get === 'function') {
         throw new Error('Invalid permalink setting!');
       }
       return data[name];

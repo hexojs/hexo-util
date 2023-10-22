@@ -78,9 +78,18 @@ describe('Permalink', () => {
   });
 
   it('stringify() - avoid infinite loops', () => {
-    permalink = new Permalink('/:permalink');
-    (() => permalink.stringify({})).should.throw('Invalid permalink setting!');
-    permalink = new Permalink('/:path');
-    (() => permalink.stringify({})).should.throw('Invalid permalink setting!');
+    const post = {
+      get path() {
+        return this.permalink;
+      },
+
+      get permalink() {
+        const permalink = new Permalink('/:permalink');
+        return permalink.stringify(post);
+      }
+    };
+
+    (() => post.path).should.throw('Invalid permalink setting!');
+    (() => post.permalink).should.throw('Invalid permalink setting!');
   });
 });
