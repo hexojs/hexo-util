@@ -37,8 +37,6 @@
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^18.11.8",
     "@types/prismjs": "^1.26.0",
-    "@typescript-eslint/eslint-plugin": "^5.41.0",
-    "@typescript-eslint/parser": "^5.41.0",
     "c8": "^8.0.1",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
