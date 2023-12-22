@@ -59,10 +59,23 @@ describe('Pattern', () => {
     pattern.match('foo').should.eql({});
   });
 
+  it('Pattern', () => {
+    const pattern = new Pattern('posts/:id');
+    new Pattern(pattern).should.eql(pattern);
+  });
+
   it('rule is required', () => {
     (() => {
       // eslint-disable-next-line no-new
       new Pattern();
     }).should.throw('rule must be a function, a string or a regular expression.');
   });
+
+  it('test function', () => {
+    const pattern = new Pattern('posts/:id');
+
+    pattern.test('/posts/89').should.eql(true);
+    pattern.test('/post/89').should.eql(false);
+  });
+
 });

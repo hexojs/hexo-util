@@ -16,4 +16,8 @@ describe('escapeHTML', () => {
   it('avoid double escape', () => {
     escapeHTML('&lt;foo>bar</foo&gt;').should.eql('&lt;foo&gt;bar&lt;&#x2F;foo&gt;');
   });
+
+  it('avoid double escape https://github.com/hexojs/hexo/issues/4946', () => {
+    escapeHTML('&emsp;&nbsp;&ensp;').should.eql('&emsp;&nbsp;&ensp;');
+  });
 });

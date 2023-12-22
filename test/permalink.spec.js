@@ -21,6 +21,18 @@ describe('Permalink', () => {
 
     permalink = new Permalink(':year/:month/:day/:title', {
       segments: {
+        year: '(\\d{4})',
+        month: '(\\d{2})',
+        day: '(\\d{2})'
+      }
+    });
+
+    permalink.rule.should.eql(':year/:month/:day/:title');
+    permalink.regex.should.eql(/^(\d{4})\/(\d{2})\/(\d{2})\/(.+?)$/);
+    permalink.params.should.eql(['year', 'month', 'day', 'title']);
+
+    permalink = new Permalink(':year/:month/:day/:title', {
+      segments: {
         year: /(\d{4})/,
         month: /(\d{2})/,
         day: /(\d{2})/
@@ -53,6 +65,7 @@ describe('Permalink', () => {
       day: '31',
       title: 'test'
     });
+    (typeof permalink.parse('test')).should.eql('undefined');
   });
 
   it('stringify()', () => {

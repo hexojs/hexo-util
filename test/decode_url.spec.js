@@ -84,4 +84,9 @@ describe('decodeURL', () => {
     const content = '#f%C3%B3o-b%C3%A1r';
     decodeURL(content).should.eql('#fóo-bár');
   });
+
+  it('data url', () => {
+    const content = 'data:image/png;base64';
+    decodeURL(content).should.eql('data:image/png;base64');
+  });
 });
