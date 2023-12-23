@@ -11,7 +11,7 @@ const cache = new Cache<string>();
  * // to call this type
  * type urlOpt = Parameters<typeof import('hexo-util')['url_for']>[1];
  */
-interface url_for_options {
+interface UrlForOptions {
   relative?: boolean;
 }
 
