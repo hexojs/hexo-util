@@ -25,7 +25,7 @@ interface UrlForOptions {
  * const Hutil = require('hexo-util')
  * console.log(Hutil.url_for.bind(hexo)('path/to/file/inside/source.css')); // https://example.com/path/to/file/inside/source.css
  */
-function urlForHelper(path = '/', options: url_for_options | null = {}) {
+function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
   if (/^(#|\/\/|http(s)?:)/.test(path)) return path;
 
   const { config } = this;
