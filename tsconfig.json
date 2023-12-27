@@ -6,15 +6,9 @@
     "outDir": "dist",
     "declaration": true,
     "esModuleInterop": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "lib": ["ES2020", "ES2019"]
   },
-  "include": [
-    "lib/index.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["lib/**.ts"],
+  "exclude": ["node_modules"]
 }
