@@ -1,7 +1,7 @@
 const hljs = require('highlight.js');
-const languages = hljs.listLanguages();
 const fs = require('fs');
 
+const languages = hljs.listLanguages();
 const result = {
   languages: languages,
   aliases: {}
@@ -10,8 +10,7 @@ const result = {
 languages.forEach(lang => {
   result.aliases[lang] = lang;
 
-  const def = require('highlight.js/lib/languages/' + lang)(hljs);
-  const aliases = def.aliases;
+  const aliases = hljs.getLanguage(lang).aliases;
 
   if (aliases) {
     aliases.forEach(alias => {
