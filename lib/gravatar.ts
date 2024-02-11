@@ -7,7 +7,7 @@ function md5(str: BinaryLike) {
   return createHash('md5').update(str).digest('hex');
 }
 
-function gravatarHelper(email: string, options: ParsedUrlQueryInput) {
+function gravatarHelper(email: string, options?: ParsedUrlQueryInput | number) {
   if (typeof options === 'number') {
     options = {s: options};
   }
