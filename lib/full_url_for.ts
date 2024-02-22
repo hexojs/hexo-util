@@ -4,7 +4,7 @@ import prettyUrls from './pretty_urls';
 import Cache from './cache';
 const cache = new Cache();
 
-function fullUrlForHelper(path = '/') {
+function fullUrlForHelper(path = '/'): string {
   const { config } = this;
   const prettyUrlsOptions = Object.assign({
     trailing_index: true,
@@ -25,7 +25,7 @@ function fullUrlForHelper(path = '/') {
     path = prettyUrls(path, prettyUrlsOptions);
 
     return path;
-  });
+  }) as string;
 }
 
 export = fullUrlForHelper;

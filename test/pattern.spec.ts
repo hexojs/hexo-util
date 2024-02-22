@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import Pattern from '../lib/pattern';
+chai.should();
 
 describe('Pattern', () => {
-  const Pattern = require('../dist/pattern');
-
   it('String - posts/:id', () => {
     const pattern = new Pattern('posts/:id');
     const result = pattern.match('/posts/89');
@@ -66,6 +64,7 @@ describe('Pattern', () => {
 
   it('rule is required', () => {
     (() => {
+      // @ts-ignore
       // eslint-disable-next-line no-new
       new Pattern();
     }).should.throw('rule must be a function, a string or a regular expression.');

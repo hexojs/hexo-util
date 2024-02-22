@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import camelCaseKeys from '../lib/camel_case_keys';
+chai.should();
 
 describe('camelCaseKeys', () => {
-  const camelCaseKeys = require('../dist/camel_case_keys');
-
   it('default', () => {
     const result = camelCaseKeys({
       foo_bar: 'test'

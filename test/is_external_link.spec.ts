@@ -1,13 +1,11 @@
-'use strict';
+import isExternalLink from '../lib/is_external_link';
 
 describe('isExternalLink', () => {
-  const ctx = {
+  const ctx: any = {
     config: {
       url: 'https://example.com'
     }
   };
-
-  const isExternalLink = require('../dist/is_external_link');
 
   it('invalid url', () => {
     isExternalLink('https://localhost:4000你好', ctx.config.url).should.eql(false);

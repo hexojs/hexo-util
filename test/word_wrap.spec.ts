@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import wordWrap from '../lib/word_wrap';
+chai.should();
 
 describe('wordWrap', () => {
-  const wordWrap = require('../dist/word_wrap');
-
   it('default', () => {
     wordWrap('Once upon a time').should.eql('Once upon a time');
   });

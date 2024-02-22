@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import slugize from '../lib/slugize';
+chai.should();
 
 describe('slugize', () => {
-  const slugize = require('../dist/slugize');
-
   it('spaces', () => {
     slugize('Hello World').should.eql('Hello-World');
   });

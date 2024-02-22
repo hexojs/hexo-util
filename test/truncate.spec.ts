@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import truncate from '../lib/truncate';
+chai.should();
 
 describe('truncate', () => {
-  const truncate = require('../dist/truncate');
-
   it('default', () => {
     truncate('Once upon a time in a world far far away')
       .should.eql('Once upon a time in a world...');

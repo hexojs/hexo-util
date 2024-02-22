@@ -1,8 +1,9 @@
-'use strict';
+import chai from 'chai';
+import hljs from 'highlight.js';
+import { encode } from 'html-entities';
+import highlight from '../lib/highlight';
 
-const should = require('chai').should(); // eslint-disable-line
-const hljs = require('highlight.js');
-const entities = require('html-entities');
+const should = chai.should(); // eslint-disable-line
 const validator = require('html-tag-validator');
 
 const testJson = {
@@ -33,7 +34,7 @@ function gutter(start, end) {
   return result;
 }
 
-function code(str, lang) {
+function code(str, lang?) {
   let data;
 
   if (lang) {
@@ -43,7 +44,7 @@ function code(str, lang) {
   } else if (lang === null) {
     data = {value: str};
   } else {
-    data = {value: entities.encode(str)};
+    data = {value: encode(str)};
   }
 
   const lines = data.value.split('\n');
@@ -68,8 +69,6 @@ function validateHtmlAsync(str, done) {
 }
 
 describe('highlight', () => {
-  const highlight = require('../dist/highlight');
-
   it('default', done => {
     const result = highlight(testString);
     assertResult(result, gutter(1, 4), code(testString));
@@ -96,7 +95,7 @@ describe('highlight', () => {
     const result = highlight(testString, {gutter: false, wrap: false});
     result.should.eql([
       '<pre><code class="highlight plaintext">',
-      entities.encode(testString),
+      encode(testString),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -106,7 +105,7 @@ describe('highlight', () => {
     const result = highlight(testString, {gutter: false, wrap: false, hljs: true});
     result.should.eql([
       '<pre><code class="hljs plaintext">',
-      entities.encode(testString),
+      encode(testString),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -139,7 +138,7 @@ describe('highlight', () => {
   });
 
   it('wrap: false (with mark)', done => {
-    const result = highlight(testString, {gutter: false, wrap: false, hljs: true, lang: 'json', mark: '1'});
+    const result = highlight(testString, {gutter: false, wrap: false, hljs: true, lang: 'json', mark: [1]});
     hljs.configure({classPrefix: 'hljs-'});
     result.should.eql([
       '<pre><code class="hljs json">',
@@ -229,7 +228,7 @@ describe('highlight', () => {
       '<pre>',
       `<div class="caption">${caption}</div>`,
       '<code class="highlight plaintext">',
-      entities.encode(testString),
+      encode(testString),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);
@@ -453,7 +452,7 @@ describe('highlight', () => {
     console.log(result);
     result.should.eql([
       '<pre><code class="highlight plaintext" data-language="plaintext">',
-      entities.encode(testString),
+      encode(testString),
       '</code></pre>'
     ].join(''));
     validateHtmlAsync(result, done);

@@ -27,7 +27,7 @@ function camelCaseKeys(obj: object) {
   if (typeof obj !== 'object') throw new TypeError('obj must be an object!');
 
   const keys = Object.keys(obj);
-  const result = {};
+  const result: Record<string, any> = {};
 
   for (const oldKey of keys) {
     const newKey = toCamelCase(oldKey);

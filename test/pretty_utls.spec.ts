@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import prettyUrls from '../lib/pretty_urls';
+chai.should();
 
 describe('prettyUrls', () => {
-  const prettyUrls = require('../dist/pretty_urls');
-
   it('default', () => {
     prettyUrls('//example.com/index.html').should.eql('//example.com/index.html');
     prettyUrls('/bar/foo.html').should.eql('/bar/foo.html');
