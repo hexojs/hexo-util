@@ -66,7 +66,7 @@ describe('spawn', () => {
         e.message.should.eql('spawn type ENOENT');
         e.should.have.property('code', 'ENOENT');
       } else {
-        e.message.should.eql('cat: nothing: No such file or directory');
+        e.message.should.with.match(/^cat: nothing: No such file or directory\n?$/);
         e.should.have.property('code', 1);
       }
     }
