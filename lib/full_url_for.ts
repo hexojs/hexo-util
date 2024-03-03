@@ -2,9 +2,9 @@ import { parse } from 'url';
 import encodeURL from './encode_url';
 import prettyUrls from './pretty_urls';
 import Cache from './cache';
-const cache = new Cache();
+const cache = new Cache<string>();
 
-function fullUrlForHelper(path = '/'): string {
+function fullUrlForHelper(path = '/') {
   const { config } = this;
   const prettyUrlsOptions = Object.assign({
     trailing_index: true,
@@ -25,7 +25,7 @@ function fullUrlForHelper(path = '/'): string {
     path = prettyUrls(path, prettyUrlsOptions);
 
     return path;
-  }) as string;
+  });
 }
 
 export = fullUrlForHelper;
