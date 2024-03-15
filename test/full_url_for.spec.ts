@@ -1,13 +1,15 @@
-'use strict';
+import chai from 'chai';
+import fullUrlForHelper from '../lib/full_url_for';
+chai.should();
 
 describe('full_url_for', () => {
-  const ctx = {
+  const ctx: any = {
     config: {
       url: 'http://example.com'
     }
   };
 
-  const fullUrlFor = require('../dist/full_url_for').bind(ctx);
+  const fullUrlFor: typeof fullUrlForHelper = fullUrlForHelper.bind(ctx);
 
   it('internal url - root directory', () => {
     ctx.config.url = 'https://example.com';

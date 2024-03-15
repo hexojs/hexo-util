@@ -1,11 +1,9 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import htmlTag from '../lib/html_tag';
+import encodeURL from '../lib/encode_url';
+chai.should();
 
 describe('htmlTag', () => {
-  const htmlTag = require('../dist/html_tag');
-  const encodeURL = require('../dist/encode_url');
-
   it('tag', () => {
     htmlTag('hr').should.eql('<hr>');
   });
@@ -58,6 +56,7 @@ describe('htmlTag', () => {
 
   it('tag is required', () => {
     try {
+      // @ts-ignore
       htmlTag();
     } catch (err) {
       err.should.have.property('message', 'tag is required!');

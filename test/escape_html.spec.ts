@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import escapeHTML from '../lib/escape_html';
+chai.should();
 
 describe('escapeHTML', () => {
-  const escapeHTML = require('../dist/escape_html');
-
   it('default', () => {
     escapeHTML('<p class="foo">Hello "world".</p>').should.eql('&lt;p class&#x3D;&quot;foo&quot;&gt;Hello &quot;world&quot;.&lt;&#x2F;p&gt;');
   });

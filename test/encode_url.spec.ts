@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import encodeURL from '../lib/encode_url';
+chai.should();
 
 describe('encodeURL', () => {
-  const encodeURL = require('../dist/encode_url');
-
   it('regular', () => {
     const content = 'http://foo.com/';
     encodeURL(content).should.eql(content);

@@ -1,10 +1,7 @@
-'use strict';
-
-const { createHash } = require('crypto');
+import { createHash } from 'crypto';
+import gravatar from '../lib/gravatar';
 
 describe('gravatar', () => {
-  const gravatar = require('../dist/gravatar');
-
   function md5(str) {
     return createHash('md5').update(str).digest('hex');
   }

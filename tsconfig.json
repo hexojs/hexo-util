@@ -6,7 +6,7 @@
     "outDir": "dist",
     "declaration": true,
     "esModuleInterop": true,
-    "types": ["node"],
+    "types": ["node", "mocha"],
     "lib": ["ES2020", "ES2019"]
   },
   "include": ["lib/**.ts"],

@@ -1,9 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import Permalink from '../lib/permalink';
+chai.should();
 
 describe('Permalink', () => {
-  const Permalink = require('../dist/permalink');
   let permalink;
 
   it('constructor', () => {
@@ -46,6 +45,7 @@ describe('Permalink', () => {
 
   it('rule is required', () => {
     try {
+      // @ts-ignore
       // eslint-disable-next-line no-new
       new Permalink();
     } catch (err) {

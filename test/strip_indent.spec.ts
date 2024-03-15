@@ -1,6 +1,4 @@
-'use strict';
-
-const stripIndent = require('../dist/strip_indent');
+import stripIndent from '../lib/strip_indent';
 
 describe('stripIndent', () => {
   it('default', () => {

@@ -4,7 +4,7 @@ interface Options {
   separator?: string;
 }
 
-function truncate(str: string, options: Options = {}) {
+function truncate(str: string, options: Options = {}): string {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const length = options.length || 30;
