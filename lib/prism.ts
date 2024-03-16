@@ -65,11 +65,14 @@ interface Options {
   lineNumber?: boolean;
   mark?: string;
   tab?: string;
+  disableStripIndent?: boolean
 }
 
 function PrismUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
-  str = stripIndent(str);
+  if (!options.disableStripIndent) {
+    str = stripIndent(str);
+  }
 
   const {
     lineNumber = true,
