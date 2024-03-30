@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import escapeRegExp from '../lib/escape_regexp';
+chai.should();
 
 describe('escapeRegExp', () => {
-  const escapeRegExp = require('../dist/escape_regexp');
-
   it('default', () => {
     escapeRegExp('hello*world').should.eql('hello\\*world');
   });

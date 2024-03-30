@@ -1,14 +1,13 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import Cache from '../lib/cache';
+chai.should();
 
 describe('Cache', () => {
-  const Cache = require('../dist/cache');
-  const cache = new Cache();
+  const cache = new Cache<number>();
 
   it('get & set', () => {
     cache.set('foo', 123);
-    cache.get('foo').should.eql(123);
+    cache.get('foo')!.should.eql(123);
   });
 
   it('size', () => {

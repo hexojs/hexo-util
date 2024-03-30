@@ -40,7 +40,7 @@ function tocObj(str: string, options = {}) {
 
   if (!headingsLen) return [];
 
-  const result = [];
+  const result: Result[] = [];
 
   for (let i = 0; i < headingsLen; i++) {
     const el = headings[i];

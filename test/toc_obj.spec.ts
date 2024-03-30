@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import tocObj from '../lib/toc_obj';
+chai.should();
 
 describe('tocObj', () => {
-  const tocObj = require('../dist/toc_obj');
-
   const html = [
     '<h1 id="title_1">Title 1</h1>',
     '<div id="title_1_1"><h2>Title 1.1</h2></div>',

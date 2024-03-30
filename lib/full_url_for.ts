@@ -2,7 +2,7 @@ import { parse } from 'url';
 import encodeURL from './encode_url';
 import prettyUrls from './pretty_urls';
 import Cache from './cache';
-const cache = new Cache();
+const cache = new Cache<string>();
 
 function fullUrlForHelper(path = '/') {
   const { config } = this;

@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import Color from '../lib/color';
+chai.should();
 
 describe('color', () => {
-  const Color = require('../dist/color');
-
   it('name', () => {
     const red = new Color('red');
     const pink = new Color('pink');
@@ -67,6 +65,7 @@ describe('color', () => {
   it('invalid color', () => {
     let color;
     try {
+      // @ts-ignore
       color = new Color(200);
     } catch (e) {
       e.message.should.eql('color is required!');

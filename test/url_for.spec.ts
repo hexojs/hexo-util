@@ -1,13 +1,13 @@
-'use strict';
+import urlForHelper from '../lib/url_for';
 
 describe('url_for', () => {
-  const ctx = {
+  const ctx: any = {
     config: {
       url: 'http://example.com'
     }
   };
 
-  const urlFor = require('../dist/url_for').bind(ctx);
+  const urlFor: typeof urlForHelper = urlForHelper.bind(ctx);
 
   it('should encode path', () => {
     ctx.config.root = '/';

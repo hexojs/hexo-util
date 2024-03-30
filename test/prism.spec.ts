@@ -1,9 +1,9 @@
-'use strict';
+import chai from 'chai';
+import escapeHTML from '../lib/escape_html';
+import prismHighlight from '../lib/prism';
+import stripIndent from 'strip-indent';
 
-require('chai').should();
-const escapeHTML = require('../dist/escape_html');
-const stripIndent = require('strip-indent');
-
+chai.should();
 const validator = require('html-tag-validator');
 function validateHtmlAsync(str, done) {
   validator(str, {
@@ -27,8 +27,6 @@ const lineNumberStartTag = '<span aria-hidden="true" class="line-numbers-rows">'
 const highlightToken = '<span class="token ';
 
 describe('prismHighlight', () => {
-  const prismHighlight = require('../dist/prism');
-
   it('default (plain text)', done => {
     const input = `
     {

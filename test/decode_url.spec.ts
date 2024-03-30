@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import decodeURL from '../lib/decode_url';
+chai.should();
 
 describe('decodeURL', () => {
-  const decodeURL = require('../dist/decode_url');
-
   it('regular', () => {
     const content = 'http://foo.com/';
     decodeURL(content).should.eql(content);

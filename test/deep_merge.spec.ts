@@ -1,36 +1,34 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import deepMerge from '../lib/deep_merge';
+chai.should();
 
 // The test is modified based on https://github.com/jonschlinkert/merge-deep/blob/master/test.js
 
 describe('deepMerge()', () => {
-  const deepMerge = require('../dist/deep_merge');
-
   it('should act as lodash.merge', () => {
-    const obj1 = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
-    const obj2 = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
+    const obj1: any = { 'a': [{ 'b': 2 }, { 'd': 4 }] };
+    const obj2: any = { 'a': [{ 'c': 3 }, { 'e': 5 }] };
 
     const expected = { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] };
-
-    deepMerge(obj1, obj2).should.eql(expected);
+    const result: any = deepMerge(obj1, obj2);
+    result.should.eql(expected);
   });
 
   it('should do a deep merge', () => {
-    const obj1 = {a: {b: 1, c: 1, d: {e: 1, f: 1}}};
-    const obj2 = {a: {b: 2, d: {f: 'f'} }};
+    const obj1: any = {a: {b: 1, c: 1, d: {e: 1, f: 1}}};
+    const obj2: any = {a: {b: 2, d: {f: 'f'} }};
 
     const expected = {a: {b: 2, c: 1, d: {e: 1, f: 'f'} }};
-
-    deepMerge(obj1, obj2).should.eql(expected);
+    const result: any = deepMerge(obj1, obj2);
+    result.should.eql(expected);
   });
 
   it('should not merge strings', () => {
-    const obj1 = {a: 'fooo'};
-    const obj2 = {a: {b: 2, d: {f: 'f'} }};
-    const obj3 = {a: 'bar'};
+    const obj1: any = {a: 'fooo'};
+    const obj2: any = {a: {b: 2, d: {f: 'f'} }};
+    const obj3: any = {a: 'bar'};
 
-    const result = deepMerge(deepMerge(obj1, obj2), obj3);
+    const result: any = deepMerge(deepMerge(obj1, obj2), obj3);
     result.a.should.eql('bar');
   });
 
@@ -45,10 +43,11 @@ describe('deepMerge()', () => {
   });
 
   it('should not merge an objects into an array', () => {
-    const obj1 = {a: {b: 1}};
-    const obj2 = {a: ['foo', 'bar']};
+    const obj1: any = {a: {b: 1}};
+    const obj2: any = {a: ['foo', 'bar']};
 
-    deepMerge(obj1, obj2).should.eql({a: ['foo', 'bar']});
+    const result: any = deepMerge(obj1, obj2);
+    result.should.eql({a: ['foo', 'bar']});
   });
 
   it('should not affect target & source', () => {
@@ -68,10 +67,10 @@ describe('deepMerge()', () => {
   });
 
   it('should deep clone arrays during merge', () => {
-    const obj1 = {a: [1, 2, [3, 4]]};
-    const obj2 = {b: [5, 6]};
+    const obj1: any = {a: [1, 2, [3, 4]]};
+    const obj2: any = {b: [5, 6]};
 
-    const result = deepMerge(obj1, obj2);
+    const result: any = deepMerge(obj1, obj2);
 
     result.a.should.eql([1, 2, [3, 4]]);
     result.a[2].should.eql([3, 4]);

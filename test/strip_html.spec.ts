@@ -1,6 +1,4 @@
-'use strict';
-
-const stripHTML = require('../dist/strip_html');
+import stripHTML from '../lib/strip_html';
 
 describe('stripHTML', () => {
   it('should not strip invalid tags', () => {
@@ -55,6 +53,7 @@ describe('stripHTML', () => {
     const html = ['X'];
     const text = '';
 
+    // @ts-ignore
     stripHTML(html).should.eql(text);
   });
 });

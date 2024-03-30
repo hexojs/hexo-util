@@ -1,12 +1,10 @@
-'use strict';
+import chai from 'chai';
+import { Readable } from 'stream';
+import CacheStream from '../lib/cache_stream';
 
-require('chai').should();
-
-const { Readable } = require('stream');
+chai.should();
 
 describe('CacheStream', () => {
-  const CacheStream = require('../dist/cache_stream');
-
   it('default', () => {
     const src = new Readable();
     const cacheStream = new CacheStream();
