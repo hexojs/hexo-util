@@ -289,6 +289,7 @@ Option | Description | Default
 `autoDetect` | Detect language automatically (warning: slow)<br>_Sublanguage highlight requires `autoDetect` to be enabled and `lang` to be unset_  | false
 `mark` | Line highlight specific line(s) |
 `languageAttr` | Output code language into `data-language` attr | false
+`stripIndent`| Whether to strip leading whitespace via [strip-indent](https://www.npmjs.com/package/strip-indent) | true
 
 ### htmlTag(tag, attrs, text, escape)
 
@@ -451,6 +452,8 @@ Option | Description | Default
 `mark` | Highlight specific line |
 `firstLine` | First line number |
 `caption` | Caption |
+`stripIndent`| Whether to strip leading whitespace via [strip-indent](https://www.npmjs.com/package/strip-indent) | true
+
 
 When `isPreprocess` is enabled, `prismHighlight()` will return PrismJS processed HTML snippet. Otherwise `str` will only be escaped and `prismHighlight()` will return the HTML snippet that is suitable for `prism.js` working in the Browser.
 
