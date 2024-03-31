@@ -16,11 +16,11 @@ interface Options {
   mark?: number[];
   tab?: string;
   wrap?: boolean;
+  stripIndent?: boolean;
 }
 
 function highlightUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
-  str = stripIndent(str);
 
   const useHljs = Object.prototype.hasOwnProperty.call(options, 'hljs') ? options.hljs : false;
   const {
@@ -29,9 +29,14 @@ function highlightUtil(str: string, options: Options = {}) {
     caption,
     mark = [],
     languageAttr = false,
-    tab
+    tab,
+    stripIndent: enableStripIndent = true
   } = options;
   let { wrap = true } = options;
+
+  if (enableStripIndent) {
+    str = stripIndent(str);
+  }
 
   if (!hljs) {
     hljs = require('highlight.js');

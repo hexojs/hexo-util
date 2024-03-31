@@ -65,11 +65,11 @@ interface Options {
   lineNumber?: boolean;
   mark?: string;
   tab?: string;
+  stripIndent?: boolean;
 }
 
 function PrismUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
-  str = stripIndent(str);
 
   const {
     lineNumber = true,
@@ -78,8 +78,13 @@ function PrismUtil(str: string, options: Options = {}) {
     mark,
     firstLine,
     isPreprocess = true,
-    caption
+    caption,
+    stripIndent: enableStripIndent = true
   } = options;
+
+  if (enableStripIndent) {
+    str = stripIndent(str);
+  }
 
   // To be consistent with highlight.js
   let language = lang === 'plaintext' || lang === 'none' ? 'none' : lang;
