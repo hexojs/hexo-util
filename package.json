@@ -21,7 +21,10 @@
     "scripts/",
     "highlight_alias.json"
   ],
-  "repository": "hexojs/hexo-util",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hexojs/hexo-util.git"
+  },
   "homepage": "https://hexo.io/",
   "keywords": [
     "hexo",
