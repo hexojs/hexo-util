@@ -102,4 +102,8 @@ describe('encodeURL', () => {
     const content = 'data:,Hello%2C%20World!';
     encodeURL(content).should.eql(content);
   });
+  it('encode pathname', () => {
+    const content = 'https://fóo.com/páth%20[square]';
+    encodeURL(content).should.eql('https://fóo.com/p%C3%A1th%20%5Bsquare%5D');
+  });
 });

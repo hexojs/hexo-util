@@ -9,6 +9,7 @@ const encodeURL = (str: string) => {
     if (parsed.origin === 'null') return str;
 
     parsed.search = encodeURI(unescape(parsed.search));
+    parsed.pathname = encodeURI(decodeURI(parsed.pathname));
     // preserve IDN
     return format(parsed, { unicode: true });
   }
