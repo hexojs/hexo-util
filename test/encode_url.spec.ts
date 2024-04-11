@@ -104,8 +104,6 @@ describe('encodeURL', () => {
   });
   it('encode pathname', () => {
     const content = 'https://fóo.com/páth%20[square]';
-    const result = encodeURL(content);
-    console.log(result);
-    result.should.eql('https://fóo.com/p%C3%A1th%20%5Bsquare%5D');
+    encodeURL(content).should.eql('https://fóo.com/p%C3%A1th%20%5Bsquare%5D');
   });
 });
