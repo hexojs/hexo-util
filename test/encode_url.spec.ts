@@ -106,4 +106,9 @@ describe('encodeURL', () => {
     const content = 'https://fóo.com/páth%20[square]';
     encodeURL(content).should.eql('https://fóo.com/p%C3%A1th%20%5Bsquare%5D');
   });
+  it('perserve escape in search', () => {
+    // https://github.com/hexojs/hexo-util/issues/411
+    const content = 'https://fóo.com/path?search1=2%2B2&search2=bár';
+    encodeURL(content).should.eql(content.replace('bár', 'b%C3%A1r'));
+  });
 });

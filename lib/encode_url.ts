@@ -8,7 +8,7 @@ const encodeURL = (str: string) => {
     // Exit if input is a data url
     if (parsed.origin === 'null') return str;
 
-    parsed.search = encodeURI(unescape(parsed.search));
+    parsed.search = new URLSearchParams(parsed.search).toString();
     parsed.pathname = encodeURI(decodeURI(parsed.pathname));
     // preserve IDN
     return format(parsed, { unicode: true });
