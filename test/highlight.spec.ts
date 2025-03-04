@@ -1,7 +1,10 @@
 import chai from 'chai';
 import hljs from 'highlight.js';
+import { solidity } from 'highlightjs-solidity';
 import { encode } from 'html-entities';
 import highlight from '../lib/highlight';
+
+hljs.registerLanguage('solidity', solidity); 
 
 const should = chai.should(); // eslint-disable-line
 const validator = require('html-tag-validator');
@@ -176,6 +179,33 @@ describe('highlight', () => {
       '<figure class="highlight json"><table><tr>',
       gutter(1, 4),
       code(testString, 'json'),
+      end
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+
+  it('lang = solidity', done => {
+    const solString = 'contract MyContract {}';
+    const result = highlight(solString, {lang: 'solidity'});
+
+    result.should.eql([
+      '<figure class="highlight solidity"><table><tr>',
+      gutter(1, 1),
+      code(solString, 'solidity'),
+      end
+    ].join(''));
+    validateHtmlAsync(result, done);
+  });
+
+  it('lang = sol', done => {
+    const solString = 'contract MyContract {}';
+    const result = highlight(solString, {lang: 'sol'});
+
+    result.should.eql([
+      '<figure class="highlight sol"><table><tr>',
+      gutter(1, 1),
+      code(solString, 'solidity'),
       end
     ].join(''));
     validateHtmlAsync(result, done);

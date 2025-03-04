@@ -44,6 +44,7 @@
     "domhandler": "^5.0.3",
     "eslint": "^8.23.0",
     "eslint-config-hexo": "^5.0.0",
+    "highlightjs-solidity": "^2.0.6",
     "html-entities": "^2.3.3",
     "html-tag-validator": "^1.6.0",
     "mocha": "^10.0.0",
