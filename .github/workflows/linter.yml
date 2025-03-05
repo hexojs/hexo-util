@@ -15,5 +15,3 @@ jobs:
       - name: Lint
         run: |
           npm run eslint
-        env:
-          CI: true

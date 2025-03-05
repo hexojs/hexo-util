@@ -38,8 +38,6 @@ jobs:
         run: npm install
       - name: Coverage
         run: npm run test-cov
-        env:
-          CI: true
       - name: Coveralls
         uses: coverallsapp/github-action@v2
         with:
