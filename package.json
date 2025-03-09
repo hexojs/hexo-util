@@ -11,14 +11,11 @@
     "eslint": "eslint lib test",
     "pretest": "npm run clean && npm run build",
     "test": "mocha --require ts-node/register",
-    "test-cov": "c8 --reporter=lcovonly npm run test",
-    "build:highlight": "node scripts/build_highlight_alias.js",
-    "postinstall": "npm run build:highlight"
+    "test-cov": "c8 --reporter=lcovonly npm run test"
   },
   "files": [
     "dist/**",
-    "scripts/",
-    "highlight_alias.json"
+    "scripts/"
   ],
   "repository": {
     "type": "git",
@@ -47,6 +44,7 @@
     "domhandler": "^5.0.3",
     "eslint": "^8.23.0",
     "eslint-config-hexo": "^5.0.0",
+    "highlightjs-solidity": "^2.0.6",
     "html-entities": "^2.3.3",
     "html-tag-validator": "^1.6.0",
     "mocha": "^10.0.0",
