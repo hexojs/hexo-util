@@ -4,7 +4,7 @@ import { solidity } from 'highlightjs-solidity';
 import { encode } from 'html-entities';
 import highlight from '../lib/highlight';
 
-hljs.registerLanguage('solidity', solidity); 
+hljs.registerLanguage('solidity', solidity);
 
 const should = chai.should(); // eslint-disable-line
 const validator = require('html-tag-validator');
