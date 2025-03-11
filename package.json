@@ -11,11 +11,14 @@
     "eslint": "eslint lib test",
     "pretest": "npm run clean && npm run build",
     "test": "mocha --require ts-node/register",
-    "test-cov": "c8 --reporter=lcovonly npm run test"
+    "test-cov": "c8 --reporter=lcovonly npm run test",
+    "build:highlight": "node scripts/build_highlight_alias.js",
+    "postinstall": "npm run build:highlight"
   },
   "files": [
     "dist/**",
-    "scripts/"
+    "scripts/",
+    "highlight_alias.json"
   ],
   "repository": {
     "type": "git",
