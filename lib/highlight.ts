@@ -125,7 +125,7 @@ function highlight(str: string, options: Options) {
     return closeTags(result);
   }
 
-  if (!lang || !alias.aliases[lang]) {
+  if (!lang || (!alias.aliases[lang] && !hljs.getLanguage(lang))) {
     lang = 'plaintext';
   }
 
