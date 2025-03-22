@@ -8,7 +8,6 @@
     "prepublishOnly": "npm install && npm run clean && npm run build",
     "build": "tsc -b",
     "clean": "tsc -b --clean",
-    "preeslint": "npm run clean && npm run build",
     "eslint": "eslint lib test",
     "pretest": "npm run clean && npm run build",
     "test": "mocha --require ts-node/register",
@@ -65,6 +64,6 @@
     "strip-indent": "^3.0.0"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   }
 }

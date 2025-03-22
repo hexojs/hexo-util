@@ -63,6 +63,12 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql('http://foo.com/bar?query=b%C3%A1z#f%C3%B3o');
   });
 
+  it('perserve escape in search', () => {
+    // https://github.com/hexojs/hexo-util/issues/411
+    const content = 'https://fóo.com/path?search1=2%2B2&search2=bár';
+    encodeURL(content).should.eql(content.replace('bár', 'b%C3%A1r'));
+  });
+
   it('idn', () => {
     const content = 'http://bár.com/baz';
     encodeURL(content).should.eql('http://bár.com/baz');
