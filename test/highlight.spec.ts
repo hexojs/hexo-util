@@ -183,40 +183,39 @@ describe('highlight', () => {
   });
 
 
-
-  it("lang = solidity", (done) => {
-    hljs.registerLanguage("solidity", solidity);
-    const solString = "contract MyContract {}";
-    const result = highlight(solString, { lang: "solidity" });
+  it('lang = solidity', done => {
+    hljs.registerLanguage('solidity', solidity);
+    const solString = 'contract MyContract {}';
+    const result = highlight(solString, { lang: 'solidity' });
 
     result.should.eql(
       [
         '<figure class="highlight solidity"><table><tr>',
         gutter(1, 1),
-        code(solString, "solidity"),
-        end,
-      ].join("")
+        code(solString, 'solidity'),
+        end
+      ].join('')
     );
     validateHtmlAsync(result, done);
-    hljs.unregisterLanguage("solidity");
+    hljs.unregisterLanguage('solidity');
   });
 
-  it("lang = sol", (done) => {
-    hljs.registerLanguage("solidity", solidity);
-    const solString = "contract MyContract {}";
-    const result = highlight(solString, { lang: "sol" });
+  it('lang = sol', done => {
+    hljs.registerLanguage('solidity', solidity);
+    const solString = 'contract MyContract {}';
+    const result = highlight(solString, { lang: 'sol' });
 
     result.should.eql(
       [
         '<figure class="highlight sol"><table><tr>',
         gutter(1, 1),
-        code(solString, "solidity"),
-        end,
-      ].join("")
+        code(solString, 'solidity'),
+        end
+      ].join('')
     );
     validateHtmlAsync(result, done);
 
-    hljs.unregisterLanguage("solidity");
+    hljs.unregisterLanguage('solidity');
   });
 
   it('auto detect', done => {
