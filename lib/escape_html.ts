@@ -76,7 +76,7 @@ function escapeHTML(str: string) {
           || (next >= 97 && next <= 122) // a-z
           || (next >= 65 && next <= 90) // A-Z
         ) { // 0-9
-          index = nextIndex + 1; // we already look ahead, let nextIndex catch up
+          index = nextIndex; // we skip already looked up
           continue;
         }
         escape = '&amp;';
