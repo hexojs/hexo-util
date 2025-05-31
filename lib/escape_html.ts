@@ -7,7 +7,7 @@
  * This is also modified by SukkaW for use w/ Hexo. Hexo needs to escape more characters (=, /, `)
  * to work with template languages (nunjucks/pug/mustache), and also needs to avoid double escaping
  * HTML entities. After modification, this function is of course slower than `fast-escape-html`, but
- * is still faster than `lodash.escape` and `escape-goat` (where they even escape less symbols and do 
+ * is still faster than `lodash.escape` and `escape-goat` (where they even escape less symbols and do
  * not avoid double escaping).
  */
 const reHtmlEntity = /[&<>"'`/=]/;
