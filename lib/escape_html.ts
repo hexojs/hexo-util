@@ -71,14 +71,47 @@ function escapeHTML(str: string) {
             next = str.charCodeAt(nextIndex);
           }
         }
-        if ( // check whether it is /&#\w+/ or /&#x\w+/
-          (next >= 48 && next <= 57) // 0-9
-          || (next >= 97 && next <= 122) // a-z
-          || (next >= 65 && next <= 90) // A-Z
-        ) { // 0-9
+
+        let breakout = false;
+
+        console.log({
+          index,
+          char: str.charAt(index),
+          nextIndex,
+          next,
+          nextChar: str.charAt(nextIndex),
+        })
+
+        while (
+          nextIndex < len && (
+            (next >= 48 && next <= 57) // 0-9
+            || (next >= 97 && next <= 122) // a-z
+            || (next >= 65 && next <= 90) // A-Z
+          )
+        ) {
+          nextIndex++;
+          next = str.charCodeAt(nextIndex);
+
+          console.log({
+            index,
+            char: str.charAt(index),
+            nextIndex,
+            next,
+            nextChar: str.charAt(nextIndex),
+          })
+
+          if (next === 59) { // ;
+            breakout = true;
+            break;
+          }
+        }
+
+        if (breakout) {
+          // If we found a semicolon, we can skip the rest of the loop
           index = nextIndex; // we skip already looked up
           continue;
         }
+
         escape = '&amp;';
         break;
       }
