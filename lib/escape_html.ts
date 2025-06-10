@@ -79,8 +79,8 @@ function escapeHTML(str: string) {
           char: str.charAt(index),
           nextIndex,
           next,
-          nextChar: str.charAt(nextIndex),
-        })
+          nextChar: str.charAt(nextIndex)
+        });
 
         while (
           nextIndex < len && (
@@ -97,8 +97,8 @@ function escapeHTML(str: string) {
             char: str.charAt(index),
             nextIndex,
             next,
-            nextChar: str.charAt(nextIndex),
-          })
+            nextChar: str.charAt(nextIndex)
+          });
 
           if (next === 59) { // ;
             breakout = true;

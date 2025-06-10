@@ -21,5 +21,5 @@ describe('escapeHTML', () => {
 
   it('proper escape', () => {
     escapeHTML('&0').should.eql('&amp;0');
-  })
+  });
 });
