@@ -3,7 +3,7 @@
     "module": "commonjs",
     "target": "es6",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "tmp/dist",
     "declaration": true,
     "esModuleInterop": true,
     "types": ["node", "mocha"],
