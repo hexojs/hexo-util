@@ -46,10 +46,13 @@ function entryFileNamesWithExt(ext) {
     if (!facadeModuleId.includes('node_modules')) {
       return `[name].${ext}`;
     }
-    // Find the first occurrence of 'node_modules' and slice from there
-    const nodeModulesIdx = facadeModuleId.indexOf('node_modules');
-    let rel = facadeModuleId.slice(nodeModulesIdx);
-    rel = rel.replace('node_modules', 'dependencies');
+    // Replace all occurrences of 'node_modules' with 'dependencies'
+    let rel = facadeModuleId.replace(/node_modules/g, 'dependencies');
+    // Remove everything before the first 'dependencies/'
+    const depIdx = rel.indexOf('dependencies/');
+    if (depIdx !== -1) {
+      rel = rel.slice(depIdx);
+    }
     // Remove extension using upath.extname
     rel = rel.slice(0, -path.extname(rel).length) + `.${ext}`;
     // Remove any null bytes (\x00) that may be present (Rollup sometimes injects these)
@@ -77,9 +80,13 @@ function chunkFileNamesWithExt(ext) {
   return function({ name }) {
     // For node_modules chunks, place in dependencies folder
     if (name && name.includes('node_modules')) {
-      const nodeModulesIdx = name.indexOf('node_modules');
-      let rel = name.slice(nodeModulesIdx);
-      rel = rel.replace('node_modules', 'dependencies');
+      // Replace all occurrences of 'node_modules' with 'dependencies'
+      let rel = name.replace(/node_modules/g, 'dependencies');
+      // Remove everything before the first 'dependencies/'
+      const depIdx = rel.indexOf('dependencies/');
+      if (depIdx !== -1) {
+        rel = rel.slice(depIdx);
+      }
       // Remove extension using upath.extname
       rel = rel.slice(0, -path.extname(rel).length);
       // Remove any null bytes (\x00) that may be present
@@ -168,7 +175,7 @@ module.exports = [
       }
     ],
     plugins: [
-      nodeResolve({extensions: ['.ts', '.js', '.json', '.mjs', '.cjs', '.node']}),
+      nodeResolve({ extensions: ['.ts', '.js', '.json', '.mjs', '.cjs', '.node'] }),
       commonjs(),
       json(),
       babel({
