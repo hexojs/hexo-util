@@ -133,4 +133,75 @@ describe('deepMerge()', () => {
     const result = deepMerge(obj1, obj2);
     result.fn.should.equal(fn2);
   });
+
+  it('should handle thousands of circular references', () => {
+    // Create 1000 objects with circular references and multiple types
+    const arr1: any[] = [];
+    const arr2: any[] = [];
+    for (let i = 0; i < 1000; i++) {
+      arr1[i] = {
+        idx: i,
+        date: new Date(2020, 0, i + 1),
+        regexp: new RegExp(`foo${i}`, i % 2 ? 'g' : 'i'),
+        map: new Map([[i, { val: i }]]),
+        set: new Set([i, i + 1]),
+        fn: function() { return i; }
+      };
+      arr2[i] = {
+        idx: i,
+        date: new Date(2021, 0, i + 1),
+        regexp: new RegExp(`bar${i}`, i % 2 ? 'i' : 'g'),
+        map: new Map([[i, { val: i * 2 }]]),
+        set: new Set([i, i + 2]),
+        fn: function() { return i * 2; }
+      };
+    }
+    // Add circular references
+    for (let i = 0; i < 1000; i++) {
+      arr1[i].self = arr1[i];
+      arr2[i].self = arr2[i];
+      if (i > 0) {
+        arr1[i].prev = arr1[i - 1];
+        arr2[i].prev = arr2[i - 1];
+      }
+    }
+    const obj1 = { arr: arr1 };
+    const obj2 = { arr: arr2 };
+    const result = deepMerge(obj1, obj2);
+    // Check merged array length
+    result.arr.length.should.eql(1000);
+    // Check circular references and types are preserved and not the same as original
+    for (let i = 0; i < 1000; i++) {
+      result.arr[i].should.have.property('idx', i);
+      result.arr[i].should.have.property('self');
+      result.arr[i].self.should.equal(result.arr[i]);
+      if (i > 0) {
+        result.arr[i].should.have.property('prev');
+        result.arr[i].prev.should.equal(result.arr[i - 1]);
+      }
+      // Should not be the same object as arr1 or arr2
+      result.arr[i].should.not.equal(arr1[i]);
+      result.arr[i].should.not.equal(arr2[i]);
+      // Check Date
+      result.arr[i].date.getTime().should.eql(arr2[i].date.getTime());
+      result.arr[i].date.should.not.equal(arr1[i].date);
+      result.arr[i].date.should.not.equal(arr2[i].date);
+      // Check RegExp
+      result.arr[i].regexp.source.should.eql(arr2[i].regexp.source);
+      result.arr[i].regexp.flags.should.eql(arr2[i].regexp.flags);
+      result.arr[i].regexp.should.not.equal(arr1[i].regexp);
+      result.arr[i].regexp.should.not.equal(arr2[i].regexp);
+      // Check Map
+      Array.from(result.arr[i].map.keys()).should.eql(Array.from(arr2[i].map.keys()));
+      result.arr[i].map.get(i).should.eql({ val: i * 2 });
+      result.arr[i].map.should.not.equal(arr1[i].map);
+      result.arr[i].map.should.not.equal(arr2[i].map);
+      // Check Set
+      Array.from(result.arr[i].set).sort().should.eql(Array.from(new Set([...arr1[i].set, ...arr2[i].set])).sort());
+      result.arr[i].set.should.not.equal(arr1[i].set);
+      result.arr[i].set.should.not.equal(arr2[i].set);
+      // Check Function
+      result.arr[i].fn.should.equal(arr2[i].fn);
+    }
+  });
 });
