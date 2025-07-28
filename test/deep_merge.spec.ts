@@ -204,4 +204,68 @@ describe('deepMerge()', () => {
       result.arr[i].fn.should.equal(arr2[i].fn);
     }
   });
+
+  it('should handle null and undefined as source and target', () => {
+    deepMerge(null, {a: 1}).should.eql({a: 1});
+    chai.expect(deepMerge({a: 1}, null)).to.eql(null);
+    deepMerge(undefined, {a: 2}).should.eql({a: 2});
+    chai.expect(deepMerge({a: 2}, undefined)).to.eql(undefined);
+    chai.expect(deepMerge(null, null)).to.eql(null);
+    chai.expect(deepMerge(undefined, undefined)).to.eql(undefined);
+  });
+
+  it('should handle empty objects and arrays', () => {
+    deepMerge({}, {}).should.eql({});
+    deepMerge([], []).should.eql([]);
+    deepMerge({a: []}, {a: []}).should.eql({a: []});
+    deepMerge({a: {}}, {a: {}}).should.eql({a: {}});
+  });
+
+  it('should handle symbol properties', () => {
+    const sym = Symbol('s');
+    const obj1: any = { [sym]: 123 };
+    const obj2: any = { [sym]: 456 };
+    const result = deepMerge(obj1, obj2);
+    result[sym].should.eql(456);
+  });
+
+  it('should handle sparse arrays', () => {
+    const arr1 = [];
+    arr1[2] = 3;
+    const arr2 = [];
+    arr2[1] = 2;
+    const result = deepMerge(arr1, arr2);
+    result.length.should.eql(3);
+    result[1].should.eql(2);
+    result[2].should.eql(3);
+  });
+
+  it('should not merge inherited properties', () => {
+    function Parent() { this.inherited = 1; }
+    Parent.prototype.protoProp = 2;
+    const obj1 = new(Parent as any)();
+    const obj2 = { own: 3 };
+    const result = deepMerge(obj1, obj2);
+    result.should.have.property('inherited', 1);
+    result.should.have.property('own', 3);
+    result.should.not.have.property('protoProp');
+  });
+
+  it('should handle merging function with non-function', () => {
+    const obj1 = { fn: function() { return 1; } };
+    const obj2 = { fn: 42 };
+    const result = deepMerge(obj1, obj2 as any);
+    result.fn.should.eql(42);
+    const result2 = deepMerge(obj2, obj1 as any);
+    result2.fn.should.be.a('function');
+  });
+
+  it('should handle deeply nested mixed types', () => {
+    const obj1 = { a: [{ b: { c: [1, 2, { d: 'x' }] } }] };
+    const obj2 = { a: [{ b: { c: [1, 3, { d: 'y', e: 'z' }] } }] };
+    const result = deepMerge(obj1, obj2);
+    result.a[0].b.c[0].should.eql(1);
+    result.a[0].b.c[1].should.eql(3);
+    result.a[0].b.c[2].should.eql({ d: 'y', e: 'z' });
+  });
 });

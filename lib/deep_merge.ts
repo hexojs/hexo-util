@@ -61,12 +61,18 @@ function deepClone<T>(param: T, seen = new WeakMap()): T {
     return arr as unknown as T;
   }
 
-  const newObj: Record<string, unknown> = {};
+  const newObj: Record<PropertyKey, unknown> = {};
   seen.set(param as object, newObj);
+  // Merge string keys
   for (const key in param) {
     if (Object.prototype.hasOwnProperty.call(param, key)) {
       newObj[key] = deepClone((param as Record<string, unknown>)[key], seen);
     }
+  }
+  // Merge symbol keys
+  const symbols = Object.getOwnPropertySymbols(param as object);
+  for (const sym of symbols) {
+    newObj[sym] = deepClone((param as Record<symbol, unknown>)[sym], seen);
   }
   return newObj as T;
 }
@@ -175,8 +181,9 @@ function deepMerge<T>(target: Partial<T>, source: Partial<T>, seen = new WeakMap
 
   // Object merge
   if (isObject(target) && isObject(source)) {
-    const resultObj: Record<string, unknown> = { ...target };
+    const resultObj: Record<PropertyKey, unknown> = { ...target };
     seen.set(target as object, resultObj);
+    // Merge string keys
     for (const key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {
         const tVal = (target as Record<string, unknown>)[key];
@@ -206,11 +213,50 @@ function deepMerge<T>(target: Partial<T>, source: Partial<T>, seen = new WeakMap
           } else if (typeof tVal === 'function' && typeof sVal === 'function') {
             resultObj[key] = sVal;
           } else {
-            resultObj[key] = deepMerge(tVal, sVal, seen);
+            // Use 'as unknown as Partial<T>' to satisfy TS type system for deepMerge recursion
+            resultObj[key] = deepMerge(tVal as unknown as Partial<T>, sVal as unknown as Partial<T>, seen);
           }
         } else {
           resultObj[key] = deepClone(sVal, seen);
         }
+      }
+    }
+    // Merge symbol keys
+    const sourceSymbols = Object.getOwnPropertySymbols(source);
+    for (const sym of sourceSymbols) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const tVal = (target as any)[sym];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const sVal = (source as any)[sym];
+      if (Object.prototype.hasOwnProperty.call(target, sym)) {
+        // Handle special types for symbols
+        if (tVal instanceof Date && sVal instanceof Date) {
+          resultObj[sym] = new Date(Math.max(tVal.getTime(), sVal.getTime()));
+        } else if (tVal instanceof RegExp && sVal instanceof RegExp) {
+          resultObj[sym] = new RegExp(sVal.source, sVal.flags);
+        } else if (tVal instanceof Map && sVal instanceof Map) {
+          const merged = new Map(tVal);
+          for (const [k, v] of sVal) {
+            if (merged.has(k)) {
+              merged.set(k, deepMerge(merged.get(k), v, seen));
+            } else {
+              merged.set(deepClone(k, seen), deepClone(v, seen));
+            }
+          }
+          resultObj[sym] = merged;
+        } else if (tVal instanceof Set && sVal instanceof Set) {
+          const merged = new Set(tVal);
+          for (const v of sVal) {
+            merged.add(deepClone(v, seen));
+          }
+          resultObj[sym] = merged;
+        } else if (typeof tVal === 'function' && typeof sVal === 'function') {
+          resultObj[sym] = sVal;
+        } else {
+          resultObj[sym] = deepMerge(tVal, sVal, seen);
+        }
+      } else {
+        resultObj[sym] = deepClone(sVal, seen);
       }
     }
     return resultObj as T;
