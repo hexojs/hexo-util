@@ -8,3 +8,4 @@ highlight_alias.json
 coverage/
 dist/
 package-lock.json
+.vscode/
