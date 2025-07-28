@@ -1,9 +1,6 @@
 import type { HLJSApi, HighlightResult } from 'highlight.js';
-import path from 'path';
-import fs from 'fs';
 import stripIndent from 'strip-indent';
-
-const alias: Record<string, unknown> = JSON.parse(fs.readFileSync(path.join(__dirname, '../highlight_alias.json'), 'utf8'));
+import alias from '../highlight_alias.json';
 
 let hljs: HLJSApi | undefined;
 
