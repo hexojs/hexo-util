@@ -73,12 +73,13 @@ describe('spawn', () => {
   });
 
   it('verbose - stdout', () => {
-    const _spawn = rewire<typeof spawn>('../dist/cjs/spawn');
+    const _spawnModule = rewire('../dist/cjs/spawn');
+    const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
     const content = 'something';
 
-    _spawn.__set__('process', Object.assign({}, process, {
+    _spawnModule.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
       stderr: stderrCache
     }));
@@ -96,11 +97,12 @@ describe('spawn', () => {
   });
 
   it('verbose - stderr', () => {
-    const _spawn = rewire<typeof spawn>('../dist/cjs/spawn');
+    const _spawnModule = rewire('../dist/cjs/spawn');
+    const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
 
-    _spawn.__set__('process', Object.assign({}, process, {
+    _spawnModule.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
       stderr: stderrCache,
       removeListener: () => {},
