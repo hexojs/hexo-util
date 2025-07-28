@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": ["ES2020", "ES2019"]
+  },
+  "include": ["lib/**.ts"],
+  "exclude": ["node_modules"]
+}
