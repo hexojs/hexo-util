@@ -23,7 +23,7 @@ function toCamelCase(str: string) {
   return str.substring(0, prefixLength) + camelCase(str.substring(prefixLength));
 }
 
-function camelCaseKeys(obj: object) {
+export function camelCaseKeys(obj: object) {
   if (typeof obj !== 'object') throw new TypeError('obj must be an object!');
 
   const keys = Object.keys(obj);
@@ -47,4 +47,4 @@ function camelCaseKeys(obj: object) {
   return result;
 }
 
-export = camelCaseKeys;
+export default camelCaseKeys;

@@ -1,7 +1,7 @@
 import { parse, format } from 'url';
 import { unescape } from 'querystring';
 
-const encodeURL = (str: string) => {
+export const encodeURL = (str: string) => {
   if (parse(str).protocol) {
     const parsed = new URL(str);
 
@@ -17,4 +17,4 @@ const encodeURL = (str: string) => {
   return encodeURI(unescape(str));
 };
 
-export = encodeURL;
+export default encodeURL;

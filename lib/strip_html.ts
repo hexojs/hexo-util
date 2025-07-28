@@ -121,4 +121,4 @@ function striptags(html: string | String = '') {
   return output;
 }
 
-export = striptags;
+export default striptags;

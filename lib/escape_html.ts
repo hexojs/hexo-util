@@ -22,4 +22,4 @@ function escapeHTML(str: string) {
   return str;
 }
 
-export = escapeHTML;
+export default escapeHTML;

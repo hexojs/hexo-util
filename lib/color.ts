@@ -190,7 +190,7 @@ interface RGBA {
   a: number;
 }
 
-class Color {
+export class Color {
   r: number;
   g: number;
   b: number;
@@ -344,4 +344,4 @@ class Color {
   }
 }
 
-export = Color;
+export default Color;

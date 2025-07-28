@@ -9,7 +9,7 @@ interface Options {
   transform?: number;
 }
 
-function slugize(str: string, options: Options = {}) {
+export function slugize(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const separator = options.separator || '-';
@@ -37,4 +37,4 @@ function slugize(str: string, options: Options = {}) {
   }
 }
 
-export = slugize;
+export default slugize;

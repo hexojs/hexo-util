@@ -105,4 +105,4 @@ function escapeDiacritic(str: string) {
   return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
 }
 
-export = escapeDiacritic;
+export default escapeDiacritic;

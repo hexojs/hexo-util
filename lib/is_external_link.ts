@@ -9,8 +9,7 @@ const cache = new Cache<boolean>();
  * @param {Array} input Exclude hostnames. Specific subdomain is required when applicable, including www.
  * @returns {Boolean} True if the link doesn't have protocol or link has same host with config.url
  */
-
-function isExternalLink(input: string, sitehost: string, exclude?: string | string[]): boolean {
+export function isExternalLink(input: string, sitehost: string, exclude?: string | string[]): boolean {
   return cache.apply(`${input}-${sitehost}-${exclude}`, () => {
     // Return false early for internal link
     if (!/^(\/\/|http(s)?:)/.test(input)) return false;
@@ -49,4 +48,4 @@ function isExternalLink(input: string, sitehost: string, exclude?: string | stri
   });
 }
 
-export = isExternalLink;
+export default isExternalLink;

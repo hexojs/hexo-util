@@ -28,7 +28,7 @@ interface Result {
   unnumbered?: boolean;
 }
 
-function tocObj(str: string, options = {}) {
+export function tocObj(str: string, options = {}) {
   const { min_depth, max_depth } = Object.assign({
     min_depth: 1,
     max_depth: 6
@@ -72,4 +72,4 @@ function tocObj(str: string, options = {}) {
   return result;
 }
 
-export = tocObj;
+export default tocObj;

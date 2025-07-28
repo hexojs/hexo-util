@@ -18,4 +18,4 @@ function prettyUrls(url: string, options: Options = {}) {
   return url;
 }
 
-export = prettyUrls;
+export default prettyUrls;

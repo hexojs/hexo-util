@@ -68,7 +68,7 @@ interface Options {
   stripIndent?: boolean;
 }
 
-function PrismUtil(str: string, options: Options = {}) {
+export function PrismUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const {
@@ -141,4 +141,4 @@ function PrismUtil(str: string, options: Options = {}) {
   return startTag + parsedCode + endTag;
 }
 
-export = PrismUtil;
+export default PrismUtil;

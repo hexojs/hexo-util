@@ -156,4 +156,4 @@ function closeTags(res: HighlightResult) {
   return res;
 }
 
-export = highlightUtil;
+export default highlightUtil;

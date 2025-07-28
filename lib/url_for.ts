@@ -74,4 +74,4 @@ function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
   );
 }
 
-export = urlForHelper;
+export default urlForHelper;

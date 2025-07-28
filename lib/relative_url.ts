@@ -2,7 +2,7 @@ import encodeURL from './encode_url';
 import Cache from './cache';
 const cache = new Cache<string>();
 
-function relativeUrlHelper(from = '', to = '') {
+export function relativeUrlHelper(from = '', to = '') {
   return cache.apply(`${from}-${to}`, () => {
     const fromParts = from.split('/');
     const toParts = to.split('/');
@@ -30,4 +30,4 @@ function relativeUrlHelper(from = '', to = '') {
   });
 }
 
-export = relativeUrlHelper;
+export default relativeUrlHelper;

@@ -21,4 +21,4 @@ function wordWrap(str: string, options: Options = {}) {
   return lines.join('\n');
 }
 
-export = wordWrap;
+export default wordWrap;

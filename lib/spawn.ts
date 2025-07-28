@@ -11,7 +11,7 @@ class StatusError extends Error {
   code?: number;
 }
 
-function promiseSpawn(command: string, args: string | string[] | Options = [], options: Options = {}) {
+export function promiseSpawn(command: string, args: string | string[] | Options = [], options: Options = {}) {
   if (!command) throw new TypeError('command is required!');
 
   if (typeof args === 'string') args = [args];
@@ -75,4 +75,4 @@ function getCache(stream: CacheStream, encoding?: BufferEncoding) {
   return buf.toString(encoding);
 }
 
-export = promiseSpawn;
+export default promiseSpawn;

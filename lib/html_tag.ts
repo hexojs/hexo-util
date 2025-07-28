@@ -46,4 +46,4 @@ function htmlTag(tag: string, attrs?: {
   return result;
 }
 
-export = htmlTag;
+export default htmlTag;

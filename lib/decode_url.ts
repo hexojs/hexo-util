@@ -1,7 +1,7 @@
 import { parse, format } from 'url';
 import { unescape } from 'querystring';
 
-const decodeURL = (str: string) => {
+export const decodeURL = (str: string) => {
   if (parse(str).protocol) {
     const parsed = new URL(str);
 
@@ -15,4 +15,4 @@ const decodeURL = (str: string) => {
   return unescape(str);
 };
 
-export = decodeURL;
+export default decodeURL;

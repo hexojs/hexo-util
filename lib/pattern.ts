@@ -2,7 +2,7 @@ import escapeRegExp from './escape_regexp';
 
 const rParam = /([:*])([\w?]*)?/g;
 
-class Pattern {
+export class Pattern {
   match: (str: string) => any;
 
   constructor(rule: Pattern | ((str: string) => any) | RegExp | string) {
@@ -70,4 +70,4 @@ function stringFilter(rule: string) {
   };
 }
 
-export = Pattern;
+export default Pattern;

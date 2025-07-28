@@ -1,4 +1,4 @@
-export = class Cache<T> {
+export class Cache<T> {
   cache: Map<string, T>;
 
   constructor() {
@@ -41,4 +41,6 @@ export = class Cache<T> {
   dump() {
     return Object.fromEntries(this.cache);
   }
-};
+}
+
+export default Cache;
