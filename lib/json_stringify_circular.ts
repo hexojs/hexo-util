@@ -13,10 +13,14 @@ const ignore = {};
 
 const noop = (_: unknown, value: unknown) => value;
 
-// No longer needed, as we only care about objects for circular refs
-
 /**
  * Recursively revives circular references in a parsed object.
+ *
+ * @param input - The array of parsed objects.
+ * @param parsed - A set of already parsed objects to avoid infinite recursion.
+ * @param output - The current output object being revived.
+ * @param $ - The reviver function to apply to each key/value pair.
+ * @returns The revived object with circular references restored.
  */
 const revive = (
   input: unknown[],
@@ -47,7 +51,12 @@ const revive = (
 };
 
 /**
- * Adds a value to a set of known values and returns its index.
+ * Adds a value to a set of known values and returns its index as a string.
+ *
+ * @param known - A map of known objects to their indices.
+ * @param input - The array of input objects.
+ * @param value - The value to add.
+ * @returns The index of the value as a string.
  */
 const set = (known: Map<unknown, string>, input: unknown[], value: unknown): string => {
   const index = String(input.push(value) - 1);
@@ -57,9 +66,11 @@ const set = (known: Map<unknown, string>, input: unknown[], value: unknown): str
 
 /**
  * Parses a JSON string with support for circular references.
+ *
+ * @template T
  * @param text - The JSON string to parse.
  * @param reviver - Optional function to transform the parsed values.
- * @returns The parsed object.
+ * @returns The parsed object of type T.
  */
 const parse = <T = unknown>(text: string, reviver?: (this: unknown, key: string, value: unknown) => unknown): T => {
   const input = $parse(text);
@@ -71,9 +82,10 @@ const parse = <T = unknown>(text: string, reviver?: (this: unknown, key: string,
 
 /**
  * Stringifies an object into JSON with support for circular references.
+ *
  * @param value - The object to stringify.
- * @param replacer - Optional function to transform the values before stringifying.
- * @param space - Optional number or string to use as a white space in the output.
+ * @param replacer - Optional function or array of strings to transform the values before stringifying.
+ * @param space - Optional number or string to use as white space in the output.
  * @returns The JSON string representation of the object.
  */
 const stringify = (
@@ -119,30 +131,29 @@ const stringify = (
 };
 
 /**
- * Converts an object with circular references to JSON.
+ * Converts an object with circular references to a JSON-compatible object.
+ *
  * @param anyData - The object to convert.
- * @returns The JSON representation of the object.
+ * @returns The JSON-compatible representation of the object.
  */
-const toJSONBrowser = (anyData: unknown): unknown => $parse(stringify(anyData));
-export { toJSONBrowser };
+const toJSON = (anyData: unknown): unknown => $parse(stringify(anyData));
+export { toJSON };
 
 /**
- * Parses a circular object from JSON.
+ * Parses a circular object from a JSON string.
+ *
+ * @template T
  * @param anyData - The JSON string to parse.
- * @returns The parsed object.
+ * @returns The parsed object of type T.
  */
-const fromJSONBrowser = <T = unknown>(anyData: string): T => parse<T>($stringify(anyData));
-export { fromJSONBrowser, parse as parseBrowser, stringify as stringifyBrowser };
+const fromJSON = <T = unknown>(anyData: string): T => parse<T>($stringify(anyData));
+export { fromJSON, parse, stringify };
 
 /**
- * transform any object to json. Suppress `TypeError: Converting circular structure to JSON`
- * @param data
- * @returns
- */
-/**
- * Transforms any object to JSON, suppressing `TypeError: Converting circular structure to JSON` (Browser version)
- * @param data - The object to stringify
- * @returns The JSON string representation
+ * Transforms any object to a JSON string, suppressing `TypeError: Converting circular structure to JSON`.
+ *
+ * @param data - The object to stringify.
+ * @returns The JSON string representation.
  */
 export function jsonStringifyWithCircular(data: unknown): string {
   return stringify(data);
@@ -151,9 +162,11 @@ export function jsonStringifyWithCircular(data: unknown): string {
 export { jsonStringifyWithCircular as jsonStringify };
 
 /**
- * Parses JSON stringified with circular refs (Browser version)
- * @param data - The JSON string to parse
- * @returns The parsed object
+ * Parses a JSON string that was stringified with circular references (browser version).
+ *
+ * @template T
+ * @param data - The JSON string to parse.
+ * @returns The parsed object of type T.
  */
 export function jsonParseWithCircular<T>(data: string): T {
   return parse(data) as T;

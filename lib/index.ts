@@ -28,3 +28,4 @@ export { default as truncate } from './truncate';
 export { default as unescapeHTML } from './unescape_html';
 export { default as url_for } from './url_for';
 export { default as wordWrap } from './word_wrap';
+export { jsonParse, jsonStringify } from './json_stringify_circular';
