@@ -73,7 +73,7 @@ describe('spawn', () => {
   });
 
   it('verbose - stdout', () => {
-    const _spawn = rewire<typeof spawn>('../dist/spawn');
+    const _spawn = rewire<typeof spawn>('../dist/cjs/spawn');
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
     const content = 'something';
@@ -96,7 +96,7 @@ describe('spawn', () => {
   });
 
   it('verbose - stderr', () => {
-    const _spawn = rewire<typeof spawn>('../dist/spawn');
+    const _spawn = rewire<typeof spawn>('../dist/cjs/spawn');
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
 
