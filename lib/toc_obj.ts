@@ -1,12 +1,12 @@
-import { DomHandler, DomUtils, Parser } from 'htmlparser2';
+import * as htmlparser2 from 'htmlparser2';
 // eslint-disable-next-line node/no-extraneous-import
 import type { Element } from 'domhandler';
 import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
 const parseHtml = (html: string) => {
-  const handler = new DomHandler(null, {});
-  new Parser(handler, {}).end(html);
+  const handler = new htmlparser2.DomHandler(null, {});
+  new htmlparser2.Parser(handler, {}).end(html);
   return handler.dom;
 };
 
@@ -35,7 +35,12 @@ function tocObj(str: string, options = {}) {
   }, options);
 
   const headingsSelector = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].slice(min_depth - 1, max_depth);
-  const headings = DomUtils.find(element => 'tagName' in element && headingsSelector.includes(element.tagName), parseHtml(str), true, Infinity) as Element[];
+  const headings = htmlparser2.DomUtils.find(
+    element => 'tagName' in element && headingsSelector.includes(element.tagName),
+    parseHtml(str),
+    true,
+    Infinity
+  ) as Element[];
   const headingsLen = headings.length;
 
   if (!headingsLen) return [];
@@ -49,7 +54,7 @@ function tocObj(str: string, options = {}) {
     const unnumbered = isUnnumbered(el);
     let text = '';
     for (const element of el.children) {
-      const elText = DomUtils.textContent(element);
+      const elText = htmlparser2.DomUtils.textContent(element);
       // Skip permalink symbol wrapped in <a>
       // permalink is a single non-word character, word = [a-Z0-9]
       // permalink may be wrapped in whitespace(s)
@@ -57,7 +62,7 @@ function tocObj(str: string, options = {}) {
         text += escapeHTML(elText);
       }
     }
-    if (!text) text = escapeHTML(DomUtils.textContent(el));
+    if (!text) text = escapeHTML(htmlparser2.DomUtils.textContent(el));
 
     const res: Result = { text, id, level };
     if (unnumbered) res.unnumbered = true;
