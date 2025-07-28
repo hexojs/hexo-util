@@ -3,9 +3,9 @@ import escapeRegExp from './escape_regexp';
 const rParam = /([:*])([\w?]*)?/g;
 
 export class Pattern {
-  match: (str: string) => any;
+  match: (str: string) => unknown;
 
-  constructor(rule: Pattern | ((str: string) => any) | RegExp | string) {
+  constructor(rule: Pattern | ((str: string) => unknown) | RegExp | string) {
     if (rule instanceof Pattern) {
       return rule;
     } else if (typeof rule === 'function') {
