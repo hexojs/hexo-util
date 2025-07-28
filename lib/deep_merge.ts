@@ -1,14 +1,14 @@
 /**
- * Recursively creates a deep clone of the given value, handling circular references.
+ * Recursively creates a deep clone of the given value, handling circular references and special types.
  *
  * This function supports:
  * - Primitives (`string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`)
  * - Arrays (including nested arrays)
  * - Plain objects (including nested objects)
+ * - Special types: `Date`, `Map`, `Set`, `RegExp`, and `Function` (functions are returned as-is)
  * - Circular references (using WeakMap)
  *
- * Note: This does **not** handle special types like `Date`, `Map`, `Set`,
- * `RegExp`, or `Function`.
+ * Note: Functions are not cloned, but returned as-is. Other special types are deeply cloned.
  *
  * @param param - The value to deep clone.
  * @param seen - Internal WeakMap to track circular references.
@@ -16,6 +16,34 @@
  */
 function deepClone<T>(param: T, seen = new WeakMap()): T {
   if (param === null || typeof param !== 'object') {
+    return param;
+  }
+
+  // Handle special types
+  if (param instanceof Date) {
+    return new Date(param.getTime()) as unknown as T;
+  }
+  if (param instanceof RegExp) {
+    return new RegExp(param.source, param.flags) as unknown as T;
+  }
+  if (param instanceof Map) {
+    const result = new Map();
+    seen.set(param as object, result);
+    for (const [k, v] of param as unknown as Map<unknown, unknown>) {
+      result.set(deepClone(k, seen), deepClone(v, seen));
+    }
+    return result as unknown as T;
+  }
+  if (param instanceof Set) {
+    const result = new Set();
+    seen.set(param as object, result);
+    for (const v of param as unknown as Set<unknown>) {
+      result.add(deepClone(v, seen));
+    }
+    return result as unknown as T;
+  }
+  if (typeof param === 'function') {
+    // Functions are not clonable, return as-is
     return param;
   }
 
@@ -43,10 +71,29 @@ function deepClone<T>(param: T, seen = new WeakMap()): T {
   return newObj as T;
 }
 
+/**
+ * Checks if a value is a plain object (not an array, null, or special type).
+ *
+ * @param item - The value to check.
+ * @returns True if the value is a plain object, false otherwise.
+ */
 function isObject(item: unknown): item is Record<string, unknown> {
   return !!item && typeof item === 'object' && !Array.isArray(item);
 }
 
+/**
+ * Deeply merges two values, handling arrays, objects, and special types.
+ *
+ * - If both values are arrays, merges by index, unions nested arrays, and merges objects/maps/sets/functions at the same index.
+ * - If both values are objects, merges properties recursively, handling special types (`Date`, `Map`, `Set`, `RegExp`, `Function`).
+ * - If types differ, source replaces target.
+ * - Handles circular references.
+ *
+ * @param target - The target value to merge into.
+ * @param source - The source value to merge from.
+ * @param seen - Internal WeakMap to track circular references.
+ * @returns The deeply merged value.
+ */
 function deepMerge<T>(target: Partial<T>, source: Partial<T>, seen = new WeakMap()): T {
   // If source is a primitive, return source (replace target)
   if (source === null || typeof source !== 'object') {
@@ -86,6 +133,32 @@ function deepMerge<T>(target: Partial<T>, source: Partial<T>, seen = new WeakMap
           resultArr[i] = deepClone(tVal, seen);
         } else if (isObject(tVal) && isObject(sVal)) {
           resultArr[i] = deepMerge(tVal, sVal, seen);
+        } else if (tVal instanceof Date && sVal instanceof Date) {
+          resultArr[i] = new Date(Math.max(tVal.getTime(), sVal.getTime()));
+        } else if (tVal instanceof RegExp && sVal instanceof RegExp) {
+          // Prefer source's RegExp
+          resultArr[i] = new RegExp(sVal.source, sVal.flags);
+        } else if (tVal instanceof Map && sVal instanceof Map) {
+          // Merge maps: keys from both, values deep merged
+          const merged = new Map(tVal);
+          for (const [k, v] of sVal) {
+            if (merged.has(k)) {
+              merged.set(k, deepMerge(merged.get(k), v, seen));
+            } else {
+              merged.set(deepClone(k, seen), deepClone(v, seen));
+            }
+          }
+          resultArr[i] = merged;
+        } else if (tVal instanceof Set && sVal instanceof Set) {
+          // Union of sets
+          const merged = new Set(tVal);
+          for (const v of sVal) {
+            merged.add(deepClone(v, seen));
+          }
+          resultArr[i] = merged;
+        } else if (typeof tVal === 'function' && typeof sVal === 'function') {
+          // Prefer source's function
+          resultArr[i] = sVal;
         } else if (typeof sVal !== 'undefined') {
           resultArr[i] = deepClone(sVal, seen);
         } else {
@@ -106,14 +179,37 @@ function deepMerge<T>(target: Partial<T>, source: Partial<T>, seen = new WeakMap
     seen.set(target as object, resultObj);
     for (const key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {
+        const tVal = (target as Record<string, unknown>)[key];
+        const sVal = (source as Record<string, unknown>)[key];
         if (key in target) {
-          resultObj[key] = deepMerge(
-            (target as Record<string, unknown>)[key],
-            (source as Record<string, unknown>)[key],
-            seen
-          );
+          // Handle special types
+          if (tVal instanceof Date && sVal instanceof Date) {
+            resultObj[key] = new Date(Math.max(tVal.getTime(), sVal.getTime()));
+          } else if (tVal instanceof RegExp && sVal instanceof RegExp) {
+            resultObj[key] = new RegExp(sVal.source, sVal.flags);
+          } else if (tVal instanceof Map && sVal instanceof Map) {
+            const merged = new Map(tVal);
+            for (const [k, v] of sVal) {
+              if (merged.has(k)) {
+                merged.set(k, deepMerge(merged.get(k), v, seen));
+              } else {
+                merged.set(deepClone(k, seen), deepClone(v, seen));
+              }
+            }
+            resultObj[key] = merged;
+          } else if (tVal instanceof Set && sVal instanceof Set) {
+            const merged = new Set(tVal);
+            for (const v of sVal) {
+              merged.add(deepClone(v, seen));
+            }
+            resultObj[key] = merged;
+          } else if (typeof tVal === 'function' && typeof sVal === 'function') {
+            resultObj[key] = sVal;
+          } else {
+            resultObj[key] = deepMerge(tVal, sVal, seen);
+          }
         } else {
-          resultObj[key] = deepClone((source as Record<string, unknown>)[key], seen);
+          resultObj[key] = deepClone(sVal, seen);
         }
       }
     }
