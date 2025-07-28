@@ -11,7 +11,8 @@
       "require": "./dist/cjs/index.js",
       "types": "./dist/esm/index.d.ts"
     },
-    "./highlight_alias.json": "./highlight_alias.json"
+    "./highlight_alias.json": "./highlight_alias.json",
+    "./dist/highlight_alias.json": "./highlight_alias.json"
   },
   "scripts": {
     "build:cjs": "tsc -p tsconfig.cjs.json",
