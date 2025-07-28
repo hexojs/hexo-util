@@ -70,6 +70,24 @@ function validateHtmlAsync(str, done) {
 }
 
 describe('highlight', () => {
+  it('should strip leading indentation by default (stripIndent: true)', done => {
+    const indented = '    foo\n      bar';
+    const expected = 'foo\n  bar';
+    const result = highlight(indented, { gutter: false });
+    // Should match the HTML structure for stripped indentation
+    result.should.include(code(expected));
+    result.should.not.include(encode('    foo'));
+    validateHtmlAsync(result, done);
+  });
+
+  it('should preserve leading indentation when stripIndent: false', done => {
+    const indented = '    foo\n      bar';
+    const result = highlight(indented, { gutter: false, stripIndent: false });
+    // Should contain leading spaces
+    result.should.include(encode('    foo'));
+    result.should.include(encode('      bar'));
+    validateHtmlAsync(result, done);
+  });
   it('default', done => {
     const result = highlight(testString);
     assertResult(result, gutter(1, 4), code(testString));
