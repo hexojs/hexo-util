@@ -1,8 +1,8 @@
 import { parse } from 'url';
-import encodeURL from './encode_url';
-import relative_url from './relative_url';
-import prettyUrls from './pretty_urls';
-import Cache from './cache';
+import encodeURL from './encode_url.js';
+import relative_url from './relative_url.js';
+import prettyUrls from './pretty_urls.js';
+import Cache from './cache.js';
 const cache = new Cache<string>();
 
 /**
@@ -28,7 +28,8 @@ interface UrlForOptions {
 function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
   if (/^(#|\/\/|http(s)?:)/.test(path)) return path;
 
-  const { config } = this;
+  // Safe destructuring to avoid errors if `this` is undefined
+  const { config = {} } = this || {};
 
   options = Object.assign(
     {
