@@ -17,4 +17,12 @@ const unescapeHTML = (str: string) => {
   return str.replace(regexHtml, a => htmlEntityMap[a]);
 };
 
+
+// For ESM compatibility
 export default unescapeHTML;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = unescapeHTML;
+  // For ESM compatibility
+  module.exports.default = unescapeHTML;
+}

@@ -121,4 +121,12 @@ function striptags(html: string | String = '') {
   return output;
 }
 
+
+// For ESM compatibility
 export default striptags;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = striptags;
+  // For ESM compatibility
+  module.exports.default = striptags;
+}

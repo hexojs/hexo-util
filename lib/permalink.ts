@@ -60,4 +60,12 @@ export class Permalink {
   }
 }
 
+
+// For ESM compatibility
 export default Permalink;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Permalink;
+  // For ESM compatibility
+  module.exports.default = Permalink;
+}

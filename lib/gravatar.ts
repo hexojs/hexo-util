@@ -24,4 +24,12 @@ export function gravatarHelper(email: string, options?: ParsedUrlQueryInput | nu
   return str;
 }
 
+
+// For ESM compatibility
 export default gravatarHelper;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = gravatarHelper;
+  // For ESM compatibility
+  module.exports.default = gravatarHelper;
+}

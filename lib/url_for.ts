@@ -81,4 +81,12 @@ function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
   );
 }
 
+
+// For ESM compatibility
 export default urlForHelper;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = urlForHelper;
+  // For ESM compatibility
+  module.exports.default = urlForHelper;
+}

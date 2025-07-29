@@ -43,4 +43,12 @@ export class Cache<T> {
   }
 }
 
+
+// For ESM compatibility
 export default Cache;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Cache;
+  // For ESM compatibility
+  module.exports.default = Cache;
+}

@@ -22,4 +22,12 @@ function escapeHTML(str: string) {
   return str;
 }
 
+
+// For ESM compatibility
 export default escapeHTML;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = escapeHTML;
+  // For ESM compatibility
+  module.exports.default = escapeHTML;
+}

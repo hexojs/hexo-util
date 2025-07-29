@@ -266,4 +266,12 @@ function deepMerge<T>(target: Partial<T>, source: Partial<T>, seen = new WeakMap
   return deepClone(source) as T;
 }
 
+
+// For ESM compatibility
 export default deepMerge;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = deepMerge;
+  // For ESM compatibility
+  module.exports.default = deepMerge;
+}

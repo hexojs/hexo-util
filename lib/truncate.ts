@@ -32,4 +32,12 @@ export function truncate(str: string, options: Options = {}): string {
   }
 }
 
+
+// For ESM compatibility
 export default truncate;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = truncate;
+  // For ESM compatibility
+  module.exports.default = truncate;
+}

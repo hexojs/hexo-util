@@ -30,4 +30,12 @@ export function relativeUrlHelper(from = '', to = '') {
   });
 }
 
+
+// For ESM compatibility
 export default relativeUrlHelper;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = relativeUrlHelper;
+  // For ESM compatibility
+  module.exports.default = relativeUrlHelper;
+}

@@ -46,4 +46,12 @@ function htmlTag(tag: string, attrs?: {
   return result;
 }
 
+
+// For ESM compatibility
 export default htmlTag;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = htmlTag;
+  // For ESM compatibility
+  module.exports.default = htmlTag;
+}

@@ -70,4 +70,12 @@ function stringFilter(rule: string) {
   };
 }
 
+
+// For ESM compatibility
 export default Pattern;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Pattern;
+  // For ESM compatibility
+  module.exports.default = Pattern;
+}

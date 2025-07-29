@@ -37,4 +37,12 @@ export function slugize(str: string, options: Options = {}) {
   }
 }
 
+
+// For ESM compatibility
 export default slugize;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = slugize;
+  // For ESM compatibility
+  module.exports.default = slugize;
+}

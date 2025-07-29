@@ -29,4 +29,12 @@ export function fullUrlForHelper(path = '/') {
   });
 }
 
+
+// For ESM compatibility
 export default fullUrlForHelper;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = fullUrlForHelper;
+  // For ESM compatibility
+  module.exports.default = fullUrlForHelper;
+}

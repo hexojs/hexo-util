@@ -75,4 +75,12 @@ function getCache(stream: CacheStream, encoding?: BufferEncoding) {
   return buf.toString(encoding);
 }
 
+
+// For ESM compatibility
 export default promiseSpawn;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = promiseSpawn;
+  // For ESM compatibility
+  module.exports.default = promiseSpawn;
+}

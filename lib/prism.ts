@@ -185,4 +185,12 @@ function PrismUtil(str: string, options: Options = {}) {
   return startTag + parsedCode + endTag;
 }
 
+
+// For ESM compatibility
 export default PrismUtil;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = PrismUtil;
+  // For ESM compatibility
+  module.exports.default = PrismUtil;
+}

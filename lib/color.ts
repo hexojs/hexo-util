@@ -344,4 +344,11 @@ export class Color {
   }
 }
 
+// For ESM compatibility
 export default Color;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Color;
+  // For ESM compatibility
+  module.exports.default = Color;
+}

@@ -15,4 +15,12 @@ export const decodeURL = (str: string) => {
   return unescape(str);
 };
 
+
+// For ESM compatibility
 export default decodeURL;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = decodeURL;
+  // For ESM compatibility
+  module.exports.default = decodeURL;
+}

@@ -47,4 +47,11 @@ export function camelCaseKeys(obj: object) {
   return result;
 }
 
+// For ESM compatibility
 export default camelCaseKeys;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = camelCaseKeys;
+  // For ESM compatibility
+  module.exports.default = camelCaseKeys;
+}

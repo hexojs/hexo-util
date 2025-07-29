@@ -5,4 +5,12 @@ function escapeRegExp(str: string) {
   return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
+
+// For ESM compatibility
 export default escapeRegExp;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = escapeRegExp;
+  // For ESM compatibility
+  module.exports.default = escapeRegExp;
+}

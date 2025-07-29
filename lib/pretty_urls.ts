@@ -18,4 +18,12 @@ function prettyUrls(url: string, options: Options = {}) {
   return url;
 }
 
+
+// For ESM compatibility
 export default prettyUrls;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = prettyUrls;
+  // For ESM compatibility
+  module.exports.default = prettyUrls;
+}

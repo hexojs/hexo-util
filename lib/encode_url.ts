@@ -17,4 +17,12 @@ export const encodeURL = (str: string) => {
   return encodeURI(unescape(str));
 };
 
+
+// For ESM compatibility
 export default encodeURL;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = encodeURL;
+  // For ESM compatibility
+  module.exports.default = encodeURL;
+}

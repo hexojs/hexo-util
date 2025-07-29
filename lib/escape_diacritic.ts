@@ -105,4 +105,12 @@ function escapeDiacritic(str: string) {
   return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
 }
 
+
+// For ESM compatibility
 export default escapeDiacritic;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = escapeDiacritic;
+  // For ESM compatibility
+  module.exports.default = escapeDiacritic;
+}

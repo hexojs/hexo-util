@@ -72,4 +72,12 @@ export function tocObj(str: string, options = {}) {
   return result;
 }
 
+
+// For ESM compatibility
 export default tocObj;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = tocObj;
+  // For ESM compatibility
+  module.exports.default = tocObj;
+}
