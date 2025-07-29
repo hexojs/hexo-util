@@ -56,6 +56,7 @@ async function importModules(mode) {
     };
   }
   convertCjs(); // Ensure CJS files are renamed before importing
+  // eslint-disable-next-line import/no-unresolved
   const cjsModule = await import('../dist/cjs/index.cjs');
   return {
     lib: cjsModule.default || cjsModule,
