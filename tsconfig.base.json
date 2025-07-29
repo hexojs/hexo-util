@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
+    "module": "ESNext",
+    "target": "ES2020",
+    "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "esModuleInterop": true,
-    "resolveJsonModule": false,
-    "lib": ["ES2020", "ES2019"]
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES2020", "ES2019"],
+    "rootDir": "lib"
   },
-  "include": ["lib/**.ts"],
+  "include": ["lib/**.ts", "./*.json"],
   "exclude": ["node_modules"]
 }

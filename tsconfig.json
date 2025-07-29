@@ -1,9 +1,14 @@
 {
-  // TypeScript configuration for IDE support only. Not used for build.
+  // TypeScript configuration for IDE and mocha support only. Not used for build.
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "tmp/dist",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
     "noEmit": true,
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "outDir": "tmp/dist",
     "types": ["node", "mocha"]
   },
   "exclude": [
