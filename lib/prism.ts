@@ -1,25 +1,28 @@
+import PrismCore from 'prismjs';
+import prismLoadLanguages from 'prismjs/components/index.js';
 import stripIndent from 'strip-indent';
-import prismLoadLanguages from 'prismjs/components/';
+import escapeHTML from './escape_html.js';
 
 let Prism: typeof import('prismjs') | undefined;
 
-// https://github.com/PrismJS/prism/issues/2145
-import prismComponents from 'prismjs/components';
-
-const prismAlias = Object.entries(prismComponents.languages).reduce((acc, [key, value]) => {
-  if (value.alias) {
-    if (Array.isArray(value.alias)) {
-      value.alias.forEach(alias => (acc[alias] = key));
-    } else if (typeof value.alias === 'string') {
-      acc[value.alias] = key;
+const prismAlias = Object.entries(PrismCore.languages).reduce(
+  (acc, [key, value]) => {
+    if (value && typeof value === 'object' && 'alias' in value) {
+      const alias = (value as { alias?: string | string[] }).alias;
+      if (alias) {
+        if (Array.isArray(alias)) {
+          alias.forEach(a => (acc[a] = key));
+        } else if (typeof alias === 'string') {
+          acc[alias] = key;
+        }
+      }
     }
-  }
-  return acc;
-}, {});
+    return acc;
+  },
+  {} as Record<string, string>
+);
 
-const prismSupportedLanguages = Object.keys(prismComponents.languages).concat(Object.keys(prismAlias));
-
-import escapeHTML from './escape_html';
+const prismSupportedLanguages = Object.keys(PrismCore.languages).concat(Object.keys(prismAlias));
 
 /**
  * Wrapper of Prism.highlight()
@@ -27,7 +30,7 @@ import escapeHTML from './escape_html';
  * @param {String} language
  */
 function prismHighlight(code: string, language: string) {
-  if (!Prism) Prism = require('prismjs');
+  if (!Prism) Prism = PrismCore;
 
   // Prism has not load the language pattern
   if (!Prism.languages[language] && prismSupportedLanguages.includes(language)) prismLoadLanguages(language);
@@ -68,7 +71,7 @@ interface Options {
   stripIndent?: boolean;
 }
 
-export function PrismUtil(str: string, options: Options = {}) {
+function PrismUtil(str: string, options: Options = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const {
@@ -87,9 +90,35 @@ export function PrismUtil(str: string, options: Options = {}) {
   }
 
   // To be consistent with highlight.js
+  // Normalize language aliases to canonical Prism names
   let language = lang === 'plaintext' || lang === 'none' ? 'none' : lang;
-
+  // Manual alias mapping for common cases
+  const manualAlias: Record<string, string> = {
+    js: 'javascript',
+    ts: 'typescript',
+    py: 'python',
+    rb: 'ruby',
+    sh: 'bash',
+    html: 'markup',
+    md: 'markdown',
+    csharp: 'cs',
+    shell: 'bash',
+    yml: 'yaml',
+    vue: 'markup',
+    plaintext: 'none',
+    none: 'none'
+  };
+  if (manualAlias[language]) language = manualAlias[language];
   if (prismAlias[language]) language = prismAlias[language];
+
+  // Ensure Prism loads the language if not loaded
+  if (language !== 'none' && PrismCore && !PrismCore.languages[language]) {
+    try {
+      prismLoadLanguages(language);
+    } catch (e) {
+      // ignore
+    }
+  }
 
   const preTagClassArr = [];
   const preTagAttrArr = [];
@@ -127,10 +156,25 @@ export function PrismUtil(str: string, options: Options = {}) {
 
   let parsedCode = '';
 
-  if (language === 'none' || !isPreprocess) {
-    parsedCode = escapeHTML(str);
-  } else {
+  // Always use Prism for supported languages, even if not loaded yet
+  if (language !== 'none' && isPreprocess && PrismCore.languages[language]) {
     parsedCode = prismHighlight(str, language);
+  } else if (language !== 'none' && isPreprocess && Prism && Prism.languages[language]) {
+    parsedCode = prismHighlight(str, language);
+  } else if (language !== 'none' && isPreprocess) {
+    // Try to load language and highlight
+    try {
+      prismLoadLanguages(language);
+      if (PrismCore.languages[language]) {
+        parsedCode = prismHighlight(str, language);
+      } else {
+        parsedCode = escapeHTML(str);
+      }
+    } catch (e) {
+      parsedCode = escapeHTML(str);
+    }
+  } else {
+    parsedCode = escapeHTML(str);
   }
 
   // lineNumberUtil() should be used only under preprocess mode
