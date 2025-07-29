@@ -1,5 +1,5 @@
 import spawn from 'cross-spawn';
-import CacheStream from './cache_stream';
+import CacheStream from './cache_stream.js';
 
 import { SpawnOptions } from 'child_process';
 interface Options extends SpawnOptions {

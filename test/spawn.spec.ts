@@ -1,12 +1,14 @@
 import chai from 'chai';
-import { join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { writeFile, unlink } from 'fs';
 import rewire from 'rewire';
-import spawn from '../lib/spawn';
-import CacheStream from '../lib/cache_stream';
+import spawn from '../lib/spawn.js';
+import CacheStream from '../lib/cache_stream.js';
+import { fileURLToPath } from 'url';
 
 chai.should();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const isWindows = process.platform === 'win32';
 const catCommand = isWindows ? 'type' : 'cat';
 
@@ -72,8 +74,12 @@ describe('spawn', () => {
     }
   });
 
-  it('verbose - stdout', () => {
-    const _spawnModule = rewire('../dist/cjs/spawn');
+  it('verbose - stdout', async () => {
+    await import('./utils.cjs').then(({ convertCjs }) => {
+      convertCjs();
+    });
+    const spawnCjsPath = resolve(__dirname, '../dist/cjs/spawn.cjs');
+    const _spawnModule = rewire(spawnCjsPath);
     const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
@@ -89,7 +95,7 @@ describe('spawn', () => {
     }).then(() => {
       const result = stdoutCache.getCache().toString('utf8').trim();
       if (isWindows) {
-        result.should.match(new RegExp(`^(["']?)${content}\\1$`));
+        result.should.match(new RegExp(`^(\["']?)${content}\\1$`));
       } else {
         result.should.eql(content);
       }
@@ -97,7 +103,8 @@ describe('spawn', () => {
   });
 
   it('verbose - stderr', () => {
-    const _spawnModule = rewire('../dist/cjs/spawn');
+    const spawnCjsPath = resolve(__dirname, '../dist/cjs/spawn.cjs');
+    const _spawnModule = rewire(spawnCjsPath);
     const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();

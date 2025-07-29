@@ -70,7 +70,7 @@
     "html-entities": "^2.3.3",
     "html-tag-validator": "^1.6.0",
     "mocha": "^11.7.1",
-    "rewire": "^6.0.0",
+    "rewire": "^9.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.3"
   },

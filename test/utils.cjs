@@ -6,7 +6,7 @@ const _filename = fileURLToPath(__filename ? 'file://' + __filename : __filename
 const _dirname = path.dirname(_filename);
 
 /**
- * Recursively updates all import/require extensions from .js to .cjs, then renames .js files to .cjs in the specified directory and its subdirectories.
+ * Recursively updates all import/require extensions from .js to .cjs, then copies .js files to .cjs in the specified directory and its subdirectories.
  * @param {string} [dir] - The directory to start from. Defaults to '../dist/cjs' relative to this file.
  */
 function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
@@ -41,6 +41,7 @@ function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
     }
   });
 }
+module.exports.convertCjs = convertCjs;
 
 /**
  * Import modules based on the specified mode.
