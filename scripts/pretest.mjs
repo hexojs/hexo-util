@@ -7,6 +7,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const libDir = path.resolve(__dirname, '../lib');
 const markerFile = path.resolve(__dirname, '../.last_build');
+const extraFiles = [
+  path.resolve(__dirname, '../test/utils.cjs'),
+  path.resolve(__dirname, '../test/dual_mode.spec.ts'),
+  __filename
+];
 
 function getAllFiles(dir) {
   let results = [];
@@ -26,8 +31,8 @@ function getAllFiles(dir) {
 function needsBuild() {
   if (!fs.existsSync(markerFile)) return true;
   const markerMtime = fs.statSync(markerFile).mtimeMs;
-  const files = getAllFiles(libDir);
-  return files.some((f) => fs.statSync(f).mtimeMs > markerMtime);
+  const files = getAllFiles(libDir).concat(extraFiles);
+  return files.some((f) => fs.existsSync(f) && fs.statSync(f).mtimeMs > markerMtime);
 }
 
 function isTestEnv() {
