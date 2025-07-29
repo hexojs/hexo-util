@@ -115,7 +115,7 @@ function PrismUtil(str: string, options: Options = {}) {
   if (language !== 'none' && PrismCore && !PrismCore.languages[language]) {
     try {
       prismLoadLanguages(language);
-    } catch (e) {
+    } catch {
       // ignore
     }
   }
@@ -170,7 +170,7 @@ function PrismUtil(str: string, options: Options = {}) {
       } else {
         parsedCode = escapeHTML(str);
       }
-    } catch (e) {
+    } catch {
       parsedCode = escapeHTML(str);
     }
   } else {

@@ -1,26 +1,52 @@
-import { defineConfig } from 'eslint/config';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 import hexoTs from 'eslint-config-hexo/ts';
 import hexoTsTest from 'eslint-config-hexo/ts-test';
+import importPlugin from 'eslint-plugin-import';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
 
 export default [
   // Configurations applied globally
   ...hexoTs,
+  // Ignore specific files
+  {
+    ignores: [
+      // Exclude auto-generated file from all linting
+      'lib/highlight_alias.ts',
+      // Exclude dist directory from all linting
+      'dist',
+      // Exclude tmp directory from all linting
+      'tmp'
+    ]
+  },
   {
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module'
+    }
+  },
+  // Import plugin for ESM import resolution and rules
+  {
+    plugins: {
+      import: importPlugin
+    },
+    rules: {
+      ...importPlugin.configs.recommended.rules,
+      'n/no-missing-import': 'off',
+      'node/no-extraneous-import': 'off'
+    },
+    settings: {
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.ts', '.mjs', '.cjs']
+        },
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json'
+        }
+      }
     }
   },
   // Configurations applied only to test files
