@@ -12,6 +12,8 @@ jobs:
           node-version: 'lts/*'
       - name: Install Dependencies
         run: npm install
+      - name: Build Project
+        run: npm run build
       - name: Lint
         run: |
           npm run lint
