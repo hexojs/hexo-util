@@ -1,9 +1,7 @@
 import type { HLJSApi, HighlightResult } from 'highlight.js';
-import path from 'path';
-import fs from 'fs';
+import _highlight from 'highlight.js/lib/core';
 import stripIndent from 'strip-indent';
-
-const alias: Record<string, unknown> = JSON.parse(fs.readFileSync(path.join(__dirname, '../highlight_alias.json'), 'utf8'));
+import alias from './highlight_alias.js';
 
 let hljs: HLJSApi | undefined;
 
@@ -41,7 +39,7 @@ function highlightUtil(str: string, options: Options = {}) {
   }
 
   if (!hljs) {
-    hljs = require('highlight.js');
+    hljs = _highlight;
   }
   hljs.configure({ classPrefix: useHljs ? 'hljs-' : '' });
 
@@ -117,7 +115,7 @@ function highlight(str: string, options: Options) {
   const { autoDetect = false } = options;
 
   if (!hljs) {
-    hljs = require('highlight.js');
+    hljs = _highlight;
   }
 
   if (lang) {
