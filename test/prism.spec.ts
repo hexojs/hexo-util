@@ -1,6 +1,6 @@
 import chai from 'chai';
-import escapeHTML from '../lib/escape_html';
-import prismHighlight from '../lib/prism';
+import escapeHTML from '../lib/escape_html.js';
+import prismHighlight from '../lib/prism.js';
 import stripIndent from 'strip-indent';
 
 chai.should();

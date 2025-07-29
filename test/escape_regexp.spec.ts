@@ -1,5 +1,5 @@
 import chai from 'chai';
-import escapeRegExp from '../lib/escape_regexp';
+import escapeRegExp from '../lib/escape_regexp.js';
 chai.should();
 
 describe('escapeRegExp', () => {

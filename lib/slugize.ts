@@ -1,5 +1,5 @@
-import escapeDiacritic from './escape_diacritic';
-import escapeRegExp from './escape_regexp';
+import escapeDiacritic from './escape_diacritic.js';
+import escapeRegExp from './escape_regexp.js';
 // eslint-disable-next-line no-control-regex
 const rControl = /[\u0000-\u001f]/g;
 const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'<>,.?/]+/g;

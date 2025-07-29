@@ -1,5 +1,5 @@
 import chai from 'chai';
-import fullUrlForHelper from '../lib/full_url_for';
+import fullUrlForHelper from '../lib/full_url_for.js';
 chai.should();
 
 describe('full_url_for', () => {

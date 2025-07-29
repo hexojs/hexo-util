@@ -1,5 +1,5 @@
-import encodeURL from './encode_url';
-import escapeHTML from './escape_html';
+import encodeURL from './encode_url.js';
+import escapeHTML from './escape_html.js';
 const regexUrl = /(cite|download|href|src|url)$/i;
 const regexMeta = /^(og:|twitter:)(audio|image|url|video|player)(:secure_url)?$/i;
 

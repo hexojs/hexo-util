@@ -1,6 +1,6 @@
 import chai from 'chai';
-import htmlTag from '../lib/html_tag';
-import encodeURL from '../lib/encode_url';
+import htmlTag from '../lib/html_tag.js';
+import encodeURL from '../lib/encode_url.js';
 chai.should();
 
 describe('htmlTag', () => {

@@ -57,8 +57,14 @@ function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
   return cache.apply(
     `${config.url}-${root}-${prettyUrlsOptions.trailing_index}-${prettyUrlsOptions.trailing_html}-${path}`,
     () => {
-      const sitehost = parse(config.url).hostname || config.url;
-      const data = new URL(path, `http://${sitehost}`);
+      const urlString = typeof config.url === 'string' ? config.url : '';
+      const sitehost = parse(urlString).hostname || urlString;
+      let data: URL;
+      try {
+        data = new URL(path, `http://${sitehost}`);
+      } catch (e) {
+        return path;
+      }
 
       // Exit if input is an external link or a data url
       if (data.hostname !== sitehost || data.origin === 'null') {

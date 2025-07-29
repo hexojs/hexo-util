@@ -1,5 +1,5 @@
 import chai from 'chai';
-import tocObj from '../lib/toc_obj';
+import tocObj from '../lib/toc_obj.js';
 chai.should();
 
 describe('tocObj', () => {

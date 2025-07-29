@@ -1,5 +1,5 @@
-import encodeURL from './encode_url';
-import Cache from './cache';
+import encodeURL from './encode_url.js';
+import Cache from './cache.js';
 const cache = new Cache<string>();
 
 export function relativeUrlHelper(from = '', to = '') {

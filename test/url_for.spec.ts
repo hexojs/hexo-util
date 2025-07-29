@@ -1,4 +1,4 @@
-import urlForHelper from '../lib/url_for';
+import urlForHelper from '../lib/url_for.js';
 
 describe('url_for', () => {
   const ctx: any = {

@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Pattern from '../lib/pattern';
+import Pattern from '../lib/pattern.js';
 chai.should();
 
 describe('Pattern', () => {

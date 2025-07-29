@@ -1,5 +1,5 @@
 import chai from 'chai';
-import encodeURL from '../lib/encode_url';
+import encodeURL from '../lib/encode_url.js';
 chai.should();
 
 describe('encodeURL', () => {

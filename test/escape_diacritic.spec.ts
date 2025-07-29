@@ -1,5 +1,5 @@
 import chai from 'chai';
-import escapeDiacritic from '../lib/escape_diacritic';
+import escapeDiacritic from '../lib/escape_diacritic.js';
 chai.should();
 
 describe('escapeDiacritic', () => {

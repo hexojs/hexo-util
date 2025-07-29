@@ -1,5 +1,5 @@
 import chai from 'chai';
-import prettyUrls from '../lib/pretty_urls';
+import prettyUrls from '../lib/pretty_urls.js';
 chai.should();
 
 describe('prettyUrls', () => {

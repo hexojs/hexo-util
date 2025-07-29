@@ -1,5 +1,5 @@
 import { parse } from 'url';
-import Cache from './cache';
+import Cache from './cache.js';
 const cache = new Cache<boolean>();
 
 /**

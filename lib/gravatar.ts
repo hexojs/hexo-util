@@ -1,6 +1,6 @@
 import { BinaryLike, createHash } from 'crypto';
 import { ParsedUrlQueryInput, stringify } from 'querystring';
-import Cache from './cache';
+import Cache from './cache.js';
 const cache = new Cache();
 
 function md5(str: BinaryLike) {

@@ -1,4 +1,4 @@
-import relativeURL from '../lib/relative_url';
+import relativeURL from '../lib/relative_url.js';
 
 describe('relative_url', () => {
   it('from root', () => {

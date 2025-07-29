@@ -1,4 +1,4 @@
-import stripIndent from '../lib/strip_indent';
+import stripIndent from '../lib/strip_indent.js';
 
 describe('stripIndent', () => {
   it('default', () => {

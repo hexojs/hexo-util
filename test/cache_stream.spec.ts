@@ -1,6 +1,6 @@
 import chai from 'chai';
 import { Readable } from 'stream';
-import CacheStream from '../lib/cache_stream';
+import CacheStream from '../lib/cache_stream.js';
 
 chai.should();
 

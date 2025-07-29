@@ -1,4 +1,4 @@
-import escapeRegExp from './escape_regexp';
+import escapeRegExp from './escape_regexp.js';
 
 const rParam = /([:*])([\w?]*)?/g;
 

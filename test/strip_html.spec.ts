@@ -1,4 +1,4 @@
-import stripHTML from '../lib/strip_html';
+import stripHTML from '../lib/strip_html.js';
 
 describe('stripHTML', () => {
   it('should not strip invalid tags', () => {

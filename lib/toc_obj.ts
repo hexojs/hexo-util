@@ -1,7 +1,7 @@
 import * as htmlparser2 from 'htmlparser2';
 // eslint-disable-next-line node/no-extraneous-import
 import type { Element } from 'domhandler';
-import escapeHTML from './escape_html';
+import escapeHTML from './escape_html.js';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
 const parseHtml = (html: string) => {

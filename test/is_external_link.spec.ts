@@ -1,4 +1,4 @@
-import isExternalLink from '../lib/is_external_link';
+import isExternalLink from '../lib/is_external_link.js';
 
 describe('isExternalLink', () => {
   const ctx: any = {
