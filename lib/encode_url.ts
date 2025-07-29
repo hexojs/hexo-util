@@ -1,18 +1,62 @@
-import { unescape } from 'querystring';
-export const encodeURL = (str: string) => {
+import { punycode } from './_punycode.js';
+
+function safeDecodeURIComponent(str: string) {
   try {
-    const parsed = new URL(str);
-    // Exit if input is a data url
-    if (parsed.origin === 'null') return str;
-    parsed.search = new URLSearchParams(parsed.search).toString();
-    parsed.pathname = encodeURI(decodeURI(parsed.pathname));
-    // preserve IDN
-    return parsed.toString();
+    return decodeURI(str);
   } catch {
-    return encodeURI(unescape(str));
+    return str;
+  }
+}
+
+export const encodeURL = (str: string) => {
+  // Handle data URLs
+  if (/^data:/i.test(str)) return str;
+
+  // Try absolute URL
+  try {
+    const url = new URL(str);
+    // Convert punycode host to Unicode if needed
+    const unicodeHost = punycode.toUnicode(url.hostname);
+    // Encode pathname only if not already encoded
+    const pathname = encodeURI(safeDecodeURIComponent(url.pathname));
+    // Encode search params, preserving existing encodings
+    const search = new URLSearchParams(url.search).toString() ? '?' + new URLSearchParams(url.search).toString() : '';
+    // Encode hash
+    const hash = url.hash ? '#' + encodeURI(safeDecodeURIComponent(url.hash.slice(1))) : '';
+    // Rebuild URL string manually to preserve Unicode hostname
+    let result = url.protocol + '//';
+    if (url.username || url.password) {
+      result += url.username;
+      if (url.password) result += ':' + url.password;
+      result += '@';
+    }
+    result += unicodeHost;
+    if (url.port) result += ':' + url.port;
+    result += pathname + search + hash;
+    // Remove trailing slash for file URLs if not present in input
+    if (/^file:/i.test(str) && !/\/$/.test(str)) {
+      result = result.replace(/\/$/, '');
+    }
+    return result;
+  } catch {
+    // Not an absolute URL, try relative path or fragment
+    // Handle hash only
+    if (str.startsWith('#')) {
+      return '#' + encodeURI(safeDecodeURIComponent(str.slice(1)));
+    }
+    // Handle relative path with query/hash
+    const [path, search = ''] = str.split('?');
+    const [pathname, hash = ''] = search.split('#');
+    let encoded = encodeURI(safeDecodeURIComponent(path));
+    if (pathname) {
+      encoded += '?' + encodeURI(safeDecodeURIComponent(pathname));
+    }
+    if (hash) {
+      encoded += '#' + encodeURI(safeDecodeURIComponent(hash));
+    }
+    return encoded;
   }
 };
-
 
 // For ESM compatibility
 export default encodeURL;
