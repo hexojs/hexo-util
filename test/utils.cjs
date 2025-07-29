@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { fileURLToPath } = require('url');
 
-const _filename = fileURLToPath(__filename ? 'file://' + __filename : __filename);
+const _filename = fileURLToPath(__filename ? `file://${__filename}` : __filename);
 const _dirname = path.dirname(_filename);
 
 /**
@@ -21,17 +21,17 @@ function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
       let content = fs.readFileSync(filePath, 'utf8');
       // Replace only local require/import paths ending with .js to .cjs, but not directory imports (e.g. './dir')
       // require('./foo.js') or require('../foo.js'), but NOT require('./dir')
-      content = content.replace(/(require\(["'`].*?)([^\/]+)\.js(["'`]\))/g, (match, p1, filename, p3) => {
+      content = content.replace(/(require\(["'`].*?)([^/]+)\.js(["'`]\))/g, (match, p1, filename, p3) => {
         // Only replace if path is local and not a directory import
-        return /require\(["'`](\.\/|\.\.\/)/.test(match) ? p1 + filename + '.cjs' + p3 : match;
+        return /require\(["'`](\.|\.\.)\//.test(match) ? p1 + filename + '.cjs' + p3 : match;
       });
       // import ... from './foo.js' or '../foo.js', but NOT from './dir'
-      content = content.replace(/(from\s+["'`].*?)([^\/]+)\.js(["'`])/g, (match, p1, filename, p3) => {
-        return /from\s+["'`](\.\/|\.\.\/)/.test(match) ? p1 + filename + '.cjs' + p3 : match;
+      content = content.replace(/(from\s+["'`].*?)([^/]+)\.js(["'`])/g, (match, p1, filename, p3) => {
+        return /from\s+["'`](\.|\.\.)\//.test(match) ? p1 + filename + '.cjs' + p3 : match;
       });
       // dynamic import('./foo.js') or import('../foo.js'), but NOT import('./dir')
-      content = content.replace(/(import\s*\(["'`].*?)([^\/]+)\.js(["'`]\))/g, (match, p1, filename, p3) => {
-        return /import\s*\(["'`](\.\/|\.\.\/)/.test(match) ? p1 + filename + '.cjs' + p3 : match;
+      content = content.replace(/(import\s*\(["'`].*?)([^/]+)\.js(["'`]\))/g, (match, p1, filename, p3) => {
+        return /import\s*\(["'`](\.|\.\.)\//.test(match) ? p1 + filename + '.cjs' + p3 : match;
       });
       fs.writeFileSync(filePath, content, 'utf8');
       // Copy the file with .cjs extension instead of renaming
