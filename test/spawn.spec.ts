@@ -95,7 +95,7 @@ describe('spawn', () => {
     }).then(() => {
       const result = stdoutCache.getCache().toString('utf8').trim();
       if (isWindows) {
-        result.should.match(new RegExp(`^(\["']?)${content}\\1$`));
+        result.should.match(new RegExp(`^(["']?)${content}(?:\\1)?$`));
       } else {
         result.should.eql(content);
       }

@@ -15,12 +15,14 @@ chai.should();
 async function validateHtmlAsync(str: string): Promise<void> {
   // Use dynamic import for html-tag-validator to avoid type issues in ESM/TS
   const htmlTagValidatorModule = await import('html-tag-validator');
-  const htmlTagValidator =
-    typeof htmlTagValidatorModule === 'function'
-      ? htmlTagValidatorModule
-      : typeof htmlTagValidatorModule.default === 'function'
-        ? htmlTagValidatorModule.default
-        : undefined;
+  let htmlTagValidator;
+  if (typeof htmlTagValidatorModule === 'function') {
+    htmlTagValidator = htmlTagValidatorModule;
+  } else if (typeof htmlTagValidatorModule.default === 'function') {
+    htmlTagValidator = htmlTagValidatorModule.default;
+  } else {
+    htmlTagValidator = undefined;
+  }
   if (!htmlTagValidator) throw new Error('html-tag-validator is not a function');
   return await new Promise<void>((resolve, reject) => {
     htmlTagValidator(
