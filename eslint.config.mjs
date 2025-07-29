@@ -38,7 +38,18 @@ export default [
       '@typescript-eslint/no-var-requires': 0,
       '@typescript-eslint/no-empty-function': 0,
       '@typescript-eslint/no-unused-vars': 0,
-      'node/no-missing-require': 0
+      'node/no-missing-require': 0,
+      'node/no-missing-import': 0
+    }
+  },
+
+  // Specific rules for JavaScript and CommonJS files
+  {
+    files: ['**/*.cjs'],
+
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off', // Allow require() in CommonJS files
+      '@typescript-eslint/no-require-imports': 'off' // Allow require imports
     }
   }
 ];
