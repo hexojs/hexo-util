@@ -6,11 +6,11 @@ import * as hexoUtilSrc from '../lib/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-describe('Test import module in dual environment', function () {
+describe('Test import module in dual environment', function() {
   this.timeout(30000); // Increase Mocha timeout to allow for module loading
-  const libNames = Object.keys(hexoUtilSrc).filter((name) => !name.startsWith('_'));
+  const libNames = Object.keys(hexoUtilSrc).filter(name => !name.startsWith('_'));
 
-  it('imports ESM modules and exposes url_for()', async function () {
+  it('imports ESM modules and exposes url_for()', async () => {
     const { importModules } = await import('./utils.cjs');
     const { lib, mode } = await importModules('esm');
     expect(lib).to.have.property('url_for').that.is.a('function');
@@ -20,7 +20,7 @@ describe('Test import module in dual environment', function () {
     expect(result).to.be.a('string');
   });
 
-  it('imports CJS modules and exposes url_for()', async function () {
+  it('imports CJS modules and exposes url_for()', async () => {
     const { importModules } = await import('./utils.cjs');
     const { lib, mode } = await importModules('cjs');
     expect(lib).to.have.property('url_for').that.is.a('function');
@@ -30,7 +30,7 @@ describe('Test import module in dual environment', function () {
     expect(result).to.be.a('string');
   });
 
-  it('imports ESM modules and exposes all public methods', async function () {
+  it('imports ESM modules and exposes all public methods', async () => {
     const { importModules } = await import('./utils.cjs');
     const { lib, mode } = await importModules('esm');
     expect(mode).to.equal('esm');
@@ -45,7 +45,7 @@ describe('Test import module in dual environment', function () {
     }
   });
 
-  it('imports CJS modules and exposes all public methods', async function () {
+  it('imports CJS modules and exposes all public methods', async () => {
     const { importModules } = await import('./utils.cjs');
     const { lib, mode } = await importModules('cjs');
     expect(mode).to.equal('cjs');

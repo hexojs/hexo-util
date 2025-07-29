@@ -3,7 +3,7 @@ const STATE_HTML = Symbol('html');
 const STATE_COMMENT = Symbol('comment');
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-function striptags(html: string | String = '') {
+function striptags(html: string | string = '') {
   // if not string, then safely return an empty string
   if (typeof html !== 'string' && !(html instanceof String)) {
     return '';

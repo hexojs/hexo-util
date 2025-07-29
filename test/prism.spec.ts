@@ -131,7 +131,7 @@ describe('prismHighlight', () => {
   });
 
   it('language - haml (prismjs/components/)', async () => {
-    const input = "= ['hi', 'there', 'reader!'].join \" \"";
+    const input = '= [\'hi\', \'there\', \'reader!\'].join " "';
 
     const result = prismHighlight(input, { lang: 'haml' });
 

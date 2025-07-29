@@ -11,7 +11,7 @@ const _dirname = path.dirname(_filename);
  */
 function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
   if (!fs.existsSync(dir)) return;
-  fs.readdirSync(dir).forEach((file) => {
+  fs.readdirSync(dir).forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
@@ -21,16 +21,16 @@ function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
       let content = fs.readFileSync(filePath, 'utf8');
       // Replace only local require/import paths ending with .js to .cjs, but not directory imports (e.g. './dir')
       // require('./foo.js') or require('../foo.js'), but NOT require('./dir')
-      content = content.replace(/(require\(["'`].*?)([^\/]+)\.js(["'`]\))/g, function(match, p1, filename, p3) {
+      content = content.replace(/(require\(["'`].*?)([^\/]+)\.js(["'`]\))/g, (match, p1, filename, p3) => {
         // Only replace if path is local and not a directory import
         return /require\(["'`](\.\/|\.\.\/)/.test(match) ? p1 + filename + '.cjs' + p3 : match;
       });
       // import ... from './foo.js' or '../foo.js', but NOT from './dir'
-      content = content.replace(/(from\s+["'`].*?)([^\/]+)\.js(["'`])/g, function(match, p1, filename, p3) {
+      content = content.replace(/(from\s+["'`].*?)([^\/]+)\.js(["'`])/g, (match, p1, filename, p3) => {
         return /from\s+["'`](\.\/|\.\.\/)/.test(match) ? p1 + filename + '.cjs' + p3 : match;
       });
       // dynamic import('./foo.js') or import('../foo.js'), but NOT import('./dir')
-      content = content.replace(/(import\s*\(["'`].*?)([^\/]+)\.js(["'`]\))/g, function(match, p1, filename, p3) {
+      content = content.replace(/(import\s*\(["'`].*?)([^\/]+)\.js(["'`]\))/g, (match, p1, filename, p3) => {
         return /import\s*\(["'`](\.\/|\.\.\/)/.test(match) ? p1 + filename + '.cjs' + p3 : match;
       });
       fs.writeFileSync(filePath, content, 'utf8');
@@ -54,14 +54,14 @@ async function importModules(mode) {
       lib: await import('../dist/esm/index.js'),
       mode
     };
-  } else {
-    convertCjs(); // Ensure CJS files are renamed before importing
-    const cjsModule = await import('../dist/cjs/index.cjs');
-    return {
-      lib: cjsModule.default || cjsModule,
-      mode
-    };
   }
+  convertCjs(); // Ensure CJS files are renamed before importing
+  const cjsModule = await import('../dist/cjs/index.cjs');
+  return {
+    lib: cjsModule.default || cjsModule,
+    mode
+  };
+
 }
 
 module.exports.importModules = importModules;
