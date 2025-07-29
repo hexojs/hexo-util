@@ -1,5 +1,5 @@
 import chai from 'chai';
-import deepMerge from '../lib/deep_merge';
+import deepMerge from '../lib/deep_merge.js';
 chai.should();
 
 // The test is modified based on https://github.com/jonschlinkert/merge-deep/blob/master/test.js
@@ -75,5 +75,197 @@ describe('deepMerge()', () => {
     result.a.should.eql([1, 2, [3, 4]]);
     result.a[2].should.eql([3, 4]);
     result.b.should.eql(obj2.b);
+  });
+
+  it('should handle Date type', () => {
+    const date1 = new Date('2020-01-01T00:00:00Z');
+    const date2 = new Date('2022-01-01T00:00:00Z');
+    const obj1 = { date: date1 };
+    const obj2 = { date: date2 };
+    const result = deepMerge(obj1, obj2);
+    result.date.getTime().should.eql(date2.getTime());
+    result.date.should.not.equal(date1);
+    result.date.should.not.equal(date2); // Should be a clone
+  });
+
+  it('should handle RegExp type', () => {
+    const reg1 = /foo/g;
+    const reg2 = /bar/i;
+    const obj1 = { regexp: reg1 };
+    const obj2 = { regexp: reg2 };
+    const result = deepMerge(obj1, obj2);
+    result.regexp.source.should.eql(reg2.source);
+    result.regexp.flags.should.eql(reg2.flags);
+    result.regexp.should.not.equal(reg1);
+    result.regexp.should.not.equal(reg2); // Should be a clone
+  });
+
+  it('should handle Map type', () => {
+    const map1 = new Map<number, any>([[1, {a: 1}], [2, {b: 2}]]);
+    const map2 = new Map<number, any>([[2, {b: 3}], [3, {c: 4}]]);
+    const obj1 = { map: map1 };
+    const obj2 = { map: map2 };
+    const result = deepMerge(obj1, obj2);
+    Array.from(result.map.keys()).should.eql([1, 2, 3]);
+    result.map.get(1).should.eql({a: 1});
+    result.map.get(2).should.eql({b: 3});
+    result.map.get(3).should.eql({c: 4});
+    result.map.should.not.equal(map1);
+    result.map.should.not.equal(map2);
+  });
+
+  it('should handle Set type', () => {
+    const set1 = new Set([1, 2, 3]);
+    const set2 = new Set([3, 4, 5]);
+    const obj1 = { set: set1 };
+    const obj2 = { set: set2 };
+    const result = deepMerge(obj1, obj2);
+    Array.from(result.set).sort().should.eql([1, 2, 3, 4, 5]);
+    result.set.should.not.equal(set1);
+    result.set.should.not.equal(set2);
+  });
+
+  it('should handle Function type', () => {
+    const fn1 = function() { return 1; };
+    const fn2 = function() { return 2; };
+    const obj1 = { fn: fn1 };
+    const obj2 = { fn: fn2 };
+    const result = deepMerge(obj1, obj2);
+    result.fn.should.equal(fn2);
+  });
+
+  it('should handle thousands of circular references', () => {
+    // Create 1000 objects with circular references and multiple types
+    const arr1: any[] = [];
+    const arr2: any[] = [];
+    for (let i = 0; i < 1000; i++) {
+      arr1[i] = {
+        idx: i,
+        date: new Date(2020, 0, i + 1),
+        regexp: new RegExp(`foo${i}`, i % 2 ? 'g' : 'i'),
+        map: new Map([[i, { val: i }]]),
+        set: new Set([i, i + 1]),
+        fn: function() { return i; }
+      };
+      arr2[i] = {
+        idx: i,
+        date: new Date(2021, 0, i + 1),
+        regexp: new RegExp(`bar${i}`, i % 2 ? 'i' : 'g'),
+        map: new Map([[i, { val: i * 2 }]]),
+        set: new Set([i, i + 2]),
+        fn: function() { return i * 2; }
+      };
+    }
+    // Add circular references
+    for (let i = 0; i < 1000; i++) {
+      arr1[i].self = arr1[i];
+      arr2[i].self = arr2[i];
+      if (i > 0) {
+        arr1[i].prev = arr1[i - 1];
+        arr2[i].prev = arr2[i - 1];
+      }
+    }
+    const obj1 = { arr: arr1 };
+    const obj2 = { arr: arr2 };
+    const result = deepMerge(obj1, obj2);
+    // Check merged array length
+    result.arr.length.should.eql(1000);
+    // Check circular references and types are preserved and not the same as original
+    for (let i = 0; i < 1000; i++) {
+      result.arr[i].should.have.property('idx', i);
+      result.arr[i].should.have.property('self');
+      result.arr[i].self.should.equal(result.arr[i]);
+      if (i > 0) {
+        result.arr[i].should.have.property('prev');
+        result.arr[i].prev.should.equal(result.arr[i - 1]);
+      }
+      // Should not be the same object as arr1 or arr2
+      result.arr[i].should.not.equal(arr1[i]);
+      result.arr[i].should.not.equal(arr2[i]);
+      // Check Date
+      result.arr[i].date.getTime().should.eql(arr2[i].date.getTime());
+      result.arr[i].date.should.not.equal(arr1[i].date);
+      result.arr[i].date.should.not.equal(arr2[i].date);
+      // Check RegExp
+      result.arr[i].regexp.source.should.eql(arr2[i].regexp.source);
+      result.arr[i].regexp.flags.should.eql(arr2[i].regexp.flags);
+      result.arr[i].regexp.should.not.equal(arr1[i].regexp);
+      result.arr[i].regexp.should.not.equal(arr2[i].regexp);
+      // Check Map
+      Array.from(result.arr[i].map.keys()).should.eql(Array.from(arr2[i].map.keys()));
+      result.arr[i].map.get(i).should.eql({ val: i * 2 });
+      result.arr[i].map.should.not.equal(arr1[i].map);
+      result.arr[i].map.should.not.equal(arr2[i].map);
+      // Check Set
+      Array.from(result.arr[i].set).sort().should.eql(Array.from(new Set([...arr1[i].set, ...arr2[i].set])).sort());
+      result.arr[i].set.should.not.equal(arr1[i].set);
+      result.arr[i].set.should.not.equal(arr2[i].set);
+      // Check Function
+      result.arr[i].fn.should.equal(arr2[i].fn);
+    }
+  });
+
+  it('should handle null and undefined as source and target', () => {
+    deepMerge(null, {a: 1}).should.eql({a: 1});
+    chai.expect(deepMerge({a: 1}, null)).to.eql(null);
+    deepMerge(undefined, {a: 2}).should.eql({a: 2});
+    chai.expect(deepMerge({a: 2}, undefined)).to.eql(undefined);
+    chai.expect(deepMerge(null, null)).to.eql(null);
+    chai.expect(deepMerge(undefined, undefined)).to.eql(undefined);
+  });
+
+  it('should handle empty objects and arrays', () => {
+    deepMerge({}, {}).should.eql({});
+    deepMerge([], []).should.eql([]);
+    deepMerge({a: []}, {a: []}).should.eql({a: []});
+    deepMerge({a: {}}, {a: {}}).should.eql({a: {}});
+  });
+
+  it('should handle symbol properties', () => {
+    const sym = Symbol('s');
+    const obj1: any = { [sym]: 123 };
+    const obj2: any = { [sym]: 456 };
+    const result = deepMerge(obj1, obj2);
+    result[sym].should.eql(456);
+  });
+
+  it('should handle sparse arrays', () => {
+    const arr1 = [];
+    arr1[2] = 3;
+    const arr2 = [];
+    arr2[1] = 2;
+    const result = deepMerge(arr1, arr2);
+    result.length.should.eql(3);
+    result[1].should.eql(2);
+    result[2].should.eql(3);
+  });
+
+  it('should not merge inherited properties', () => {
+    function Parent() { this.inherited = 1; }
+    Parent.prototype.protoProp = 2;
+    const obj1 = new(Parent as any)();
+    const obj2 = { own: 3 };
+    const result = deepMerge(obj1, obj2);
+    result.should.have.property('inherited', 1);
+    result.should.have.property('own', 3);
+    result.should.not.have.property('protoProp');
+  });
+
+  it('should handle merging function with non-function', () => {
+    const obj1 = { fn: function() { return 1; } };
+    const obj2 = { fn: 42 };
+    const result = deepMerge(obj1, obj2 as any);
+    result.fn.should.eql(42);
+    const result2 = deepMerge(obj2, obj1 as any);
+    result2.fn.should.be.a('function');
+  });
+
+  it('should handle deeply nested mixed types', () => {
+    const obj1 = { a: [{ b: { c: [1, 2, { d: 'x' }] } }] };
+    const obj2 = { a: [{ b: { c: [1, 3, { d: 'y', e: 'z' }] } }] };
+    const result = deepMerge(obj1, obj2);
+    result.a[0].b.c[0].should.eql(1);
+    result.a[0].b.c[1].should.eql(3);
+    result.a[0].b.c[2].should.eql({ d: 'y', e: 'z' });
   });
 });
