@@ -1,4 +1,3 @@
-import { parse } from 'url';
 import encodeURL from './encode_url.js';
 import prettyUrls from './pretty_urls.js';
 import Cache from './cache.js';
@@ -16,7 +15,13 @@ export function fullUrlForHelper(path = '/') {
   return cache.apply(`${config.url}-${prettyUrlsOptions.trailing_index}-${prettyUrlsOptions.trailing_html}-${path}`, () => {
     if (/^(\/\/|http(s)?:)/.test(path)) return path;
 
-    const sitehost = parse(config.url).hostname || config.url;
+
+    let sitehost = '';
+    try {
+      sitehost = new URL(config.url).hostname;
+    } catch {
+      sitehost = config.url;
+    }
     const data = new URL(path, `http://${sitehost}`);
 
     // Exit if input is an external link or a data url

@@ -1,20 +1,16 @@
-import { parse, format } from 'url';
 import { unescape } from 'querystring';
-
 export const encodeURL = (str: string) => {
-  if (parse(str).protocol) {
+  try {
     const parsed = new URL(str);
-
     // Exit if input is a data url
     if (parsed.origin === 'null') return str;
-
     parsed.search = new URLSearchParams(parsed.search).toString();
     parsed.pathname = encodeURI(decodeURI(parsed.pathname));
     // preserve IDN
-    return format(parsed, { unicode: true });
+    return parsed.toString();
+  } catch {
+    return encodeURI(unescape(str));
   }
-
-  return encodeURI(unescape(str));
 };
 
 

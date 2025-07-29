@@ -1,4 +1,3 @@
-import { parse } from 'url';
 import encodeURL from './encode_url.js';
 import relative_url from './relative_url.js';
 import prettyUrls from './pretty_urls.js';
@@ -58,11 +57,16 @@ function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
     `${config.url}-${root}-${prettyUrlsOptions.trailing_index}-${prettyUrlsOptions.trailing_html}-${path}`,
     () => {
       const urlString = typeof config.url === 'string' ? config.url : '';
-      const sitehost = parse(urlString).hostname || urlString;
+      let sitehost = '';
+      try {
+        sitehost = new URL(urlString).hostname;
+      } catch {
+        sitehost = urlString;
+      }
       let data: URL;
       try {
         data = new URL(path, `http://${sitehost}`);
-      } catch (e) {
+      } catch {
         return path;
       }
 
@@ -80,7 +84,6 @@ function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
     }
   );
 }
-
 
 // For ESM compatibility
 export default urlForHelper;
