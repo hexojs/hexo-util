@@ -4,21 +4,37 @@ import prismHighlight from '../lib/prism.js';
 import stripIndent from 'strip-indent';
 
 chai.should();
-const validator = require('html-tag-validator');
-function validateHtmlAsync(str, done) {
-  validator(str, {
-    'attributes': {
-      // 'aria-hidden' is used at <span> for line number
-      // Even MDN website itself uses 'aria-hidden' at <span> tag
-      // So I believe it is ok to whitelist this
-      'span': { 'normal': ['aria-hidden'] }
-    }
-  }, (err, ast) => {
-    if (err) {
-      done(err);
-    } else {
-      done();
-    }
+
+/**
+ * Validates the given HTML string using html-tag-validator, allowing 'aria-hidden' on <span> tags.
+ * Uses dynamic import for ESM compatibility and returns a Promise that resolves if valid, rejects on error.
+ *
+ * @param str - The HTML string to validate.
+ * @returns A Promise that resolves if the HTML is valid, or rejects with an error.
+ */
+async function validateHtmlAsync(str: string): Promise<void> {
+  // Use dynamic import for html-tag-validator to avoid type issues in ESM/TS
+  const htmlTagValidatorModule = await import('html-tag-validator');
+  const htmlTagValidator = htmlTagValidatorModule.default || htmlTagValidatorModule;
+  return await new Promise<void>((resolve, reject) => {
+    htmlTagValidator(
+      str,
+      {
+        attributes: {
+          // 'aria-hidden' is used at <span> for line number
+          // Even MDN website itself uses 'aria-hidden' at <span> tag
+          // So I believe it is ok to whitelist this
+          span: { normal: ['aria-hidden'] }
+        }
+      },
+      (err, ast) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(void 0);
+        }
+      }
+    );
   });
 }
 
@@ -27,7 +43,7 @@ const lineNumberStartTag = '<span aria-hidden="true" class="line-numbers-rows">'
 const highlightToken = '<span class="token ';
 
 describe('prismHighlight', () => {
-  it('default (plain text)', done => {
+  it('default (plain text)', async () => {
     const input = `
     {
       "foo": 1,
@@ -46,14 +62,14 @@ describe('prismHighlight', () => {
     result.should.contains(escapeHTML(stripIndent(input)));
     result.should.not.contains(highlightToken);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
   it('str must be a string', () => {
     prismHighlight.should.throw('str must be a string!');
   });
 
-  it('lineNumber disabled', done => {
+  it('lineNumber disabled', async () => {
     const input = `
     {
       "foo": 1,
@@ -64,26 +80,21 @@ describe('prismHighlight', () => {
     // Line Number
     result.should.not.contains(lineNumberStartTag);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('tab - replace \\t', done => {
-    const input = [
-      'function fib(i){',
-      '\tif (i <= 1) return i;',
-      '\treturn fib(i - 1) + fib(i - 2);',
-      '}'
-    ].join('\n');
+  it('tab - replace \\t', async () => {
+    const input = ['function fib(i){', '\tif (i <= 1) return i;', '\treturn fib(i - 1) + fib(i - 2);', '}'].join('\n');
 
     // Use language: 'plain-text' for not supported language with Prism
     const result = prismHighlight(input, { tab: '  ', lang: 'plain-text' });
 
     result.should.contains(escapeHTML(input.replace(/\t/g, '  ')));
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('language - javascript (loaded by default)', done => {
+  it('language - javascript (loaded by default)', async () => {
     const input = `
       const Prism = require('prismjs');
       /**
@@ -116,11 +127,11 @@ describe('prismHighlight', () => {
     // Being highlighted
     result.should.contains(highlightToken);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('language - haml (prismjs/components/)', done => {
-    const input = '= [\'hi\', \'there\', \'reader!\'].join " "';
+  it('language - haml (prismjs/components/)', async () => {
+    const input = "= ['hi', 'there', 'reader!'].join \" \"";
 
     const result = prismHighlight(input, { lang: 'haml' });
 
@@ -134,10 +145,10 @@ describe('prismHighlight', () => {
     // Being highlighted
     result.should.contains(highlightToken);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('language - ts (an alias for typescript)', done => {
+  it('language - ts (an alias for typescript)', async () => {
     const input = 'const a: string = "";';
 
     const result = prismHighlight(input, { lang: 'ts' });
@@ -152,10 +163,10 @@ describe('prismHighlight', () => {
     // Being highlighted
     result.should.contains(highlightToken);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('language - unsupported by prism', done => {
+  it('language - unsupported by prism', async () => {
     const input = `
       [ yet another pi calculation program in bf
 
@@ -195,10 +206,10 @@ describe('prismHighlight', () => {
     result.should.contains(escapeHTML(stripIndent(input)));
     result.should.not.contains(highlightToken);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('isPreprocess - false', done => {
+  it('isPreprocess - false', async () => {
     const input = `
       const Prism = require('prismjs');
       /**
@@ -231,10 +242,10 @@ describe('prismHighlight', () => {
     // Being highlighted
     result.should.not.contains(highlightToken);
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
 
-  it('mark', done => {
+  it('mark', async () => {
     const input = `
       [ yet another pi calculation program in bf
 
@@ -268,22 +279,21 @@ describe('prismHighlight', () => {
     // isPreprocess - false
     const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10' });
     // Start Tag
-    result2.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-line="1,3-6,10">');
+    result2.should.contains(
+      '<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-line="1,3-6,10">'
+    );
 
     // Only validate the result2
-    validateHtmlAsync(result2, done);
+    await validateHtmlAsync(result2);
   });
 
-  it('firstLine', done => {
-    const input = [
-      'function fib(i){',
-      '  if (i <= 1) return i;',
-      '  return fib(i - 1) + fib(i - 2);',
-      '}'
-    ].join('\n');
+  it('firstLine', async () => {
+    const input = ['function fib(i){', '  if (i <= 1) return i;', '  return fib(i - 1) + fib(i - 2);', '}'].join('\n');
 
     const result1 = prismHighlight(input, { lang: 'js', isPreprocess: false, lineNumber: true, firstLine: -5 });
-    result1.should.contains('<pre class="line-numbers language-javascript" data-language="javascript" data-start="-5">');
+    result1.should.contains(
+      '<pre class="line-numbers language-javascript" data-language="javascript" data-start="-5">'
+    );
 
     // isPreprocess - true (firstLine should be disabled)
     const result2 = prismHighlight(input, { lang: 'js', isPreprocess: true, lineNumber: true, firstLine: -5 });
@@ -294,10 +304,10 @@ describe('prismHighlight', () => {
     result3.should.contains('<pre class="language-javascript" data-language="javascript">');
 
     // Only validate the result1
-    validateHtmlAsync(result1, done);
+    await validateHtmlAsync(result1);
   });
 
-  it('offset - mark & firstLine', done => {
+  it('offset - mark & firstLine', async () => {
     const input = `
       [ yet another pi calculation program in bf
 
@@ -331,13 +341,15 @@ describe('prismHighlight', () => {
     // isPreprocess - false
     const result2 = prismHighlight(input, { lang: 'brainfuck', isPreprocess: false, mark: '1,3-6,10', firstLine: -5 });
     // Start Tag
-    result2.should.contains('<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-start="-5" data-line="1,3-6,10" data-line-offset="-6">');
+    result2.should.contains(
+      '<pre class="line-numbers language-brainfuck" data-language="brainfuck" data-start="-5" data-line="1,3-6,10" data-line-offset="-6">'
+    );
 
     // Only validate the result2
-    validateHtmlAsync(result2, done);
+    await validateHtmlAsync(result2);
   });
 
-  it('caption', done => {
+  it('caption', async () => {
     const input = `
     {
       "foo": 1,
@@ -348,7 +360,6 @@ describe('prismHighlight', () => {
 
     result.should.contains('<div class="caption">' + caption + '</div>');
 
-    validateHtmlAsync(result, done);
+    await validateHtmlAsync(result);
   });
-
 });
