@@ -84,8 +84,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "workspaces": [
-    "eslint-config-hexo"
-  ]
+  }
 }
