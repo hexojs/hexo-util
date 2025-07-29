@@ -12,3 +12,4 @@ package-lock.json
 *.ignore
 *.patch
 *.diff
+lib/highlight_alias.ts
