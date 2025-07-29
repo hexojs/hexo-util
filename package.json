@@ -23,7 +23,7 @@
     "clean": "npx --yes rimraf dist tmp && npm run build",
     "prepublishOnly": "npm install && npm run clean && npm run build",
     "eslint": "eslint --config eslint.config.mjs lib test",
-    "pretest": "npm run clean && npm run build",
+    "pretest": "node scripts/pretest.mjs",
     "test": "mocha --loader=ts-node/esm",
     "test-cov": "c8 --reporter=lcovonly npm run test",
     "postinstall": "npm run build-hightlight"

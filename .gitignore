@@ -13,3 +13,4 @@ package-lock.json
 *.patch
 *.diff
 lib/highlight_alias.ts
+.last_build
