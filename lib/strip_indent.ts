@@ -1,1 +1,2 @@
-export default require('strip-indent');
+import stripIndent from 'strip-indent';
+export default stripIndent;
