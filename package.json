@@ -25,7 +25,7 @@
     "lint": "eslint --config eslint.config.mjs lib test",
     "lint-fix": "npm run lint -- --fix",
     "pretest": "node scripts/pretest.mjs",
-    "test": "mocha --loader=ts-node/esm",
+    "test": "mocha --loader=ts-node/esm --project tsconfig.mocha.json",
     "test-cov": "c8 --reporter=lcovonly npm run test",
     "postinstall": "npm run build-hightlight"
   },
