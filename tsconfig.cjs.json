@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "lib": ["ES2020", "ES2015", "ES2019"],
+    "lib": ["ES2020", "ES2015", "ES2019", "DOM", "ESNext"],
     "outDir": "dist/cjs"
   },
   "exclude": ["lib/highlight_esm.ts", "test", "dist", "node_modules"],
