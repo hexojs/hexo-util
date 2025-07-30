@@ -1,6 +1,7 @@
 {
   // TypeScript configuration for mocha cross-platform support only. Not used for build.
   "extends": "./tsconfig.json",
+  "include": ["test/**/*.ts", "lib/**/*.ts"],
   "exclude": [
     "**/node_modules",
     "**/tmp",
@@ -11,6 +12,6 @@
     "**/__tests__",
     "**/__mocks__",
     // Ignore non-ESM files
-    "lib/highlight.ts"
+    "**/lib/highlight.ts"
   ]
 }
