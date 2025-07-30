@@ -2,24 +2,11 @@ import type { HLJSApi, HighlightResult } from 'highlight.js';
 import _highlight from 'highlight.js/lib/core';
 import stripIndent from 'strip-indent';
 import alias from './highlight_alias.js';
+import { InternalHighlightOptions } from './types.js';
 
 let hljs: HLJSApi | undefined;
 
-interface Options {
-  autoDetect?: boolean;
-  caption?: string;
-  firstLine?: number;
-  gutter?: boolean;
-  hljs?: boolean;
-  lang?: string;
-  languageAttr?: boolean;
-  mark?: number[];
-  tab?: string;
-  wrap?: boolean;
-  stripIndent?: boolean;
-}
-
-function highlightUtil(str: string, options: Options = {}) {
+function highlightUtil(str: string, options: InternalHighlightOptions = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const useHljs = Object.prototype.hasOwnProperty.call(options, 'hljs') ? options.hljs : false;
@@ -91,7 +78,7 @@ function highlightUtil(str: string, options: Options = {}) {
   return result;
 }
 
-function formatLine(line: string, lineno: number, marked: number[], options: Options, wrap: boolean) {
+function formatLine(line: string, lineno: number, marked: number[], options: InternalHighlightOptions, wrap: boolean) {
   const useHljs = (options.hljs || false) || !wrap;
   const br = wrap ? '<br>' : '\n';
   let res = useHljs ? '' : '<span class="line';
@@ -110,7 +97,7 @@ function replaceTabs(str: string, tab: string) {
   return str.replace(/\t+/, match => tab.repeat(match.length));
 }
 
-function highlight(str: string, options: Options) {
+function highlight(str: string, options: InternalHighlightOptions) {
   let { lang } = options;
   const { autoDetect = false } = options;
 
