@@ -37,7 +37,7 @@ function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
       // Copy the file with .cjs extension instead of renaming
       const newPath = filePath.replace(/\.js$/, '.cjs');
       fs.copyFileSync(filePath, newPath);
-      console.log(`Updated imports and copied: ${filePath} -> ${newPath}`);
+      // console.log(`Updated imports and copied: ${filePath} -> ${newPath}`);
     }
   });
 }
