@@ -173,3 +173,15 @@ export function jsonParseWithCircular<T>(data: string): T {
 }
 
 export { jsonParseWithCircular as jsonParse };
+
+// for CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = {
+    parse,
+    stringify,
+    jsonStringifyWithCircular,
+    jsonParseWithCircular,
+    toJSON,
+    fromJSON
+  };
+}
