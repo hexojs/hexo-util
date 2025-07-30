@@ -3,7 +3,6 @@ import hljs, { HighlightResult } from 'highlight.js';
 import { solidity } from 'highlightjs-solidity';
 import { encode } from 'html-entities';
 import validator from 'html-tag-validator';
-import highlight from '../lib/highlight.js';
 
 chai.should();
 
@@ -70,6 +69,12 @@ function validateHtmlAsync(str, done) {
 }
 
 describe('highlight', () => {
+  let highlight: typeof import('../lib/highlight.js').default;
+
+  before(async () => {
+    highlight = (await import('../dist/esm/highlight.js')).default;
+  });
+
   it('should strip leading indentation by default (stripIndent: true)', done => {
     const indented = '    foo\n      bar';
     const expected = 'foo\n  bar';
