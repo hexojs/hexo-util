@@ -75,9 +75,6 @@ describe('spawn', () => {
   });
 
   it('verbose - stdout', async () => {
-    await import('./utils.cjs').then(({ convertCjs }) => {
-      convertCjs();
-    });
     const spawnCjsPath = resolve(__dirname, '../dist/cjs/spawn.cjs');
     const _spawnModule = rewire(spawnCjsPath);
     const _spawn = _spawnModule.default || _spawnModule;

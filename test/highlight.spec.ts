@@ -83,9 +83,6 @@ describe('highlight', () => {
     if (type === 'esm') {
       imported = await import('../dist/esm/highlight.js');
     } else if (type === 'cjs') {
-      await import('./utils.cjs').then(({ convertCjs }) => {
-        convertCjs();
-      });
       imported = await import('../dist/cjs/highlight.cjs');
     } else if (type === 'ts') {
       imported = await import('../lib/highlight_esm.js');
