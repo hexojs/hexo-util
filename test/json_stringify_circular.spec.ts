@@ -1,7 +1,7 @@
 import chai from 'chai';
+import { jsonStringifyWithCircular, jsonParseWithCircular } from '../lib/json_stringify_circular.js';
 chai.should();
 const expect = chai.expect;
-import { jsonStringifyWithCircular, jsonParseWithCircular } from '../lib/json_stringify_circular';
 
 describe('json_stringify_circular', () => {
   it('should stringify and parse a simple object', () => {
