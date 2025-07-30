@@ -155,10 +155,9 @@ export { fromJSON, parse, stringify };
  * @param data - The object to stringify.
  * @returns The JSON string representation.
  */
-export function jsonStringifyWithCircular(data: unknown): string {
+function jsonStringifyWithCircular(data: unknown): string {
   return stringify(data);
 }
-
 export { jsonStringifyWithCircular as jsonStringify };
 
 /**
@@ -168,10 +167,9 @@ export { jsonStringifyWithCircular as jsonStringify };
  * @param data - The JSON string to parse.
  * @returns The parsed object of type T.
  */
-export function jsonParseWithCircular<T>(data: string): T {
+function jsonParseWithCircular<T>(data: string): T {
   return parse(data) as T;
 }
-
 export { jsonParseWithCircular as jsonParse };
 
 // for CommonJS compatibility
@@ -180,7 +178,9 @@ if (typeof module !== 'undefined' && typeof module.exports === 'object' && modul
     parse,
     stringify,
     jsonStringifyWithCircular,
+    jsonStringify: jsonStringifyWithCircular,
     jsonParseWithCircular,
+    jsonParse: jsonParseWithCircular,
     toJSON,
     fromJSON
   };

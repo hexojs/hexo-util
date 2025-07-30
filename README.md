@@ -33,26 +33,26 @@ Utilities for [Hexo].
 - [prettyUrls](#prettyurlsurl-options)
 - [prismHighlight](#prismhighlightstr-options)
 
-### jsonStringifyWithCircular(data)
+### jsonStringify(data)
 
 Stringifies an object into JSON with support for circular references.
 
 ```js
 const obj = { a: 1 };
 obj.self = obj;
-const str = jsonStringifyWithCircular(obj);
-// str is a JSON string that can be parsed back with jsonParseWithCircular
+const str = jsonStringify(obj);
+// str is a JSON string that can be parsed back with jsonParse
 ```
 
-### jsonParseWithCircular(data)
+### jsonParse(data)
 
-Parses a JSON string created by `jsonStringifyWithCircular`, restoring circular references.
+Parses a JSON string created by `jsonStringify`, restoring circular references.
 
 ```js
 const obj = { a: 1 };
 obj.self = obj;
-const str = jsonStringifyWithCircular(obj);
-const parsed = jsonParseWithCircular(str);
+const str = jsonStringify(obj);
+const parsed = jsonParse(str);
 // parsed.self === parsed // true
 ```
 - [relative_url](#relative_urlfrom-to)
