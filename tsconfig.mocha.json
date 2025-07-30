@@ -1,7 +1,7 @@
 {
   // TypeScript configuration for mocha cross-platform support only. Not used for build.
   "extends": "./tsconfig.json",
-  "include": ["test/**/*.ts", "lib/**/*.ts"],
+  "include": ["test/**/*.spec.ts"],
   "exclude": [
     "**/node_modules",
     "**/tmp",
