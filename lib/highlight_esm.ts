@@ -33,8 +33,15 @@ function highlightUtil(str: string, options: InternalHighlightOptions = {}) {
   }
   hljs.configure({ classPrefix: useHljs ? 'hljs-' : '' });
   let lang = options.lang || options.language || 'plaintext';
-
-  hljs.registerLanguage(lang, _require(`highlight.js/lib/languages/${alias.aliases[lang] || lang}`));
+  // Register the language if it hasn't been registered yet
+  if (!hljs.getLanguage(lang)) {
+    try {
+      const mod = _require(`highlight.js/lib/languages/${alias.aliases[lang] || lang}`);
+      hljs.registerLanguage(lang, mod.default || mod);
+    } catch {
+      // If the language module does not exist, skip registration
+    }
+  }
 
   const data = highlight(str, options);
   lang = options.lang || data.language || '';
