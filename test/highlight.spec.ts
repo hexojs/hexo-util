@@ -3,6 +3,7 @@ import hljs, { HighlightResult } from 'highlight.js';
 import { solidity } from 'highlightjs-solidity';
 import { encode } from 'html-entities';
 import validator from 'html-tag-validator';
+import type HighlightJSFunc from '../lib/highlight_esm.js';
 
 chai.should();
 
@@ -22,7 +23,7 @@ const gutterEnd = '</pre></td>';
 const codeStart = '<td class="code"><pre>';
 const codeEnd = '</pre></td>';
 
-function gutter(start, end) {
+function gutter(start: number, end: number) {
   let result = gutterStart;
 
   for (let i = start; i <= end; i++) {
@@ -56,12 +57,12 @@ function code(str: string, lang?: string) {
   );
 }
 
-function assertResult(result, ...args) {
+function assertResult(result: string, ...args: string[]) {
   result.should.eql(start + args.join('') + end);
 }
 
-function validateHtmlAsync(str, done) {
-  validator(str, (err, ast) => {
+function validateHtmlAsync(str: string, done: (...args: any[]) => void) {
+  validator(str, (err: any, _ast: any) => {
     if (err) {
       done(err);
     } else {
@@ -71,21 +72,23 @@ function validateHtmlAsync(str, done) {
 }
 
 describe('highlight', () => {
-  let highlight: typeof import('../lib/highlight.js').default;
+  let highlight: typeof HighlightJSFunc;
 
   /**
    * Helper to load the highlight implementation.
-   * @param {'esm'|'cjs'} type
+   * @param type The module type: 'esm', 'cjs', or 'ts'.
    */
-  async function loadHighlight(type: 'esm' | 'cjs') {
+  async function loadHighlight(type: 'esm' | 'cjs' | 'ts') {
     let imported: { default: unknown };
     if (type === 'esm') {
       imported = await import('../dist/esm/highlight.js');
-    } else {
+    } else if (type === 'cjs') {
       await import('./utils.cjs').then(({ convertCjs }) => {
         convertCjs();
       });
       imported = await import('../dist/cjs/highlight.cjs');
+    } else if (type === 'ts') {
+      imported = await import('../lib/highlight_esm.js');
     }
     // CJS and ESM export compatibility
     return (imported.default || imported) as typeof highlight;
@@ -93,9 +96,9 @@ describe('highlight', () => {
 
   /**
    * Runs the test suite for a given module type.
-   * @param {'esm'|'cjs'} type
+   * @param type The module type: 'esm', 'cjs', or 'ts'.
    */
-  function runHighlightTests(type: 'esm' | 'cjs') {
+  function runHighlightTests(type: 'esm' | 'cjs' | 'ts') {
     describe(`${type.toUpperCase()} module`, () => {
       before(async () => {
         highlight = await loadHighlight(type);
@@ -528,4 +531,5 @@ describe('highlight', () => {
   // Run tests for both ESM and CJS modules
   runHighlightTests('esm');
   runHighlightTests('cjs');
+  runHighlightTests('ts');
 });
