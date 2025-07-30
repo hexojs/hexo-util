@@ -1,11 +1,11 @@
 import chai from 'chai';
-import hljs from 'highlight.js';
+import hljs, { HighlightResult } from 'highlight.js';
 import { solidity } from 'highlightjs-solidity';
 import { encode } from 'html-entities';
+import validator from 'html-tag-validator';
 import highlight from '../lib/highlight.js';
 
-const should = chai.should();
-import validator from 'html-tag-validator';
+chai.should();
 
 const testJson = {
   foo: 1,
@@ -35,17 +35,17 @@ function gutter(start, end) {
   return result;
 }
 
-function code(str, lang?) {
-  let data;
+function code(str: string, lang?: string) {
+  let data: HighlightResult;
 
   if (lang) {
     data = hljs.highlight(str, {
       language: lang.toLowerCase()
     });
   } else if (lang === null) {
-    data = {value: str};
+    data = {value: str} as HighlightResult;
   } else {
-    data = {value: encode(str)};
+    data = {value: encode(str)} as HighlightResult;
   }
 
   const lines = data.value.split('\n');
