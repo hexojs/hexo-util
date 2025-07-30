@@ -55,8 +55,12 @@ fs.writeFileSync(esmOutputPath, esmContent);
 // Fix the ESM import for compiled lib/highlight.ts
 const srcJs = path.join(__dirname, '../dist/esm/highlight_esm.js');
 const destJs = path.join(__dirname, '../dist/esm/highlight.js');
-fs.renameSync(srcJs, destJs);
+if (fs.existsSync(srcJs)) {
+  fs.renameSync(srcJs, destJs);
+}
 
 const srcDts = path.join(__dirname, '../dist/esm/highlight_esm.d.ts');
 const destDts = path.join(__dirname, '../dist/esm/highlight.d.ts');
-fs.renameSync(srcDts, destDts);
+if (fs.existsSync(srcDts)) {
+  fs.renameSync(srcDts, destDts);
+}
