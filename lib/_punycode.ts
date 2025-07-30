@@ -390,3 +390,7 @@ const punycode: {
 };
 
 export { punycode };
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports.punycode = punycode;
+}
