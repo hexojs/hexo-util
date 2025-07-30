@@ -3,9 +3,11 @@ import _highlight from 'highlight.js/lib/core';
 import stripIndent from 'strip-indent';
 import alias from './highlight_alias.js';
 import { InternalHighlightOptions } from './types.js';
+import { createRequire } from 'module';
 
 let hljs: HLJSApi | undefined;
-const _require = require;
+// ESM: Always use createRequire(import.meta.url)
+const _require = createRequire(import.meta.url);
 
 function highlightUtil(str: string, options: InternalHighlightOptions = {}) {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
@@ -40,9 +42,7 @@ function highlightUtil(str: string, options: InternalHighlightOptions = {}) {
 
   if (gutter && !wrap) wrap = true; // arbitrate conflict ("gutter:true" takes priority over "wrap:false")
 
-  const before = useHljs
-    ? `<pre><code class="${classNames}"${languageAttr && lang ? ` data-language="${lang}"` : ''}>`
-    : '<pre>';
+  const before = useHljs ? `<pre><code class="${classNames}"${languageAttr && lang ? ` data-language="${lang}"` : ''}>` : '<pre>';
   const after = useHljs ? '</code></pre>' : '</pre>';
 
   const lines = data.value.split('\n');
@@ -85,7 +85,7 @@ function highlightUtil(str: string, options: InternalHighlightOptions = {}) {
 }
 
 function formatLine(line: string, lineno: number, marked: number[], options: InternalHighlightOptions, wrap: boolean) {
-  const useHljs = options.hljs || false || !wrap;
+  const useHljs = (options.hljs || false) || !wrap;
   const br = wrap ? '<br>' : '\n';
   let res = useHljs ? '' : '<span class="line';
   if (marked.includes(lineno)) {
@@ -134,21 +134,19 @@ function highlight(str: string, options: InternalHighlightOptions) {
 function closeTags(res: HighlightResult) {
   const tokenStack = [];
 
-  res.value = res.value
-    .split('\n')
-    .map(line => {
-      const prepend = tokenStack.map(token => `<span class="${token}">`).join('');
-      const matches = line.matchAll(/(<span class="(.*?)">|<\/span>)/g);
-      for (const match of matches) {
-        if (match[0] === '</span>') tokenStack.shift();
-        else tokenStack.unshift(match[2]);
-      }
-      const append = '</span>'.repeat(tokenStack.length);
-      return prepend + line + append;
-    })
-    .join('\n');
+  res.value = res.value.split('\n').map(line => {
+    const prepend = tokenStack.map(token => `<span class="${token}">`).join('');
+    const matches = line.matchAll(/(<span class="(.*?)">|<\/span>)/g);
+    for (const match of matches) {
+      if (match[0] === '</span>') tokenStack.shift();
+      else tokenStack.unshift(match[2]);
+    }
+    const append = '</span>'.repeat(tokenStack.length);
+    return prepend + line + append;
+  }).join('\n');
   return res;
 }
+
 
 // For ESM compatibility
 export default highlightUtil;
