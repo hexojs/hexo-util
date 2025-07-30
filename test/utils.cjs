@@ -7,6 +7,7 @@ const _dirname = path.dirname(_filename);
 
 /**
  * Recursively updates all import/require extensions from .js to .cjs, then copies .js files to .cjs in the specified directory and its subdirectories.
+ * > while running CJS under ESM environment, we need to ensure that all CommonJS files use .cjs extension to avoid conflicts.
  * @param {string} [dir] - The directory to start from. Defaults to '../dist/cjs' relative to this file.
  */
 function convertCjs(dir = path.join(_dirname, '../dist/cjs')) {
