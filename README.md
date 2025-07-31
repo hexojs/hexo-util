@@ -35,17 +35,30 @@ Utilities for [Hexo](https://github.com/hexojs/hexo).
 - [prettyUrls](#prettyurlsurl-options)
 - [prismHighlight](#prismhighlightstr-options)
 
-### crossDirname(str)
+### crossDirName
 
-Returns the directory name of a path, using POSIX-style separators (`/`) regardless of platform. Useful for consistent path handling across operating systems.
+Cross-platform implementations for `__dirname` and `__filename` in ESM modules.
+
+These utilities allow you to get the current file's directory and filename in a way that works in both CommonJS and ES modules, without relying on Node.js globals.
+
+#### getDirname()
+Returns the directory name of the current module, similar to `__dirname` in CommonJS.
+
+**Note:** Always use this at the top level of your file, not inside nested functions, to ensure correct results.
 
 ```js
-crossDirname('foo/bar/baz.txt');
-// 'foo/bar'
-crossDirname('foo/bar/');
-// 'foo'
-crossDirname('foo');
-// '.'
+import { getDirname } from 'hexo-util/lib/cross_dirname';
+const __dirname = getDirname();
+```
+
+#### getFilename()
+Returns the filename of the current module, similar to `__filename` in CommonJS.
+
+**Note:** Always use this at the top level of your file, not inside nested functions, to ensure correct results.
+
+```js
+import { getFilename } from 'hexo-util/lib/cross_dirname';
+const __filename = getFilename();
 ```
 
 ### jsonStringify(data)
