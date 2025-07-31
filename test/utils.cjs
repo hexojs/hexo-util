@@ -12,12 +12,12 @@
 async function importModules(mode) {
   if (mode === 'esm') {
     return {
-      lib: await import('../dist/esm/index.js'),
+      lib: await import('../dist/index.js'),
       mode
     };
   }
   // eslint-disable-next-line import/no-unresolved
-  const cjsModule = await import('../dist/cjs/index.cjs');
+  const cjsModule = await import('../dist/index.cjs');
   return {
     lib: cjsModule.default || cjsModule,
     mode

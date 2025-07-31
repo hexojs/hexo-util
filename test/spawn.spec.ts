@@ -75,7 +75,7 @@ describe('spawn', () => {
   });
 
   it('verbose - stdout', async () => {
-    const spawnCjsPath = resolve(__dirname, '../dist/cjs/spawn.cjs');
+    const spawnCjsPath = resolve(__dirname, '../dist/spawn.cjs');
     const _spawnModule = rewire(spawnCjsPath);
     const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
@@ -100,7 +100,7 @@ describe('spawn', () => {
   });
 
   it('verbose - stderr', () => {
-    const spawnCjsPath = resolve(__dirname, '../dist/cjs/spawn.cjs');
+    const spawnCjsPath = resolve(__dirname, '../dist/spawn.cjs');
     const _spawnModule = rewire(spawnCjsPath);
     const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();

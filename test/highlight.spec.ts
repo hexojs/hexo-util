@@ -81,9 +81,9 @@ describe('highlight', () => {
   async function loadHighlight(type: 'esm' | 'cjs' | 'ts') {
     let imported: { default: unknown };
     if (type === 'esm') {
-      imported = await import('../dist/esm/highlight.js');
+      imported = await import('../dist/highlight.js');
     } else if (type === 'cjs') {
-      imported = await import('../dist/cjs/highlight.cjs');
+      imported = await import('../dist/highlight.cjs');
     } else if (type === 'ts') {
       imported = await import('../lib/highlight_esm.js');
     }
@@ -99,10 +99,6 @@ describe('highlight', () => {
     describe(`${type.toUpperCase()} module`, () => {
       before(async () => {
         highlight = await loadHighlight(type);
-      });
-
-      before(async () => {
-        highlight = (await import('../dist/esm/highlight.js')).default;
       });
 
       it('should strip leading indentation by default (stripIndent: true)', (done) => {
