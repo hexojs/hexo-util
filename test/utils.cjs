@@ -16,7 +16,7 @@ async function importModules(mode) {
       mode
     };
   }
-  // eslint-disable-next-line import/no-unresolved
+
   const cjsModule = await import('../dist/index.cjs');
   return {
     lib: cjsModule.default || cjsModule,

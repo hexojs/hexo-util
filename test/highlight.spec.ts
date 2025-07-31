@@ -101,7 +101,7 @@ describe('highlight', () => {
         highlight = await loadHighlight(type);
       });
 
-      it('should strip leading indentation by default (stripIndent: true)', (done) => {
+      it('should strip leading indentation by default (stripIndent: true)', done => {
         const indented = '    foo\n      bar';
         const expected = 'foo\n  bar';
         const result = highlight(indented, { gutter: false });
@@ -111,7 +111,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('should preserve leading indentation when stripIndent: false', (done) => {
+      it('should preserve leading indentation when stripIndent: false', done => {
         const indented = '    foo\n      bar';
         const result = highlight(indented, { gutter: false, stripIndent: false });
         // Should contain leading spaces
@@ -119,7 +119,7 @@ describe('highlight', () => {
         result.should.include(encode('      bar'));
         validateHtmlAsync(result, done);
       });
-      it('default', (done) => {
+      it('default', done => {
         const result = highlight(testString);
         assertResult(result, gutter(1, 4), code(testString));
         validateHtmlAsync(result, done);
@@ -129,31 +129,31 @@ describe('highlight', () => {
         highlight.should.throw('str must be a string!');
       });
 
-      it('gutter: false', (done) => {
+      it('gutter: false', done => {
         const result = highlight(testString, { gutter: false });
         assertResult(result, code(testString));
         validateHtmlAsync(result, done);
       });
 
-      it('gutter: true, but "wrap: false" (conflict)', (done) => {
+      it('gutter: true, but "wrap: false" (conflict)', done => {
         const result = highlight(testString, { gutter: true, wrap: false });
         assertResult(result, gutter(1, 4), code(testString));
         validateHtmlAsync(result, done);
       });
 
-      it('wrap: false (without hljs, without lang)', (done) => {
+      it('wrap: false (without hljs, without lang)', done => {
         const result = highlight(testString, { gutter: false, wrap: false });
         result.should.eql(['<pre><code class="highlight plaintext">', encode(testString), '</code></pre>'].join(''));
         validateHtmlAsync(result, done);
       });
 
-      it('wrap: false (with hljs, without lang)', (done) => {
+      it('wrap: false (with hljs, without lang)', done => {
         const result = highlight(testString, { gutter: false, wrap: false, hljs: true });
         result.should.eql(['<pre><code class="hljs plaintext">', encode(testString), '</code></pre>'].join(''));
         validateHtmlAsync(result, done);
       });
 
-      it('wrap: false (without hljs, with lang)', (done) => {
+      it('wrap: false (without hljs, with lang)', done => {
         const result = highlight(testString, { gutter: false, wrap: false, lang: 'json' });
         hljs.configure({ classPrefix: '' });
         result.should.eql(
@@ -168,7 +168,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('wrap: false (with hljs, with lang)', (done) => {
+      it('wrap: false (with hljs, with lang)', done => {
         const result = highlight(testString, { gutter: false, wrap: false, hljs: true, lang: 'json' });
         hljs.configure({ classPrefix: 'hljs-' });
         result.should.eql(
@@ -183,7 +183,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('wrap: false (with mark)', (done) => {
+      it('wrap: false (with mark)', done => {
         const result = highlight(testString, { gutter: false, wrap: false, hljs: true, lang: 'json', mark: [1] });
         hljs.configure({ classPrefix: 'hljs-' });
         result.should.eql(
@@ -203,7 +203,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('wrap: false (retain trailing newline)', (done) => {
+      it('wrap: false (retain trailing newline)', done => {
         const result = highlight(testString + '\n', { gutter: false, wrap: false, hljs: true, lang: 'json' });
         hljs.configure({ classPrefix: 'hljs-' });
         result.should.eql(
@@ -218,13 +218,13 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('firstLine', (done) => {
+      it('firstLine', done => {
         const result = highlight(testString, { firstLine: 3 });
         assertResult(result, gutter(3, 6), code(testString));
         validateHtmlAsync(result, done);
       });
 
-      it('lang = json', (done) => {
+      it('lang = json', done => {
         const result = highlight(testString, { lang: 'json' });
 
         result.should.eql(
@@ -233,7 +233,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('lang = solidity', (done) => {
+      it('lang = solidity', done => {
         hljs.registerLanguage('solidity', solidity);
         const solString = 'contract MyContract {}';
         const result = highlight(solString, { lang: 'solidity' });
@@ -245,7 +245,7 @@ describe('highlight', () => {
         hljs.unregisterLanguage('solidity');
       });
 
-      it('lang = sol', (done) => {
+      it('lang = sol', done => {
         hljs.registerLanguage('solidity', solidity);
         const solString = 'contract MyContract {}';
         const result = highlight(solString, { lang: 'sol' });
@@ -258,7 +258,7 @@ describe('highlight', () => {
         hljs.unregisterLanguage('solidity');
       });
 
-      it('auto detect', (done) => {
+      it('auto detect', done => {
         const result = highlight(testString, { autoDetect: true });
 
         result.should.eql(
@@ -267,7 +267,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it("don't highlight if language not found", (done) => {
+      it('don\'t highlight if language not found', done => {
         const result = highlight('test', { lang: 'jrowiejrowi' });
         assertResult(result, gutter(1, 1), code('test'));
         validateHtmlAsync(result, done);
@@ -275,7 +275,7 @@ describe('highlight', () => {
 
       // it('don\'t highlight if parse failed'); missing-unit-test
 
-      it('caption', (done) => {
+      it('caption', done => {
         const caption = 'hello world';
         const result = highlight(testString, {
           caption
@@ -292,7 +292,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('caption (wrap: false)', (done) => {
+      it('caption (wrap: false)', done => {
         const caption = 'hello world';
         const result = highlight(testString, {
           gutter: false,
@@ -312,7 +312,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('tab', (done) => {
+      it('tab', done => {
         const spaces = '  ';
         const str = ['function fib(i){', '\tif (i <= 1) return i;', '\treturn fib(i - 1) + fib(i - 2);', '}'].join(
           '\n'
@@ -328,7 +328,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('tab with wrap:false', (done) => {
+      it('tab with wrap:false', done => {
         const spaces = '  ';
         const result = highlight('\t' + testString, {
           gutter: false,
@@ -351,7 +351,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('escape html entity', (done) => {
+      it('escape html entity', done => {
         const str = [
           'deploy:',
           '  type: git',
@@ -365,7 +365,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('highlight sublanguages', (done) => {
+      it('highlight sublanguages', done => {
         const str = '<node><?php echo "foo"; ?></node>';
         const result = highlight(str, { autoDetect: true });
         result.should.eql(
@@ -383,7 +383,7 @@ describe('highlight', () => {
       });
 
       // https://github.com/hexojs/hexo/issues/4726
-      it('highlight sublanguages with tab', (done) => {
+      it('highlight sublanguages with tab', done => {
         const spaces = '  ';
         const str = '<script>\n\tfunction a() {\n\t\treturn;\n\t}\n</script>';
         const result = highlight(str, { tab: spaces, autoDetect: true });
@@ -391,7 +391,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('parse multi-line strings correctly', (done) => {
+      it('parse multi-line strings correctly', done => {
         const str = ['var string = `', '  Multi', '  line', '  string', '`'].join('\n');
 
         const result = highlight(str, { lang: 'js' });
@@ -409,7 +409,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('parse multi-line strings including empty line', (done) => {
+      it('parse multi-line strings including empty line', done => {
         const str = ['var string = `', '  Multi', '', '  string', '`'].join('\n');
 
         const result = highlight(str, { lang: 'js' });
@@ -427,7 +427,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('auto detect of multi-line statement', (done) => {
+      it('auto detect of multi-line statement', done => {
         const str = ['"use strict";', 'var string = `', '  Multi', '', '  string', '`'].join('\n');
 
         const result = highlight(str, { autoDetect: true });
@@ -445,7 +445,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('gives the highlight class to marked lines', (done) => {
+      it('gives the highlight class to marked lines', done => {
         const str = ['roses are red', 'violets are blue', 'sugar is sweet', 'and so are you'].join('\n');
 
         const result = highlight(str, { mark: [1, 3, 5] });
@@ -457,7 +457,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('hljs compatibility - with lines', (done) => {
+      it('hljs compatibility - with lines', done => {
         const str = ['function (a) {', '    if (a > 3)', '        return true;', '    return false;', '}'].join('\n');
         const result = highlight(str, { hljs: true, lang: 'javascript' });
         result.should.include(gutterStart);
@@ -468,7 +468,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('hljs compatibility - no lines', (done) => {
+      it('hljs compatibility - no lines', done => {
         const str = ['function (a) {', '    if (a > 3)', '        return true;', '    return false;', '}'].join('\n');
         const result = highlight(str, { hljs: true, gutter: false, wrap: false, lang: 'javascript' });
         result.should.not.include(gutterStart);
@@ -478,7 +478,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('hljs compatibility - wrap is true', (done) => {
+      it('hljs compatibility - wrap is true', done => {
         const str = ['function (a) {', '    if (a > 3)', '        return true;', '    return false;', '}'].join('\n');
         const result = highlight(str, { hljs: true, gutter: false, wrap: true, lang: 'javascript' });
         result.should.not.include(gutterStart);
@@ -488,7 +488,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('languageAttr: true', (done) => {
+      it('languageAttr: true', done => {
         const str = ['var string = `', '  Multi', '  line', '  string', '`'].join('\n');
 
         const result = highlight(str, { languageAttr: true, lang: 'js' });
@@ -506,7 +506,7 @@ describe('highlight', () => {
         validateHtmlAsync(result, done);
       });
 
-      it('languageAttr: true (wrap: false)', (done) => {
+      it('languageAttr: true (wrap: false)', done => {
         const result = highlight(testString, { gutter: false, wrap: false, languageAttr: true });
         console.log(result);
         result.should.eql(

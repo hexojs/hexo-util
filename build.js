@@ -8,13 +8,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distDir = path.join(__dirname, 'dist');
 
-// Packages that should be bundled
+/**
+ * Packages that should be bundled (not marked as external)
+ * @type {string[]}
+ */
 const bundledPackages = [];
 
+/**
+ * All dependencies except those in bundledPackages will be marked as external
+ * @type {string[]}
+ */
 const externalDeps = [...Object.keys(packageJson.dependencies), ...Object.keys(packageJson.devDependencies)].filter(
   pkgName => !bundledPackages.includes(pkgName)
 );
 
+/**
+ * Build the project using tsup with custom config
+ * @returns {Promise<void>}
+ */
 function buildTsup() {
   const baseConfig = defineConfig({
     entry: ['lib/**/*.ts'],
@@ -31,19 +42,20 @@ function buildTsup() {
     outDir: 'dist',
     outExtension({ format }) {
       switch (format) {
-        case 'cjs': {
+        case 'cjs':
           return { js: '.cjs', dts: '.d.cts' };
-        }
-        default: {
+        default:
           return { js: '.js', dts: '.d.ts' };
-        }
       }
     }
   });
-
   return build(baseConfig);
 }
 
+/**
+ * Patch a .cjs file to rewrite local .js imports/requires to .cjs
+ * @param {string} filePath
+ */
 function patchFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
   // Only replace paths that start with './' or '../' (local files), not bare module imports
@@ -56,6 +68,10 @@ function patchFile(filePath) {
   fs.writeFileSync(filePath, content, 'utf8');
 }
 
+/**
+ * Recursively patch all .cjs files in a directory
+ * @param {string} dir
+ */
 function doPatch(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
@@ -67,4 +83,5 @@ function doPatch(dir) {
   }
 }
 
+// Build and then patch .cjs imports
 buildTsup().then(() => doPatch(distDir));
