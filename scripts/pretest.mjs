@@ -10,7 +10,8 @@ const markerFile = path.resolve(__dirname, '../.last_build');
 const distDir = path.resolve(__dirname, '../dist');
 const extraFiles = [
   path.resolve(__dirname, '../test/utils.cjs'),
-  path.resolve(__dirname, '../tsup.config.js'),
+  path.resolve(__dirname, '../build.js'),
+  path.resolve(__dirname, '../package.json'),
   path.resolve(__dirname, '../test/dual_mode.spec.ts'),
   __filename
 ];

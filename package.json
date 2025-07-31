@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build-hightlight": "node scripts/build_highlight_alias.mjs",
-    "build": "npm run build-hightlight && npx --yes tsup",
+    "build": "npm run build-hightlight && node build.js",
     "clean": "npx --yes rimraf dist tmp",
     "prepublishOnly": "npm install && npm run clean && npm run build",
     "lint": "eslint --config eslint.config.mjs lib test",
