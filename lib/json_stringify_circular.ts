@@ -1,17 +1,11 @@
-/* eslint no-fallthrough: ["error", { "commentPattern": "break[\\s\\w]*omitted" }] */
-
-
-/* ! (c) 2020 Andrea Giammarchi */
-/* source https://github.com/WebReflection/flatted/blob/main/cjs/index.js */
+// (c) 2020 Andrea Giammarchi
+// Source: https://github.com/WebReflection/flatted/blob/main/cjs/index.js
 
 const { parse: $parse, stringify: $stringify } = JSON;
 const { keys } = Object;
-
-const isObject = (value: unknown) => typeof value === 'object' && value !== null;
-
+const isObject = (v: unknown) => typeof v === 'object' && v !== null;
 const ignore = {};
-
-const noop = (_: unknown, value: unknown) => value;
+const noop = (_: unknown, v: unknown) => v;
 
 /**
  * Recursively revives circular references in a parsed object.
@@ -28,12 +22,13 @@ const revive = (
   output: Record<string, unknown>,
   $: (key: string, value: unknown) => unknown
 ): unknown => {
-  const lazy: Array<{ k: string; a: [unknown[], Set<unknown>, Record<string, unknown>, (key: string, value: unknown) => unknown] }> = [];
-  for (let ke = keys(output), { length } = ke, y = 0; y < length; y++) {
-    const k = ke[y];
+  const lazy: Array<{
+    k: string;
+    a: [unknown[], Set<unknown>, Record<string, unknown>, (key: string, value: unknown) => unknown];
+  }> = [];
+  for (const k of keys(output)) {
     const value = output[k];
     if (typeof value === 'string' && /^\d+$/.test(value)) {
-      // Only treat as reference if value is a string that is a number (index)
       const tmp = input[Number(value)];
       if (isObject(tmp) && !parsed.has(tmp)) {
         parsed.add(tmp);
@@ -42,11 +37,7 @@ const revive = (
       } else output[k] = $.call(output, k, tmp);
     } else if (output[k] !== ignore) output[k] = $.call(output, k, value);
   }
-  for (let { length } = lazy, i = 0; i < length; i++) {
-    const { k, a } = lazy[i];
-    // eslint-disable-next-line prefer-spread
-    output[k] = $.call(output, k, revive.apply(null, a));
-  }
+  for (const { k, a } of lazy) output[k] = $.call(output, k, revive(...a));
   return output;
 };
 
@@ -59,9 +50,9 @@ const revive = (
  * @returns The index of the value as a string.
  */
 const set = (known: Map<unknown, string>, input: unknown[], value: unknown): string => {
-  const index = String(input.push(value) - 1);
-  known.set(value, index);
-  return index;
+  const idx = String(input.push(value) - 1);
+  known.set(value, idx);
+  return idx;
 };
 
 /**
@@ -93,15 +84,11 @@ const stringify = (
   replacer?: ((this: unknown, key: string, value: unknown) => unknown) | string[],
   space?: string | number
 ): string => {
-  const isCallable = typeof replacer === 'function';
   let $: (k: string, v: unknown) => unknown;
-  if (isCallable) {
+  if (typeof replacer === 'function') {
     $ = replacer as (k: string, v: unknown) => unknown;
-  } else if (typeof replacer === 'object') {
-    $ = (k: string, v: unknown) => {
-      if (k === '' || (replacer as string[]).indexOf(k) !== -1) return v;
-      return undefined;
-    };
+  } else if (typeof replacer === 'object' && replacer) {
+    $ = (k: string, v: unknown) => (k === '' || (replacer as string[]).includes(k) ? v : undefined);
   } else {
     $ = noop;
   }
@@ -137,7 +124,6 @@ const stringify = (
  * @returns The JSON-compatible representation of the object.
  */
 const toJSON = (anyData: unknown): unknown => $parse(stringify(anyData));
-export { toJSON };
 
 /**
  * Parses a circular object from a JSON string.
@@ -147,7 +133,6 @@ export { toJSON };
  * @returns The parsed object of type T.
  */
 const fromJSON = <T = unknown>(anyData: string): T => parse<T>($stringify(anyData));
-export { fromJSON, parse, stringify };
 
 /**
  * Transforms any object to a JSON string, suppressing `TypeError: Converting circular structure to JSON`.
@@ -155,21 +140,30 @@ export { fromJSON, parse, stringify };
  * @param data - The object to stringify.
  * @returns The JSON string representation.
  */
-export function jsonStringifyWithCircular(data: unknown): string {
+function jsonStringify(data: unknown): string {
   return stringify(data);
 }
 
-export { jsonStringifyWithCircular as jsonStringify };
-
 /**
- * Parses a JSON string that was stringified with circular references (browser version).
+ * Parses a JSON string that was stringified with circular references.
  *
  * @template T
  * @param data - The JSON string to parse.
  * @returns The parsed object of type T.
  */
-export function jsonParseWithCircular<T>(data: string): T {
+function jsonParse<T>(data: string): T {
   return parse(data) as T;
 }
 
-export { jsonParseWithCircular as jsonParse };
+export { parse, stringify, toJSON, fromJSON, jsonStringify, jsonParse };
+
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = {
+    parse,
+    stringify,
+    jsonStringify,
+    jsonParse,
+    toJSON,
+    fromJSON
+  };
+}
