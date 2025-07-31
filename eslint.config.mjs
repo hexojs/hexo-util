@@ -38,7 +38,8 @@ export default [
         'never',
         {
           js: 'always',
-          ts: 'never' // You might want to keep this for TS files
+          ts: 'never',
+          json: 'always'
         }
       ]
     },
