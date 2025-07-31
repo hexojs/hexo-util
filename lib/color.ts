@@ -190,7 +190,7 @@ interface RGBA {
   a: number;
 }
 
-export class Color {
+class Color {
   r: number;
   g: number;
   b: number;
