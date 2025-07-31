@@ -2,7 +2,7 @@ import escapeRegExp from './escape_regexp.js';
 
 const rParam = /([:*])([\w?]*)?/g;
 
-export class Pattern {
+class Pattern {
   match: (str: string) => unknown;
 
   constructor(rule: Pattern | ((str: string) => unknown) | RegExp | string) {

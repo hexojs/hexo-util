@@ -1,6 +1,6 @@
 import { Transform } from 'stream';
 
-export class CacheStream extends Transform {
+class CacheStream extends Transform {
   _cache: Buffer[];
 
   constructor() {

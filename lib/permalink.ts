@@ -8,7 +8,7 @@ interface Options {
   }
 }
 
-export class Permalink {
+class Permalink {
   rule: string;
   regex: RegExp;
   params: string[];

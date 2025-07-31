@@ -1,4 +1,4 @@
-export class Cache<T> {
+class Cache<T> {
   cache: Map<string, T>;
 
   constructor() {
