@@ -1,5 +1,5 @@
 import type { HighlightResult, HLJSApi } from 'highlight.js';
-import _highlight from 'highlight.js/lib/core.js';
+import _highlight from 'highlight.js';
 import stripIndent from 'strip-indent';
 import alias from './highlight_alias.js';
 import { InternalHighlightOptions } from './types.js';
