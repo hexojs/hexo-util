@@ -7,6 +7,8 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
     "target": "ES2022",
     "outDir": "tmp/dist",
     "types": ["node", "mocha"]

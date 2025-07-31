@@ -67,6 +67,7 @@
     "domhandler": "^5.0.3",
     "eslint": "^9.32.0",
     "eslint-config-hexo": "^6.0.0",
+    "eslint-import-resolver-node": "^0.3.9",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "highlightjs-solidity": "^2.0.6",

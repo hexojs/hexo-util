@@ -1,11 +1,6 @@
 import hexoTs from 'eslint-config-hexo/ts';
 import hexoTsTest from 'eslint-config-hexo/ts-test';
 import importPlugin from 'eslint-plugin-import';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export default [
   // Configurations applied globally
@@ -18,7 +13,9 @@ export default [
       // Exclude dist directory from all linting
       'dist',
       // Exclude tmp directory from all linting
-      'tmp'
+      'tmp',
+      // Exclude eslint config file itself
+      'eslint.config.mjs'
     ]
   },
   {
@@ -35,7 +32,15 @@ export default [
     rules: {
       ...importPlugin.configs.recommended.rules,
       'n/no-missing-import': 'off',
-      'node/no-extraneous-import': 'off'
+      'node/no-extraneous-import': 'off',
+      'import/extensions': [
+        'error',
+        'never',
+        {
+          js: 'always',
+          ts: 'never' // You might want to keep this for TS files
+        }
+      ]
     },
     settings: {
       'import/resolver': {
@@ -53,7 +58,17 @@ export default [
   {
     files: ['test/**/*.ts'],
     languageOptions: {
-      ...hexoTsTest.languageOptions
+      ...hexoTsTest.languageOptions,
+      globals: {
+        // Allow global variables used in tests
+        describe: 'readonly',
+        it: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        expect: 'readonly'
+      }
     },
     rules: {
       ...hexoTsTest.rules,
