@@ -1,8 +1,8 @@
-const DIRNAME_POSIX_REGEX
-  = /^((?:\.(?![^/]))|(?:(?:\/?|)(?:[\s\S]*?)))(?:\/+?|)(?:(?:\.{1,2}|[^/]+?|)(?:\.[^./]*|))(?:[/]*)$/;
-const DIRNAME_WIN32_REGEX
-  = /^((?:\.(?![^\\]))|(?:(?:\\?|)(?:[\s\S]*?)))(?:\\+?|)(?:(?:\.{1,2}|[^\\]+?|)(?:\.[^.\\]*|))(?:[\\]*)$/;
-const EXTRACT_PATH_REGEX = /@?(?<path>[file://]?[^(\s]+):[0-9]+:[0-9]+/;
+const DIRNAME_POSIX_REGEX =
+  /^((?:\.(?![^/]))|(?:(?:\/?|)(?:[\s\S]*?)))(?:\/+?|)(?:(?:\.{1,2}|[^/]+?|)(?:\.[^./]*|))(?:[/]*)$/;
+const DIRNAME_WIN32_REGEX =
+  /^((?:\.(?![^\\]))|(?:(?:\\?|)(?:[\s\S]*?)))(?:\\+?|)(?:(?:\.{1,2}|[^\\]+?|)(?:\.[^.\\]*|))(?:[\\]*)$/;
+const EXTRACT_PATH_REGEX = /@?([file://]?[^(\s]+):[0-9]+:[0-9]+/;
 const WIN_POSIX_DRIVE_REGEX = /^\/[A-Z]:\/*/;
 
 const pathDirname = (path: string) => {
@@ -37,11 +37,12 @@ const getPathFromErrorStack = () => {
   }
 
   if (initiator) {
-    path = EXTRACT_PATH_REGEX.exec(initiator)?.groups?.path || '';
+    const match = EXTRACT_PATH_REGEX.exec(initiator);
+    path = match && match[1] ? match[1] : '';
   }
 
   if (!initiator || !path) {
-    console.warn('Can\'t get path from error stack!');
+    console.warn("Can't get path from error stack!");
   }
 
   return path;

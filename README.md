@@ -10,6 +10,7 @@ Utilities for [Hexo](https://github.com/hexojs/hexo).
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Cross __dirname](#crossdirname)
 - [Cache](#cache)
 - [CacheStream](#cachestream)
 - [camelCaseKeys](#camelcasekeysobj-options)
@@ -91,6 +92,32 @@ $ npm install hexo-util --save
 
 ```js
 var util = require('hexo-util');
+```
+
+### crossDirName
+
+Cross-platform implementations for `__dirname` and `__filename` in ESM modules.
+
+These utilities allow you to get the current file's directory and filename in a way that works in both CommonJS and ES modules, without relying on Node.js globals.
+
+#### getDirname()
+Returns the directory name of the current module, similar to `__dirname` in CommonJS.
+
+**Note:** Always use this at the top level of your file, not inside nested functions, to ensure correct results.
+
+```js
+import { getDirname } from 'hexo-util/lib/cross_dirname';
+const __dirname = getDirname();
+```
+
+#### getFilename()
+Returns the filename of the current module, similar to `__filename` in CommonJS.
+
+**Note:** Always use this at the top level of your file, not inside nested functions, to ensure correct results.
+
+```js
+import { getFilename } from 'hexo-util/lib/cross_dirname';
+const __filename = getFilename();
 ```
 
 ### Cache()
