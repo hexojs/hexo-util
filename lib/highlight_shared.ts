@@ -1,5 +1,4 @@
-import type { HighlightResult, HLJSApi } from 'highlight.js';
-import _highlight from 'highlight.js';
+import _highlight, { HighlightResult, HLJSApi } from 'highlight.js';
 import stripIndent from 'strip-indent';
 import alias from './highlight_alias.js';
 import { InternalHighlightOptions } from './types.js';
@@ -33,9 +32,7 @@ function highlightUtil(str: string, options: InternalHighlightOptions = {}) {
   // Register the language if it hasn't been registered yet
   if (!hljs.getLanguage(lang)) {
     try {
-      const mod = global._require(
-        `highlight.js/lib/languages/${alias.aliases[lang] || lang}`
-      );
+      const mod = global._require(`highlight.js/lib/languages/${alias.aliases[lang] || lang}`);
       hljs.registerLanguage(lang, mod.default || mod);
     } catch {
       // If the language module does not exist, skip registration
