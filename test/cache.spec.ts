@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Cache from '../lib/cache';
+import Cache from '../lib/cache.js';
 chai.should();
 
 describe('Cache', () => {

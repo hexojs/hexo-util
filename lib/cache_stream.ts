@@ -21,4 +21,12 @@ class CacheStream extends Transform {
   }
 }
 
-export = CacheStream;
+
+// For ESM compatibility
+export default CacheStream;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = CacheStream;
+  // For ESM compatibility
+  module.exports.default = CacheStream;
+}

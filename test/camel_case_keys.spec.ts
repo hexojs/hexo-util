@@ -1,5 +1,5 @@
 import chai from 'chai';
-import camelCaseKeys from '../lib/camel_case_keys';
+import camelCaseKeys from '../lib/camel_case_keys.js';
 chai.should();
 
 describe('camelCaseKeys', () => {

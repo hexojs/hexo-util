@@ -23,11 +23,11 @@ function toCamelCase(str: string) {
   return str.substring(0, prefixLength) + camelCase(str.substring(prefixLength));
 }
 
-function camelCaseKeys(obj: object) {
+export function camelCaseKeys(obj: object) {
   if (typeof obj !== 'object') throw new TypeError('obj must be an object!');
 
   const keys = Object.keys(obj);
-  const result: Record<string, any> = {};
+  const result: Record<string, unknown> = {};
 
   for (const oldKey of keys) {
     const newKey = toCamelCase(oldKey);
@@ -47,4 +47,11 @@ function camelCaseKeys(obj: object) {
   return result;
 }
 
-export = camelCaseKeys;
+// For ESM compatibility
+export default camelCaseKeys;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = camelCaseKeys;
+  // For ESM compatibility
+  module.exports.default = camelCaseKeys;
+}

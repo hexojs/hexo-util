@@ -1,8 +1,8 @@
-import encodeURL from './encode_url';
-import Cache from './cache';
+import encodeURL from './encode_url.js';
+import Cache from './cache.js';
 const cache = new Cache<string>();
 
-function relativeUrlHelper(from = '', to = '') {
+export function relativeUrlHelper(from = '', to = '') {
   return cache.apply(`${from}-${to}`, () => {
     const fromParts = from.split('/');
     const toParts = to.split('/');
@@ -30,4 +30,12 @@ function relativeUrlHelper(from = '', to = '') {
   });
 }
 
-export = relativeUrlHelper;
+
+// For ESM compatibility
+export default relativeUrlHelper;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = relativeUrlHelper;
+  // For ESM compatibility
+  module.exports.default = relativeUrlHelper;
+}

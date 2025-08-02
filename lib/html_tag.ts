@@ -1,5 +1,5 @@
-import encodeURL from './encode_url';
-import escapeHTML from './escape_html';
+import encodeURL from './encode_url.js';
+import escapeHTML from './escape_html.js';
 const regexUrl = /(cite|download|href|src|url)$/i;
 const regexMeta = /^(og:|twitter:)(audio|image|url|video|player)(:secure_url)?$/i;
 
@@ -46,4 +46,12 @@ function htmlTag(tag: string, attrs?: {
   return result;
 }
 
-export = htmlTag;
+
+// For ESM compatibility
+export default htmlTag;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = htmlTag;
+  // For ESM compatibility
+  module.exports.default = htmlTag;
+}

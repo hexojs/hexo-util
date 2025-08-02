@@ -4,7 +4,14 @@ tmp/
 *.log
 .idea/
 .nyc_output/
-highlight_alias.json
+**/highlight_alias.json
 coverage/
 dist/
 package-lock.json
+.vscode/
+*.ignore
+*.patch
+*.diff
+lib/highlight_alias.ts
+.last_build
+yarn.lock

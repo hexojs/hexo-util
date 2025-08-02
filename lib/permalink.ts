@@ -1,4 +1,4 @@
-import escapeRegExp from './escape_regexp';
+import escapeRegExp from './escape_regexp.js';
 
 const rParam = /:(\w*[^_\W])/g;
 
@@ -60,4 +60,12 @@ class Permalink {
   }
 }
 
-export = Permalink;
+
+// For ESM compatibility
+export default Permalink;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Permalink;
+  // For ESM compatibility
+  module.exports.default = Permalink;
+}

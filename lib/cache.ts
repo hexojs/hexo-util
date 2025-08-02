@@ -1,4 +1,4 @@
-export = class Cache<T> {
+class Cache<T> {
   cache: Map<string, T>;
 
   constructor() {
@@ -41,4 +41,14 @@ export = class Cache<T> {
   dump() {
     return Object.fromEntries(this.cache);
   }
-};
+}
+
+
+// For ESM compatibility
+export default Cache;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Cache;
+  // For ESM compatibility
+  module.exports.default = Cache;
+}

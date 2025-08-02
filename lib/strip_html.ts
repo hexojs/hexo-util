@@ -2,10 +2,9 @@ const STATE_PLAINTEXT = Symbol('plaintext');
 const STATE_HTML = Symbol('html');
 const STATE_COMMENT = Symbol('comment');
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-function striptags(html: string | String = '') {
+function striptags(html: string = '') {
   // if not string, then safely return an empty string
-  if (typeof html !== 'string' && !(html instanceof String)) {
+  if (typeof html !== 'string') {
     return '';
   }
 
@@ -121,4 +120,12 @@ function striptags(html: string | String = '') {
   return output;
 }
 
-export = striptags;
+
+// For ESM compatibility
+export default striptags;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = striptags;
+  // For ESM compatibility
+  module.exports.default = striptags;
+}

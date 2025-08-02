@@ -1,8 +1,0 @@
-{
-  "root": true,
-  "extends": "hexo/ts.js",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2020
-  }
-}

@@ -1,5 +1,5 @@
 import spawn from 'cross-spawn';
-import CacheStream from './cache_stream';
+import CacheStream from './cache_stream.js';
 
 import { SpawnOptions } from 'child_process';
 interface Options extends SpawnOptions {
@@ -11,7 +11,7 @@ class StatusError extends Error {
   code?: number;
 }
 
-function promiseSpawn(command: string, args: string | string[] | Options = [], options: Options = {}) {
+export function promiseSpawn(command: string, args: string | string[] | Options = [], options: Options = {}) {
   if (!command) throw new TypeError('command is required!');
 
   if (typeof args === 'string') args = [args];
@@ -75,4 +75,12 @@ function getCache(stream: CacheStream, encoding?: BufferEncoding) {
   return buf.toString(encoding);
 }
 
-export = promiseSpawn;
+
+// For ESM compatibility
+export default promiseSpawn;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = promiseSpawn;
+  // For ESM compatibility
+  module.exports.default = promiseSpawn;
+}

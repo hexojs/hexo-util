@@ -1,5 +1,5 @@
 import chai from 'chai';
-import slugize from '../lib/slugize';
+import slugize from '../lib/slugize.js';
 chai.should();
 
 describe('slugize', () => {

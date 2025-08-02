@@ -1,5 +1,5 @@
 import chai from 'chai';
-import decodeURL from '../lib/decode_url';
+import decodeURL from '../lib/decode_url.js';
 chai.should();
 
 describe('decodeURL', () => {

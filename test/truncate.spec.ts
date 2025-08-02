@@ -1,5 +1,5 @@
 import chai from 'chai';
-import truncate from '../lib/truncate';
+import truncate from '../lib/truncate.js';
 chai.should();
 
 describe('truncate', () => {

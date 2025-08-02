@@ -1,5 +1,5 @@
 import chai from 'chai';
-import unescapeHTML from '../lib/unescape_html';
+import unescapeHTML from '../lib/unescape_html.js';
 chai.should();
 
 describe('unescapeHTML', () => {

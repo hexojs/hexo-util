@@ -1,13 +1,13 @@
 import { BinaryLike, createHash } from 'crypto';
 import { ParsedUrlQueryInput, stringify } from 'querystring';
-import Cache from './cache';
+import Cache from './cache.js';
 const cache = new Cache();
 
 function md5(str: BinaryLike) {
   return createHash('md5').update(str).digest('hex');
 }
 
-function gravatarHelper(email: string, options?: ParsedUrlQueryInput | number) {
+export function gravatarHelper(email: string, options?: ParsedUrlQueryInput | number) {
   if (typeof options === 'number') {
     options = {s: options};
   }
@@ -24,4 +24,12 @@ function gravatarHelper(email: string, options?: ParsedUrlQueryInput | number) {
   return str;
 }
 
-export = gravatarHelper;
+
+// For ESM compatibility
+export default gravatarHelper;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = gravatarHelper;
+  // For ESM compatibility
+  module.exports.default = gravatarHelper;
+}

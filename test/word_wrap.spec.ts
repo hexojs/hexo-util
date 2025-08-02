@@ -1,5 +1,5 @@
 import chai from 'chai';
-import wordWrap from '../lib/word_wrap';
+import wordWrap from '../lib/word_wrap.js';
 chai.should();
 
 describe('wordWrap', () => {

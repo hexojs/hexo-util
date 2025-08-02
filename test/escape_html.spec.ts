@@ -1,5 +1,5 @@
 import chai from 'chai';
-import escapeHTML from '../lib/escape_html';
+import escapeHTML from '../lib/escape_html.js';
 chai.should();
 
 describe('escapeHTML', () => {

@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import gravatar from '../lib/gravatar';
+import gravatar from '../lib/gravatar.js';
 
 describe('gravatar', () => {
   function md5(str) {

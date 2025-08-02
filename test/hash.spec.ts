@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import { hash, createSha1Hash } from '../lib/hash';
+import { hash, createSha1Hash } from '../lib/hash.js';
 
 function sha1(content) {
   const hash = createHash('sha1');

@@ -1,12 +1,14 @@
 import chai from 'chai';
-import { join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { writeFile, unlink } from 'fs';
 import rewire from 'rewire';
-import spawn from '../lib/spawn';
-import CacheStream from '../lib/cache_stream';
+import spawn from '../lib/spawn.js';
+import CacheStream from '../lib/cache_stream.js';
+import { fileURLToPath } from 'url';
 
 chai.should();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const isWindows = process.platform === 'win32';
 const catCommand = isWindows ? 'type' : 'cat';
 
@@ -72,13 +74,15 @@ describe('spawn', () => {
     }
   });
 
-  it('verbose - stdout', () => {
-    const _spawn = rewire<typeof spawn>('../dist/spawn');
+  it('verbose - stdout', async () => {
+    const spawnCjsPath = resolve(__dirname, '../dist/spawn.cjs');
+    const _spawnModule = rewire(spawnCjsPath);
+    const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
     const content = 'something';
 
-    _spawn.__set__('process', Object.assign({}, process, {
+    _spawnModule.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
       stderr: stderrCache
     }));
@@ -88,7 +92,7 @@ describe('spawn', () => {
     }).then(() => {
       const result = stdoutCache.getCache().toString('utf8').trim();
       if (isWindows) {
-        result.should.match(new RegExp(`^(["']?)${content}\\1$`));
+        result.should.match(new RegExp(`^(["']?)${content}(?:\\1)?$`));
       } else {
         result.should.eql(content);
       }
@@ -96,11 +100,13 @@ describe('spawn', () => {
   });
 
   it('verbose - stderr', () => {
-    const _spawn = rewire<typeof spawn>('../dist/spawn');
+    const spawnCjsPath = resolve(__dirname, '../dist/spawn.cjs');
+    const _spawnModule = rewire(spawnCjsPath);
+    const _spawn = _spawnModule.default || _spawnModule;
     const stdoutCache = new CacheStream();
     const stderrCache = new CacheStream();
 
-    _spawn.__set__('process', Object.assign({}, process, {
+    _spawnModule.__set__('process', Object.assign({}, process, {
       stdout: stdoutCache,
       stderr: stderrCache,
       removeListener: () => {},

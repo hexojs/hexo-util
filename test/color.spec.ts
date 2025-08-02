@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Color from '../lib/color';
+import Color from '../lib/color.js';
 chai.should();
 
 describe('color', () => {

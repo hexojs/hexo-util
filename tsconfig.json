@@ -1,14 +1,26 @@
 {
+  // TypeScript configuration for IDE and mocha support only. Not used for build.
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "sourceMap": true,
-    "outDir": "dist",
-    "declaration": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "esModuleInterop": true,
-    "types": ["node", "mocha"],
-    "lib": ["ES2020", "ES2019"]
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "target": "ES2022",
+    "outDir": "tmp/dist",
+    "types": ["node", "mocha"]
   },
-  "include": ["lib/**.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "**/node_modules",
+    "**/tmp",
+    "**/dist",
+    "**/coverage",
+    "**/test",
+    "**/tests",
+    "**/__tests__",
+    "**/__mocks__"
+  ]
 }

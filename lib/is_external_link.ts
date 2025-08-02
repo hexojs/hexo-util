@@ -1,5 +1,4 @@
-import { parse } from 'url';
-import Cache from './cache';
+import Cache from './cache.js';
 const cache = new Cache<boolean>();
 
 /**
@@ -9,13 +8,16 @@ const cache = new Cache<boolean>();
  * @param {Array} input Exclude hostnames. Specific subdomain is required when applicable, including www.
  * @returns {Boolean} True if the link doesn't have protocol or link has same host with config.url
  */
-
-function isExternalLink(input: string, sitehost: string, exclude?: string | string[]): boolean {
+export function isExternalLink(input: string, sitehost: string, exclude?: string | string[]): boolean {
   return cache.apply(`${input}-${sitehost}-${exclude}`, () => {
     // Return false early for internal link
     if (!/^(\/\/|http(s)?:)/.test(input)) return false;
 
-    sitehost = parse(sitehost).hostname || sitehost;
+    try {
+      sitehost = new URL(sitehost).hostname;
+    } catch {
+      // ignore error, use original sitehost
+    }
 
     if (!sitehost) return false;
 
@@ -23,7 +25,9 @@ function isExternalLink(input: string, sitehost: string, exclude?: string | stri
     let data;
     try {
       data = new URL(input, `http://${sitehost}`);
-    } catch (e) { }
+    } catch {
+      // ignore error, data will remain undefined
+    }
 
     // if input is invalid url, data should be undefined
     if (typeof data !== 'object') return false;
@@ -49,4 +53,12 @@ function isExternalLink(input: string, sitehost: string, exclude?: string | stri
   });
 }
 
-export = isExternalLink;
+
+// For ESM compatibility
+export default isExternalLink;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = isExternalLink;
+  // For ESM compatibility
+  module.exports.default = isExternalLink;
+}

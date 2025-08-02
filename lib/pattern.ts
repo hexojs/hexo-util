@@ -1,11 +1,11 @@
-import escapeRegExp from './escape_regexp';
+import escapeRegExp from './escape_regexp.js';
 
 const rParam = /([:*])([\w?]*)?/g;
 
 class Pattern {
-  match: (str: string) => any;
+  match: (str: string) => unknown;
 
-  constructor(rule: Pattern | ((str: string) => any) | RegExp | string) {
+  constructor(rule: Pattern | ((str: string) => unknown) | RegExp | string) {
     if (rule instanceof Pattern) {
       return rule;
     } else if (typeof rule === 'function') {
@@ -70,4 +70,12 @@ function stringFilter(rule: string) {
   };
 }
 
-export = Pattern;
+
+// For ESM compatibility
+export default Pattern;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = Pattern;
+  // For ESM compatibility
+  module.exports.default = Pattern;
+}

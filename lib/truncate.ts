@@ -4,7 +4,7 @@ interface Options {
   separator?: string;
 }
 
-function truncate(str: string, options: Options = {}): string {
+export function truncate(str: string, options: Options = {}): string {
   if (typeof str !== 'string') throw new TypeError('str must be a string!');
 
   const length = options.length || 30;
@@ -32,4 +32,12 @@ function truncate(str: string, options: Options = {}): string {
   }
 }
 
-export = truncate;
+
+// For ESM compatibility
+export default truncate;
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && typeof module.exports === 'object' && module.exports !== null) {
+  module.exports = truncate;
+  // For ESM compatibility
+  module.exports.default = truncate;
+}
