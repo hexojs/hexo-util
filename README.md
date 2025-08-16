@@ -26,6 +26,8 @@ Utilities for [Hexo].
 - [highlight](#highlightstr-options)
 - [htmlTag](#htmltagtag-attrs-text-escape)
 - [isExternalLink](#isexternallinkurl-sitehost-exclude)
+- [jsonStringify](#jsonstringifydata)
+- [jsonParse](#jsonparsedata)
 - [Pattern](#patternrule)
 - [Permalink](#permalinkrule-options)
 - [prettyUrls](#prettyurlsurl-options)
@@ -51,6 +53,30 @@ $ npm install hexo-util --save
 
 ``` js
 var util = require('hexo-util');
+```
+
+
+### jsonStringify(data)
+
+Stringifies an object into JSON with support for circular references.
+
+```js
+const obj = { a: 1 };
+obj.self = obj;
+const str = jsonStringify(obj);
+// str is a JSON string that can be parsed back with jsonParse
+```
+
+### jsonParse(data)
+
+Parses a JSON string created by `jsonStringify`, restoring circular references.
+
+```js
+const obj = { a: 1 };
+obj.self = obj;
+const str = jsonStringify(obj);
+const parsed = jsonParse(str);
+// parsed.self === parsed // true
 ```
 
 ### Cache()
