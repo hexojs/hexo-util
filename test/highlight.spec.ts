@@ -1,5 +1,6 @@
 import chai from 'chai';
 import hljs from 'highlight.js';
+import { solidity } from 'highlightjs-solidity';
 import { encode } from 'html-entities';
 import highlight from '../lib/highlight';
 
@@ -179,6 +180,42 @@ describe('highlight', () => {
       end
     ].join(''));
     validateHtmlAsync(result, done);
+  });
+
+
+  it('lang = solidity', done => {
+    hljs.registerLanguage('solidity', solidity);
+    const solString = 'contract MyContract {}';
+    const result = highlight(solString, { lang: 'solidity' });
+
+    result.should.eql(
+      [
+        '<figure class="highlight solidity"><table><tr>',
+        gutter(1, 1),
+        code(solString, 'solidity'),
+        end
+      ].join('')
+    );
+    validateHtmlAsync(result, done);
+    hljs.unregisterLanguage('solidity');
+  });
+
+  it('lang = sol', done => {
+    hljs.registerLanguage('solidity', solidity);
+    const solString = 'contract MyContract {}';
+    const result = highlight(solString, { lang: 'sol' });
+
+    result.should.eql(
+      [
+        '<figure class="highlight sol"><table><tr>',
+        gutter(1, 1),
+        code(solString, 'solidity'),
+        end
+      ].join('')
+    );
+    validateHtmlAsync(result, done);
+
+    hljs.unregisterLanguage('solidity');
   });
 
   it('auto detect', done => {
