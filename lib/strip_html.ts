@@ -1,6 +1,6 @@
-const STATE_PLAINTEXT = Symbol('plaintext');
-const STATE_HTML = Symbol('html');
-const STATE_COMMENT = Symbol('comment');
+const STATE_PLAINTEXT = 0;
+const STATE_HTML = 1;
+const STATE_COMMENT = 2;
 
 const CHAR_LT = 60; // '<'
 const CHAR_GT = 62; // '>'
