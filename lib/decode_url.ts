@@ -1,15 +1,12 @@
-import { format } from 'url';
+import { format, parse } from 'url';
 import { unescape } from 'querystring';
 
-const PROTOCOL_RE = /^[a-z0-9.+-]+:/i;
-
-const hasProtocolLikeNode = (str: unknown): boolean => {
-  if (typeof str !== 'string') throw new TypeError('url must be a string');
-  return PROTOCOL_RE.test(str.trim());
-};
-
 const decodeURL = (str: string) => {
-  if (hasProtocolLikeNode(str)) {
+  const index = str.indexOf(':');
+  if (index < 0) {
+    return unescape(str);
+  }
+  if (parse(str.slice(0, index + 1)).protocol) {
     const parsed = new URL(str);
 
     // Exit if input is a data url
