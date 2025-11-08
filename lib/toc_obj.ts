@@ -1,5 +1,4 @@
 import { DomHandler, DomUtils, Parser } from 'htmlparser2';
-// eslint-disable-next-line node/no-extraneous-import
 import type { Element } from 'domhandler';
 import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;

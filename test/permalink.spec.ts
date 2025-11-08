@@ -3,7 +3,7 @@ import Permalink from '../lib/permalink';
 chai.should();
 
 describe('Permalink', () => {
-  let permalink;
+  let permalink: Permalink;
 
   it('constructor', () => {
     permalink = new Permalink(':year/:month/:day/:title');
@@ -45,10 +45,10 @@ describe('Permalink', () => {
 
   it('rule is required', () => {
     try {
-      // @ts-ignore
+      // @ts-expect-error Testing invalid constructor
       // eslint-disable-next-line no-new
       new Permalink();
-    } catch (err) {
+    } catch (err: any) {
       err.should.have.property('message', 'rule is required!');
     }
   });
@@ -59,7 +59,7 @@ describe('Permalink', () => {
   });
 
   it('parse()', () => {
-    permalink.parse('2014/01/31/test').should.eql({
+    permalink.parse('2014/01/31/test')!.should.eql({
       year: '2014',
       month: '01',
       day: '31',

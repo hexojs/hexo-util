@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import gravatar from '../lib/gravatar';
 
 describe('gravatar', () => {
-  function md5(str) {
+  function md5(str: string) {
     return createHash('md5').update(str).digest('hex');
   }
 

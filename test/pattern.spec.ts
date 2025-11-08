@@ -64,7 +64,7 @@ describe('Pattern', () => {
 
   it('rule is required', () => {
     (() => {
-      // @ts-ignore
+      // @ts-expect-error Testing missing rule
       // eslint-disable-next-line no-new
       new Pattern();
     }).should.throw('rule must be a function, a string or a regular expression.');
