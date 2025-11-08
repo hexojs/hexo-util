@@ -51,7 +51,7 @@
     "html-entities": "^2.3.3",
     "html-tag-validator": "^1.6.0",
     "mocha": "^11.7.5",
-    "rewire": "^6.0.0",
+    "rewire": "^9.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.9.3"
   },
