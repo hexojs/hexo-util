@@ -56,9 +56,9 @@ describe('htmlTag', () => {
 
   it('tag is required', () => {
     try {
-      // @ts-ignore
+      // @ts-expect-error Testing invalid tag
       htmlTag();
-    } catch (err) {
+    } catch (err: any) {
       err.should.have.property('message', 'tag is required!');
     }
   });

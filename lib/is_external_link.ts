@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-deprecated-api
 import { parse } from 'url';
 import Cache from './cache';
 const cache = new Cache<boolean>();
@@ -23,7 +24,7 @@ function isExternalLink(input: string, sitehost: string, exclude?: string | stri
     let data;
     try {
       data = new URL(input, `http://${sitehost}`);
-    } catch (e) { }
+    } catch { }
 
     // if input is invalid url, data should be undefined
     if (typeof data !== 'object') return false;
