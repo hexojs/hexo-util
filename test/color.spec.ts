@@ -65,19 +65,19 @@ describe('color', () => {
   it('invalid color', () => {
     let color;
     try {
-      // @ts-ignore
+      // @ts-expect-error Testing invalid color
       color = new Color(200);
-    } catch (e) {
+    } catch (e: any) {
       e.message.should.eql('color is required!');
     }
     try {
       color = new Color('rgb(300, 130, 180)');
-    } catch (e) {
+    } catch (e: any) {
       e.message.should.eql('{r: 300, g: 130, b: 180, a: 1} is invalid.');
     }
     try {
       color = new Color('cmyk(0%,0%,0%,0%)');
-    } catch (e) {
+    } catch (e: any) {
       e.message.should.eql('cmyk(0%,0%,0%,0%) is not a supported color format.');
     }
     (typeof color).should.eql('undefined');
@@ -94,7 +94,7 @@ describe('color', () => {
 
     try {
       red.mix(pink, 2);
-    } catch (e) {
+    } catch (e: any) {
       e.message.should.eql('Valid numbers is only between 0 and 1.');
     }
   });

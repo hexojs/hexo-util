@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 import { hash, createSha1Hash } from '../lib/hash';
 
-function sha1(content) {
+function sha1(content: string) {
   const hash = createHash('sha1');
   hash.update(content);
 

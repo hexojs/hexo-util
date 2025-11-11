@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-deprecated-api
 import { parse, format } from 'url';
 import { unescape } from 'querystring';
 
