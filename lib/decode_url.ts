@@ -3,7 +3,11 @@ import { parse, format } from 'url';
 import { unescape } from 'querystring';
 
 const decodeURL = (str: string) => {
-  if (parse(str).protocol) {
+  const index = str.indexOf(':');
+  if (index < 0) {
+    return unescape(str);
+  }
+  if (parse(str.slice(0, index + 1)).protocol) {
     const parsed = new URL(str);
 
     // Exit if input is a data url
