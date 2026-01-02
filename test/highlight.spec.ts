@@ -23,7 +23,7 @@ const gutterEnd = '</pre></td>';
 const codeStart = '<td class="code"><pre>';
 const codeEnd = '</pre></td>';
 
-function gutter(start, end) {
+function gutter(start: number, end: number) {
   let result = gutterStart;
 
   for (let i = start; i <= end; i++) {
@@ -35,7 +35,7 @@ function gutter(start, end) {
   return result;
 }
 
-function code(str, lang?) {
+function code(str: string, lang?: any) {
   let data;
 
   if (lang) {
@@ -55,12 +55,12 @@ function code(str, lang?) {
   }, codeStart) + codeEnd;
 }
 
-function assertResult(result, ...args) {
+function assertResult(result: string, ...args: string[]) {
   result.should.eql(start + args.join('') + end);
 }
 
-function validateHtmlAsync(str, done) {
-  validator(str, (err, ast) => {
+function validateHtmlAsync(str: string, done: (err?: any) => void) {
+  validator(str, (err: any) => {
     if (err) {
       done(err);
     } else {

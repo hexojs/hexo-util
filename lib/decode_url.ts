@@ -1,4 +1,5 @@
-import { format, parse } from 'url';
+// eslint-disable-next-line n/no-deprecated-api
+import { parse, format } from 'url';
 import { unescape } from 'querystring';
 
 const decodeURL = (str: string) => {

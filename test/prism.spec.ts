@@ -5,7 +5,7 @@ import stripIndent from 'strip-indent';
 
 chai.should();
 const validator = require('html-tag-validator');
-function validateHtmlAsync(str, done) {
+function validateHtmlAsync(str: string, done: (err?: any) => void) {
   validator(str, {
     'attributes': {
       // 'aria-hidden' is used at <span> for line number
@@ -13,7 +13,7 @@ function validateHtmlAsync(str, done) {
       // So I believe it is ok to whitelist this
       'span': { 'normal': ['aria-hidden'] }
     }
-  }, (err, ast) => {
+  }, (err: any) => {
     if (err) {
       done(err);
     } else {

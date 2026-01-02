@@ -53,7 +53,7 @@ describe('stripHTML', () => {
     const html = ['X'];
     const text = '';
 
-    // @ts-ignore
+    // @ts-expect-error Testing invalid types
     stripHTML(html).should.eql(text);
   });
 });

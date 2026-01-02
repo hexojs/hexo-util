@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-deprecated-api
 import { parse } from 'url';
 import encodeURL from './encode_url';
 import prettyUrls from './pretty_urls';

@@ -11,7 +11,7 @@ const CHAR_SPACE = 32; // ' '
 const CHAR_NEWLINE = 10; // '\n'
 const CHAR_EXCLAIM = 33; // '!'
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
 function striptags(html: string | String = '') {
   // if not string, then safely return an empty string
   if (typeof html !== 'string' && !(html instanceof String)) {
