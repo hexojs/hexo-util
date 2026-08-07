@@ -164,6 +164,39 @@ describe('tocObj', () => {
       result.forEach(str => str[0].text.should.eql('foobarbaz'));
     });
 
+    it('hidden elements', () => {
+      const input = '<h1>Visible<span aria-hidden="true">Aria hidden</span><span hidden>Hidden</span></h1>';
+      const result = tocObj(input);
+
+      result[0].text.should.eql('Visible');
+    });
+
+    it('KaTeX MathML', () => {
+      const input = [
+        '<h2 id="energy">Energy <span class="katex">',
+        '<span class="katex-mathml"><math><semantics>',
+        '<mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow>',
+        '<annotation encoding="application/x-tex">E=mc^2</annotation>',
+        '</semantics></math></span>',
+        '<span class="katex-html" aria-hidden="true">E=mc2</span>',
+        '</span></h2>'
+      ].join('');
+      const result = tocObj(input);
+
+      result[0].text.should.eql('Energy E&#x3D;mc^2');
+    });
+
+    it('MathML without TeX annotation', () => {
+      const input = [
+        '<h2><math><semantics><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>',
+        '<annotation encoding="application/mathml-content+xml">duplicate</annotation>',
+        '</semantics></math></h2>'
+      ].join('');
+      const result = tocObj(input);
+
+      result[0].text.should.eql('x+1');
+    });
+
     it('unnumbered headings', () => {
       const input = [
         '<h1 id="title_1" data-toc-unnumbered="true">Title 1</h1>',

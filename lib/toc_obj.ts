@@ -1,5 +1,5 @@
 import { DomHandler, DomUtils, Parser } from 'htmlparser2';
-import type { Element } from 'domhandler';
+import type { AnyNode, Element } from 'domhandler';
 import escapeHTML from './escape_html';
 const nonWord = /^\s*[^a-zA-Z0-9]\s*$/;
 
@@ -18,6 +18,35 @@ const getId = ({ attribs = {}, parent }: Element) => {
  */
 const isUnnumbered = ({ attribs = {} }) => {
   return attribs['data-toc-unnumbered'] === 'true';
+};
+
+const isElement = (node: AnyNode): node is Element => 'tagName' in node;
+
+/**
+ * Extract text from the semantic representation of a DOM subtree.
+ */
+const semanticText = (node: AnyNode): string => {
+  if (node.type === 'text') return node.data;
+  if (!('children' in node)) return '';
+
+  if (isElement(node)) {
+    const { attribs, name } = node;
+    if (attribs['aria-hidden']?.toLowerCase() === 'true' || 'hidden' in attribs) return '';
+
+    if (name === 'semantics') {
+      const tex = node.children.find(child => isElement(child)
+        && child.name === 'annotation'
+        && child.attribs.encoding?.toLowerCase() === 'application/x-tex');
+      if (tex) return semanticText(tex);
+
+      const presentation = node.children.find(child => isElement(child)
+        && child.name !== 'annotation'
+        && child.name !== 'annotation-xml');
+      return presentation ? semanticText(presentation) : '';
+    }
+  }
+
+  return node.children.map(semanticText).join('');
 };
 
 interface Result {
@@ -48,7 +77,7 @@ function tocObj(str: string, options = {}) {
     const unnumbered = isUnnumbered(el);
     let text = '';
     for (const element of el.children) {
-      const elText = DomUtils.textContent(element);
+      const elText = semanticText(element);
       // Skip permalink symbol wrapped in <a>
       // permalink is a single non-word character, word = [a-Z0-9]
       // permalink may be wrapped in whitespace(s)
@@ -56,7 +85,7 @@ function tocObj(str: string, options = {}) {
         text += escapeHTML(elText);
       }
     }
-    if (!text) text = escapeHTML(DomUtils.textContent(el));
+    if (!text) text = escapeHTML(semanticText(el));
 
     const res: Result = { text, id, level };
     if (unnumbered) res.unnumbered = true;
