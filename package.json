@@ -39,7 +39,7 @@
     "@types/chai": "^4.3.11",
     "@types/cross-spawn": "^6.0.2",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^18.11.8",
+    "@types/node": "^22.1.0",
     "@types/prismjs": "^1.26.0",
     "@types/rewire": "^2.5.30",
     "c8": "^10.1.2",
@@ -65,6 +65,6 @@
     "strip-indent": "^3.0.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.1.0"
   }
 }
