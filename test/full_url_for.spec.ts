@@ -23,6 +23,11 @@ describe('full_url_for', () => {
     fullUrlFor('/').should.eql(ctx.config.url + '/');
   });
 
+  it('internal url - IPv6 host', () => {
+    ctx.config.url = 'http://[::1]:4000/blog';
+    fullUrlFor('index.html').should.eql(ctx.config.url + '/index.html');
+  });
+
   it('internal url - no duplicate slash', () => {
     ctx.config.url = 'https://example.com';
     fullUrlFor('/index.html').should.eql('https://example.com/index.html');
@@ -88,5 +93,9 @@ describe('full_url_for', () => {
     ].forEach(url => {
       fullUrlFor(url).should.eql(url);
     });
+  });
+
+  it('invalid URL', () => {
+    fullUrlFor('httpsx://[invalid').should.eql('httpsx://[invalid');
   });
 });

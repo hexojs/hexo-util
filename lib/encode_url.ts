@@ -1,14 +1,13 @@
-// eslint-disable-next-line n/no-deprecated-api
-import { parse, format } from 'url';
+import { format } from 'url';
 import { unescape } from 'querystring';
 
 const encodeURL = (str: string) => {
-  const index = str.indexOf(':');
-  if (index < 0) {
+  if (!str.includes(':')) {
     return encodeURI(unescape(str));
   }
-  if (parse(str.slice(0, index + 1)).protocol) {
-    const parsed = new URL(str);
+
+  const parsed = URL.parse(str);
+  if (parsed) {
 
     // Exit if input is a data url
     if (parsed.origin === 'null') return str;
