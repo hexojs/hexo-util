@@ -24,6 +24,12 @@ describe('isExternalLink', () => {
     isExternalLink('/archives//hexo.io', ctx.config.url).should.eql(false);
   });
 
+  it('IPv6 host', () => {
+    const sitehost = 'http://[::1]:4000';
+    isExternalLink('http://[::1]:5000/foo', sitehost).should.eql(false);
+    isExternalLink('http://[::2]:4000/foo', sitehost).should.eql(true);
+  });
+
   it('hash, mailto, javascript', () => {
     isExternalLink('#top', ctx.config.url).should.eql(false);
     isExternalLink('mailto:hi@hexo.io', ctx.config.url).should.eql(false);

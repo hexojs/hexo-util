@@ -1,5 +1,3 @@
-// eslint-disable-next-line n/no-deprecated-api
-import { parse } from 'url';
 import encodeURL from './encode_url';
 import relative_url from './relative_url';
 import prettyUrls from './pretty_urls';
@@ -57,11 +55,11 @@ function urlForHelper(path = '/', options: UrlForOptions | null = {}) {
   return cache.apply(
     `${config.url}-${root}-${prettyUrlsOptions.trailing_index}-${prettyUrlsOptions.trailing_html}-${path}`,
     () => {
-      const sitehost = parse(config.url).hostname || config.url;
-      const data = new URL(path, `http://${sitehost}`);
+      const sitehost = URL.parse(config.url)?.hostname || config.url;
+      const data = URL.parse(path, `http://${sitehost}`);
 
       // Exit if input is an external link or a data url
-      if (data.hostname !== sitehost || data.origin === 'null') {
+      if (!data || data.hostname !== sitehost || data.origin === 'null') {
         return path;
       }
 

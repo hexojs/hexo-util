@@ -68,6 +68,11 @@ describe('decodeURL', () => {
     decodeURL(content).should.eql('/foo bar/baz/');
   });
 
+  it('path with colon', () => {
+    const content = '/foo:bar%20baz/';
+    decodeURL(content).should.eql('/foo:bar baz/');
+  });
+
   it('path with unicode', () => {
     const content = '/foo/b%C3%A1r/';
     decodeURL(content).should.eql('/foo/bár/');
@@ -86,5 +91,10 @@ describe('decodeURL', () => {
   it('data url', () => {
     const content = 'data:image/png;base64';
     decodeURL(content).should.eql('data:image/png;base64');
+  });
+
+  it('invalid absolute URL', () => {
+    decodeURL('https:').should.eql('https:');
+    decodeURL('http://[invalid').should.eql('http://[invalid');
   });
 });

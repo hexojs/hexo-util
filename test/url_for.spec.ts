@@ -29,6 +29,12 @@ describe('url_for', () => {
     urlFor('/index.html').should.eql('/blog/index.html');
   });
 
+  it('internal url (relative off) - IPv6 host', () => {
+    ctx.config.url = 'http://[::1]:4000/blog';
+    ctx.config.root = '/blog/';
+    urlFor('index.html').should.eql('/blog/index.html');
+  });
+
   it('internal url (relative on)', () => {
     ctx.config.relative_link = true;
     ctx.config.root = '/';
@@ -152,5 +158,9 @@ describe('url_for', () => {
     ].forEach(url => {
       urlFor(url).should.eql(url);
     });
+  });
+
+  it('invalid URL', () => {
+    urlFor('httpsx://[invalid').should.eql('httpsx://[invalid');
   });
 });

@@ -1,5 +1,3 @@
-// eslint-disable-next-line n/no-deprecated-api
-import { parse } from 'url';
 import Cache from './cache';
 const cache = new Cache<boolean>();
 
@@ -16,18 +14,15 @@ function isExternalLink(input: string, sitehost: string, exclude?: string | stri
     // Return false early for internal link
     if (!/^(\/\/|http(s)?:)/.test(input)) return false;
 
-    sitehost = parse(sitehost).hostname || sitehost;
+    sitehost = URL.parse(sitehost)?.hostname || sitehost;
 
     if (!sitehost) return false;
 
     // handle relative url and invalid url
-    let data;
-    try {
-      data = new URL(input, `http://${sitehost}`);
-    } catch { }
+    const data = URL.parse(input, `http://${sitehost}`);
 
-    // if input is invalid url, data should be undefined
-    if (typeof data !== 'object') return false;
+    // if input is invalid url, data should be null
+    if (!data) return false;
 
     // handle mailto: javascript: vbscript: and so on
     if (data.origin === 'null') return false;

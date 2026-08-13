@@ -89,6 +89,11 @@ describe('encodeURL', () => {
     encodeURL(content).should.eql('/foo%20bar/baz/');
   });
 
+  it('path with colon', () => {
+    const content = '/foo:bar baz/';
+    encodeURL(content).should.eql('/foo:bar%20baz/');
+  });
+
   it('path with unicode', () => {
     const content = '/foo/bár/';
     encodeURL(content).should.eql('/foo/b%C3%A1r/');
@@ -108,6 +113,12 @@ describe('encodeURL', () => {
     const content = 'data:,Hello%2C%20World!';
     encodeURL(content).should.eql(content);
   });
+
+  it('invalid absolute URL', () => {
+    encodeURL('https:').should.eql('https:');
+    encodeURL('http://[invalid').should.eql('http://%5Binvalid');
+  });
+
   it('encode pathname', () => {
     const content = 'https://fóo.com/páth%20[square]';
     encodeURL(content).should.eql('https://fóo.com/p%C3%A1th%20%5Bsquare%5D');
