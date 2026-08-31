@@ -43,7 +43,7 @@
     "@types/prismjs": "^1.26.0",
     "@types/rewire": "^2.5.30",
     "c8": "^10.1.2",
-    "chai": "^4.3.6",
+    "chai": "^6.2.0",
     "domhandler": "^5.0.3",
     "eslint": "^9.39.1",
     "eslint-config-hexo": "^6.0.0",
