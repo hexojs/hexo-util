@@ -415,7 +415,7 @@ Option | Description | Default
 `trailing_index` | `/about/index.html -> /about/` when `false` | `true`
 `trailing_html` | `/about.html -> /about` when `false` | `true`
 
-Note: `trailing_html` ignores any link with a trailing `index.html`. (will not be rewritten to `index`).
+Note: `trailing_html` keeps the extension for an exact `index.html` filename at the end of a path. URLs with a query or fragment are left as provided.
 
 ``` js
 prettyUrls('/foo/bar.html');
