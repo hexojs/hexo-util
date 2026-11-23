@@ -13,6 +13,23 @@ describe('truncate', () => {
       .should.eql('Once upon');
   });
 
+  it('string at the default length', () => {
+    const str = 'a'.repeat(30);
+    truncate(str).should.eql(str);
+  });
+
+  it('string at the specified length', () => {
+    truncate('abc', {length: 3}).should.eql('abc');
+  });
+
+  it('string at the specified length with a separator', () => {
+    truncate('Once upon', {length: 9, separator: ' '}).should.eql('Once upon');
+  });
+
+  it('string at the specified length with an omission', () => {
+    truncate('Once upon', {length: 9, omission: '…'}).should.eql('Once upon');
+  });
+
   it('truncate', () => {
     truncate('Once upon a time in a world far far away', {length: 17})
       .should.eql('Once upon a ti...');

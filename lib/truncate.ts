@@ -12,7 +12,7 @@ function truncate(str: string, options: Options = {}): string {
   const { separator } = options;
   const omissionLength = omission.length;
 
-  if (str.length < length) return str;
+  if (str.length <= length) return str;
 
   if (separator) {
     const words = str.split(separator);
